@@ -9,6 +9,7 @@ export default defineConfig({
   },
   build: {
 	mode: 'dev',
-	outDir: 'build/'
+	outDir: 'build/',
+	minify: false
   }
 })
