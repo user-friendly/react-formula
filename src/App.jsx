@@ -1,17 +1,36 @@
-const Message = (props) => {
-	const {text, bgColor} = props	
+const Box = (props) => {
+	const { label, bgColor, textColor, large } = props 
+	
 	return <div style={{
-		background: bgColor
+		background: bgColor,
+		color: textColor,
+		fontSize: large ? '40px' : '12px'
 	}}>
-		{text}
+		{label}
 	</div>
 }
 
 const App = () => {
-  return <div style={{border: "1pt solid black"}}>
-  	<Message text="Sky" bgColor="cyan" />
-	<Message text="Grass" bgColor="green" />
-	<Message text="Strawberry" bgColor="red" />
+  return <div>
+  	<Box
+		label="My name is Boxy"
+		bgColor="CornFlowerBlue"
+		textColor="White"
+		large={true}
+	/>
+	
+	<Box
+		label="This is a cardboard box"
+		bgColor="Lavender"
+		textColor="Magenta"
+		large={false}
+	/>
+
+	<Box
+		label="Wooden Chest"
+		bgColor="Green"
+		textColor="White"
+	/>
   </div>
 }
 
