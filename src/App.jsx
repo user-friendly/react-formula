@@ -8,7 +8,18 @@ const App = () => {
 	
 	<div className="text-xl text-purple-500">
 		<div className="border-4 border-sky-500">Four</div>
-		<div className="bg-violet-200 border-l-8 border-l-purple-800">Five</div>
+		<div className="
+			w-1/4 min-w-min
+			select-none
+			cursor-pointer
+			transition-border-color
+			duration-1000
+			bg-violet-200 border-l-8
+			border-l-purple-800
+			hover:border-purple-300
+		">
+			Five
+		</div>
 	</div>
   </div>
 }
