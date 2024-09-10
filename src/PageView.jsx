@@ -6,7 +6,7 @@ import { useState/*, lazy, Suspense*/ } from 'react'
 
 import NotFound		from './Page/NotFound'
 import Home			from './Page/Home'
-import Portfolio	from './Page/Portfolio'
+import Current		from './Page/Lesson/ButtonComponentExercise'
 
 class Router {
 	#map = {}
@@ -36,7 +36,7 @@ const PagePort = lazy(() => import('./Page/Portfolio'))
 
 router.addRoute('/',			<Home />)
 router.addRoute('/home',		<Home />)
-router.addRoute('/portfolio',	<Portfolio />)
+router.addRoute('/lesson',		<Current />)
 
 /*const Loading = () => {
 	return <strong>

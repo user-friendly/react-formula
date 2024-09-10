@@ -15,8 +15,7 @@ const App = () => {
   return <div className="flex flex-col pt-6">
   	<NavBar>
 		<Button route="/">Home</Button>
-		<Button route="/portfolio">Portfolio</Button>
-		<Button route="/resume">Resume</Button>
+		<Button route="/lesson">Lesson</Button>
 		<Button route="/about">About</Button>
 	</NavBar>
 	
