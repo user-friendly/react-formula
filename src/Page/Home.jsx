@@ -2,8 +2,6 @@
  * Homepage view.
  */
 
-import Router from '../PageView'
-
 // console.log('Execute Home component\'s main JSX file.')
 
 const Home = () => {
