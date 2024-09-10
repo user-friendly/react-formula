@@ -2,10 +2,12 @@
  * Portfolio view.
  */
 
+import { useEffect, useState } from 'react'
+
 console.log('Execute Portfolio component\'s main JSX file.')
 
 const Portfolio = () => {
-	console.log('Render Portfolio.')
+	// console.log('Render Portfolio.')
 	
 	return <div className="
 		py-2 px-4

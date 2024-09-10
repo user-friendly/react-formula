@@ -2,39 +2,16 @@
  * Main application component.
  */
 
-import { useState } from 'react'
-
+import PageView from './PageView'
 import Button from './Button'
 import NavBar from './NavBar'
 
-import NotFound from './Page/NotFound'
-import Home from './Page/Home'
-import Portfolio from './Page/Portfolio'
-
-console.log('Execute App component\'s main JSX file.')
-
-const map = {
-	'404':			<NotFound />,
-	'/home':		<Home />,
-	'/':			<Home />,
-	'/portfolio': 	<Portfolio />
-}
-const getRoute = route => map[route] !== undefined ? route : '404'
-
-let navigateTo = null
+// console.log('Execute App component\'s main JSX file.')
 
 const App = () => {
-  // Prepare to render the main component.
+  // Render the main component.
+  // console.log('Render App.')
   
-  const [route, setRoute] = useState(getRoute(window.location.pathname))
-  
-  navigateTo = (route) => {
-	// This state change will exeute a whole app render. No good.
-	setRoute(getRoute(route))
-	console.log(`Navigate App to ${route}. TODO Use a real router that will handle window location changes and history.`)
-  }
-
-  console.log('Render App.')
   return <div className="flex flex-col pt-6">
   	<NavBar>
 		<Button route="/">Home</Button>
@@ -54,7 +31,7 @@ const App = () => {
 		
 		mx-6 my-8
 	">
-		{map[route]}
+		<PageView />
 	</div>
 	
 	<div>
@@ -71,5 +48,4 @@ const App = () => {
   </div>
 }
 
-export { navigateTo as AppNavigateTo }
 export default App

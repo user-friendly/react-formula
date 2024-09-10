@@ -2,10 +2,12 @@
  * Homepage view.
  */
 
+import Router from '../PageView'
+
 console.log('Execute Home component\'s main JSX file.')
 
 const Home = () => {
-	console.log('Render Home.')
+	// console.log('Render Home.')
 	
 	return <div className="
 		py-2 px-4

@@ -2,7 +2,7 @@
  * Button component.
  */
 
-import { AppNavigateTo as navTo } from './App'
+import { NavigateTo as navTo } from './PageView'
 
 const style = `
 	select-none
