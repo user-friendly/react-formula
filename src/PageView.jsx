@@ -6,7 +6,9 @@ import { useState/*, lazy, Suspense*/ } from 'react'
 
 import NotFound		from './Page/NotFound'
 import Home			from './Page/Home'
-import Current		from './Page/Lesson/ButtonComponentExercise'
+
+import ButtonComponentExercise from './Page/Lesson/ButtonComponentExercise'
+import FlexExercise	from './Page/Lesson/FlexExercise'
 
 class Router {
 	#map = {}
@@ -29,20 +31,13 @@ let navigateTo = null
 
 const router = new Router()
 
-/*
-const PageHome = lazy(() => import('./Page/Home'))
-const PagePort = lazy(() => import('./Page/Portfolio'))
-*/
-
 router.addRoute('/',			<Home />)
 router.addRoute('/home',		<Home />)
-router.addRoute('/lesson',		<Current />)
 
-/*const Loading = () => {
-	return <strong>
-		🌀 Loading...
-	</strong>
-}*/
+router.addRoute('/lesson/button-component-exercise', <ButtonComponentExercise />)
+router.addRoute('/lesson/flex-exercise', <FlexExercise />)
+
+router.addRoute('/lesson',		<FlexExercise />)
 
 const PageView = () => {
 	const [pathname, setPathname] = useState(window.location.pathname)
@@ -52,7 +47,6 @@ const PageView = () => {
 		console.log(`Navigate to page view: \`${path}\``)
 	}
 	
-	// return <Suspense fallback={<Loading />}>{router.getPage(pathname)}</Suspense>
 	return <>{router.getPage(pathname)}</>
 }
 
