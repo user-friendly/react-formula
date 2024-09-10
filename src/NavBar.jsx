@@ -3,6 +3,8 @@
  */
 
 const NavBar = ({children}) => {
+	console.log('Render NavBar.')
+
 	return <div className="
 		text-lg
 		font-semibold

@@ -41,13 +41,6 @@ const App = () => {
 		<Button route="/portfolio">Portfolio</Button>
 		<Button route="/resume">Resume</Button>
 		<Button route="/about">About</Button>
-		
-		{/*
-		<Button>Item 1</Button>
-		<Button>Item 2</Button>
-		<Button>Item 3</Button>
-		<Button>Item 4</Button>
-		*/}
 	</NavBar>
 	
 	{/* TODO Centering content with margin x-axis auto at medium breakpiont, is this a good idea? */}
@@ -63,7 +56,7 @@ const App = () => {
 	">
 		{map[route]}
 	</div>
-		
+	
 	<div>
 		<NavBar>
 			<Button todo="/sitemap">Site Map</Button>
