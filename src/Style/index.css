@@ -7,3 +7,7 @@ html {
 		font-size: 18pt;
 	}
 }
+
+body {
+	--google-font-color-notocoloremoji: none;
+}

@@ -5,7 +5,12 @@ export default {
 	"./src/**/*.{js,ts,jsx,tsx}"
   ],
   theme: {
-    extend: {},
+    extend: {
+		fontFamily: {
+			// Font is directly linked in the index.html document.
+			noto: ['Noto Color Emoji', 'sans-serif']
+		}
+	},
   },
   plugins: [],
 }
