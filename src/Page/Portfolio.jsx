@@ -4,7 +4,7 @@
 
 import { useEffect, useState } from 'react'
 
-console.log('Execute Portfolio component\'s main JSX file.')
+// console.log('Execute Portfolio component\'s main JSX file.')
 
 const Portfolio = () => {
 	// console.log('Render Portfolio.')

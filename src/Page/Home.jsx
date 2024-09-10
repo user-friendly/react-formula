@@ -4,7 +4,7 @@
 
 import Router from '../PageView'
 
-console.log('Execute Home component\'s main JSX file.')
+// console.log('Execute Home component\'s main JSX file.')
 
 const Home = () => {
 	// console.log('Render Home.')
