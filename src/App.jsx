@@ -13,8 +13,6 @@ import Portfolio from './Page/Portfolio'
 
 console.log('Execute App component\'s main JSX file.')
 
-const page = <NotFound />
-
 const map = {
 	'404':			<NotFound />,
 	'/home':		<Home />,
