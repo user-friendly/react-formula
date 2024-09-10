@@ -15,8 +15,7 @@
  * 
  */
 
-const MyComponent = (props) => {
-	const {children, bgColor, height} = props
+const MyComponent = ({children, bgColor, height}) => {
 	 
 	return <div style={{
 		minHeight: height + 'px',

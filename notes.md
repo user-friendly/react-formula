@@ -16,3 +16,4 @@ See Tailwind's section on [generating colors](https://tailwindcss.com/docs/custo
 
 * Learn more about the module bundler tools.
 * Look into [PostCSS](https://github.com/postcss/postcss)
+* Look into [Design Systems](https://uxdesign.cc/everything-you-need-to-know-about-design-systems-54b109851969)
