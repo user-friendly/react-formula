@@ -12,6 +12,8 @@ const App = () => {
   // Render the main component.
   // console.log('Render App.')
   
+  const bpStyles = false ? 'md:max-w-screen-md md:mx-auto' : '';
+  
   return <div className="flex flex-col pt-6">
   	<NavBar>
 		<Button route="/">Home</Button>
@@ -19,17 +21,15 @@ const App = () => {
 		<Button route="/about">About</Button>
 	</NavBar>
 	
-	{/* TODO Centering content with margin x-axis auto at medium breakpiont, is this a good idea? */}
-	<div className="
+	<div className={`
 		text-sans
 		
 		w-auto
 		
-		md:max-w-screen-md
-		md:mx-auto
+		${bpStyles}
 		
 		mx-6 my-8
-	">
+	`}>
 		<PageView />
 	</div>
 	
