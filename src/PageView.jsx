@@ -9,6 +9,7 @@ import Home			from './Page/Home'
 
 import ButtonComponentExercise from './Page/Lesson/ButtonComponentExercise'
 import FlexExercise	from './Page/Lesson/FlexExercise'
+import FlexExercise2	from './Page/Lesson/FlexExercise2'
 
 class Router {
 	#map = {}
@@ -36,8 +37,9 @@ router.addRoute('/home',		<Home />)
 
 router.addRoute('/lesson/button-component-exercise', <ButtonComponentExercise />)
 router.addRoute('/lesson/flex-exercise', <FlexExercise />)
+router.addRoute('/lesson/flex-exercise-ii', <FlexExercise2 />)
 
-router.addRoute('/lesson',		<FlexExercise />)
+router.addRoute('/lesson',		<FlexExercise2 />)
 
 const PageView = () => {
 	const [pathname, setPathname] = useState(window.location.pathname)
