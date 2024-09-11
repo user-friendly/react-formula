@@ -14,7 +14,7 @@ const App = () => {
   
   const bpStyles = false ? 'md:max-w-screen-md md:mx-auto' : '';
   
-  return <div className="flex flex-col pt-6">
+  return <div className="flex flex-col justify-between pt-6 h-dvh">
   	<NavBar>
 		<Button route="/">Home</Button>
 		<Button route="/lesson">Lesson</Button>
@@ -23,12 +23,9 @@ const App = () => {
 	
 	<div className={`
 		text-sans
-		
 		w-auto
-		
 		${bpStyles}
-		
-		mx-6 my-8
+		mx-6 my-4
 	`}>
 		<PageView />
 	</div>
