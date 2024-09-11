@@ -14,23 +14,29 @@ const App = () => {
   
   const bpStyles = false ? 'md:max-w-screen-md md:mx-auto' : '';
   
-  return <div className="flex flex-col justify-between pt-6 h-dvh">
-  	<NavBar>
-		<Button route="/">Home</Button>
-		<Button route="/lesson">Lesson</Button>
-		<Button route="/about">About</Button>
-	</NavBar>
-	
+  return <div className="flex flex-col justify-between h-dvh">
+  	{/* Header */}
+  	<div className="bg-indigo-100">
+	  	<NavBar>
+			<Button route="/">Home</Button>
+			<Button route="/lesson">Lesson</Button>
+			<Button route="/about">About</Button>
+		</NavBar>
+	</div>
+
+	{/* Content */}
 	<div className={`
+		bg-sky-50
 		text-sans
-		w-auto
 		${bpStyles}
-		mx-6 my-4
+		px-6 py-4
+		grow
 	`}>
 		<PageView />
 	</div>
-	
-	<div>
+
+	{/* Footer */}
+	<div className="bg-indigo-100">
 		<NavBar>
 			<Button todo="/sitemap">Site Map</Button>
 			<Button todo="/contact">Contact</Button>
