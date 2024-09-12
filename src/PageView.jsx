@@ -11,6 +11,7 @@ import ButtonComponentExercise from './Page/Lesson/ButtonComponentExercise'
 import FlexExercise	from './Page/Lesson/FlexExercise'
 import FlexExercise2	from './Page/Lesson/FlexExercise2'
 import AnalyzingLayoutsExercise	from './Page/Lesson/AnalyzingLayoutsExercise'
+import SearchPageDesign from './Page/Lesson/SearchPageDesign'
 
 class Router {
 	#map = {}
@@ -40,8 +41,9 @@ router.addRoute('/lesson/button-component-exercise', <ButtonComponentExercise />
 router.addRoute('/lesson/flex-exercise', <FlexExercise />)
 router.addRoute('/lesson/flex-exercise-ii', <FlexExercise2 />)
 router.addRoute('/lesson/analyzing-layouts-exercise', <AnalyzingLayoutsExercise />)
+router.addRoute('/lesson/search-page-design', <SearchPageDesign />)
 
-router.addRoute('/lesson',		<AnalyzingLayoutsExercise />)
+router.addRoute('/lesson',		<SearchPageDesign />)
 
 const PageView = () => {
 	const [pathname, setPathname] = useState(window.location.pathname)
