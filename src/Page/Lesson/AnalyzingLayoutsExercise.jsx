@@ -1,7 +1,7 @@
 /**
  * Analyzing Layouts Exercise.
  * 
- * Path: 
+ * Path: /lesson/analyzing-layouts-exercise
  */
 
 const quotes = [
