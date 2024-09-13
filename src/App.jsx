@@ -5,7 +5,7 @@
 import _ from 'lodash'
 
 import Router from './Router'
-import RouterPreloader from './RouterPreloader'
+import RouterPreloader from 'RouterPreloader'
 import Button from './Button'
 import SelectItem from './SelectItem'
 import NavBar from './NavBar'
