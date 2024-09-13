@@ -4,6 +4,8 @@
  * Path: /lesson/analyzing-layouts-exercise
  */
 
+import Router from '#Router'
+
 const quotes = [
 	{
 	  text: "One of my most productive days was throwing away 1000 lines of code.",
@@ -115,5 +117,7 @@ const AnalyzingLayoutsExercise = () => {
 		</div>
 	</div>
 }
+
+Router.addRoute('/lesson/analyzing-layouts-exercise', <AnalyzingLayoutsExercise />, 'Analyzing Layouts Exercise')
 
 export default AnalyzingLayoutsExercise
