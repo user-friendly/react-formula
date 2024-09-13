@@ -1,8 +1,10 @@
 /**
- * Template view.
+ * Flex Exercise II.
  * 
  * Path: /lesson/flex-exercise-ii
  */
+
+import Router from '#Router'
 
 const dogSymbol = '🐕'
 
@@ -82,5 +84,7 @@ const FlexExercise2 = () => {
 		</div>
 	</>
 }
+
+Router.addRoute('/lesson/flex-exercise-ii', <FlexExercise2 />, 'Flex Exercise II')
 
 export default FlexExercise2

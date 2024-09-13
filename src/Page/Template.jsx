@@ -4,6 +4,8 @@
  * Copy/paste this file and modify it.
  */
 
+import Router from '#Router'
+
 const Template = () => {
 	return <div className="py-2 px-4 rounded-xl bg-slate-300">
 		<h2>Yar Pirate Ipsum</h2>
@@ -21,5 +23,8 @@ const Template = () => {
 		</p>
 	</div>
 }
+
+Router.addRoute('/template/', <Template />)
+Router.addRoute('/template/route-2', <Template />)
 
 export default Template

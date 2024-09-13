@@ -2,6 +2,8 @@
  * Homepage view.
  */
 
+import Router from '#Router'
+
 // console.log('Execute Home component\'s main JSX file.')
 
 const Home = () => {
@@ -17,5 +19,11 @@ const Home = () => {
 		<p>It was a warm spring morning when the sun rose over the misty mountains.</p>
 	</div>
 }
+
+// window.router.addRoute('/', <Home />)
+// window.router.addRoute('/home', <Home />)
+
+Router.addRoute('/', <Home />, "Home")
+Router.addRoute('/home', <Home />, "Home")
 
 export default Home

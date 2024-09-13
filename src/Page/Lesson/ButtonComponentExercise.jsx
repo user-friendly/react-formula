@@ -1,8 +1,10 @@
 /**
- * Template view.
+ * Button Component Exercise.
  * 
  * Path: /lesson/button-component-exercise
  */
+
+import Router from '#Router'
 
 const FancyButton = ({children = 'Button', large = false}) => {
 	const largeStyles = large ? "text-3xl rounded-full" : "text-base rounded-md"
@@ -21,5 +23,7 @@ const ButtonComponentExercise = () => {
 		<FancyButton large>Button 2</FancyButton>
 	</>
 }
+
+Router.addRoute('/lesson/button-component-exercise', <ButtonComponentExercise />, 'Button Component Exercise')
 
 export default ButtonComponentExercise

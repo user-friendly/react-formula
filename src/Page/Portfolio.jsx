@@ -2,7 +2,7 @@
  * Portfolio view.
  */
 
-import { useEffect, useState } from 'react'
+import Router from '#Router'
 
 // console.log('Execute Portfolio component\'s main JSX file.')
 
@@ -29,5 +29,7 @@ const Portfolio = () => {
 		</p>
 	</div>
 }
+
+Router.addRoute('/portfolio', <Portfolio />)
 
 export default Portfolio

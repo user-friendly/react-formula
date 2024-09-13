@@ -2,8 +2,6 @@
  * Button component.
  */
 
-import { NavigateTo as navTo } from './PageView'
-
 const style = `
 	select-none
 	cursor-pointer
@@ -18,14 +16,11 @@ const style = `
 
 const Button = ({children, route, type = 'button', onClick}) => {
 	if (route === undefined) {
-		return <button type={type} onClick={onClick} className={style}>
+		return <button type={type} onClick={e => onClick(e, route)} className={style}>
 			{children}
 		</button>
 	} else {
-		if (onClick === undefined) {
-			onClick = (e) => {e.preventDefault(); navTo(route)}
-		}
-		return <a href={route} onClick={onClick} className={style}>
+		return <a href={route} onClick={e => {e.preventDefault(); onClick(e, route)}} className={style}>
 			{children}
 		</a>
 	}

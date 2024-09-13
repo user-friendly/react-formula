@@ -4,7 +4,10 @@
  * Path: /lesson/search-page-design
  */
 
+import Router from '#Router'
+
 const SearchPageDesign = () => {
+	
 	return <div className="py-2 px-4 rounded-xl bg-slate-300">
 		<h2>Yar Pirate Ipsum</h2>
 		
@@ -21,5 +24,8 @@ const SearchPageDesign = () => {
 		</p>
 	</div>
 }
+
+Router.addRoute('/lesson/search-page-design', <SearchPageDesign />, 'Search Page Design')
+Router.addRoute('/lesson', <SearchPageDesign />)
 
 export default SearchPageDesign

@@ -2,59 +2,25 @@
  * Pave view router.
  */
 
-import { useState/*, lazy, Suspense*/ } from 'react'
+import { useState } from 'react'
 
-import NotFound		from './Page/NotFound'
-import Home			from './Page/Home'
+import NotFound from './Page/NotFound'
 
-import ButtonComponentExercise from './Page/Lesson/ButtonComponentExercise'
-import FlexExercise	from './Page/Lesson/FlexExercise'
-import FlexExercise2	from './Page/Lesson/FlexExercise2'
-import AnalyzingLayoutsExercise	from './Page/Lesson/AnalyzingLayoutsExercise'
-import SearchPageDesign from './Page/Lesson/SearchPageDesign'
+let updateViewState = () => {}
 
-class Router {
-	#map = {}
-	#e404 = null
-	
-	constructor() {
-		this.#e404 = <NotFound />
-	}
-	
-	addRoute(path, component) {
-		this.#map[path] = component
-	}
-	
-	getPage(path) {
-		return this.#map[path] !== undefined ? this.#map[path] : this.#e404
-	}
+const UpdateView = (newView) => {
+	updateViewState(newView)
 }
 
-let navigateTo = null
-
-const router = new Router()
-
-router.addRoute('/',			<Home />)
-router.addRoute('/home',		<Home />)
-
-router.addRoute('/lesson/button-component-exercise', <ButtonComponentExercise />)
-router.addRoute('/lesson/flex-exercise', <FlexExercise />)
-router.addRoute('/lesson/flex-exercise-ii', <FlexExercise2 />)
-router.addRoute('/lesson/analyzing-layouts-exercise', <AnalyzingLayoutsExercise />)
-router.addRoute('/lesson/search-page-design', <SearchPageDesign />)
-
-router.addRoute('/lesson',		<SearchPageDesign />)
-
-const PageView = () => {
-	const [pathname, setPathname] = useState(window.location.pathname)
-
-	navigateTo = (path) => {
-		setPathname(path)
-		console.log(`Navigate to page view: \`${path}\``)
+const PageView = ({children, view = <NotFound />}) => {
+	const [_view, setView] = useState(view)
+	
+	updateViewState = (newView) => {
+		setView(newView)
 	}
 	
-	return <>{router.getPage(pathname)}</>
+	return <>{_view}</>
 }
 
-export { navigateTo as NavigateTo }
+export { UpdateView }
 export default PageView
