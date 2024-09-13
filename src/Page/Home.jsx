@@ -20,9 +20,6 @@ const Home = () => {
 	</div>
 }
 
-// window.router.addRoute('/', <Home />)
-// window.router.addRoute('/home', <Home />)
-
 Router.addRoute('/', <Home />, "Home")
 Router.addRoute('/home', <Home />, "Home")
 

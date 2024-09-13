@@ -12,8 +12,6 @@ import NavBar from './NavBar'
 import { default as PageView, UpdateView } from './PageView'
 import NotFound from './Page/NotFound'
 
-import { lazy } from 'react';
-
 // FIXME It may look clever, but it most definitely is not.
 Router.addRoute(undefined, <NotFound />)
 
