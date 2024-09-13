@@ -14,7 +14,7 @@ const style = `
 	transition-bg
 `;
 
-const Button = ({children, route, type = 'button', onClick}) => {
+const Button = ({children, route, type = 'button', onClick = e => {}}) => {
 	if (route === undefined) {
 		return <button type={type} onClick={e => onClick(e, route)} className={style}>
 			{children}
