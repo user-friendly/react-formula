@@ -2,12 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-html {
-	@screen md {
-		font-size: 18pt;
-	}
-}
-
 body {
 	--google-font-color-notocoloremoji: none;
 }
