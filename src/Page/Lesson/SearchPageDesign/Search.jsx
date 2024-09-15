@@ -40,7 +40,7 @@ const Search = () => {
 			flex flex-row justify-center items-center
 		">
 			<span className="font-noto text-2xl">{searchIcon}</span>
-			<input className="flex-1 ml-4 bg-orange-200" type="text" name="search" value="Enter Your search here!" />
+			<input className="flex-1 ml-4 bg-orange-200" type="text" name="search" defaultValue="Enter Your search here!" />
 		</div>
 		
 		<div className="flex flex-row justify-center items-center gap-4">

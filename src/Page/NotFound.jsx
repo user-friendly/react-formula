@@ -2,6 +2,8 @@
  * 404 page.
  */
 
+import Router from '#Router'
+
 const NotFound = () => {
 	// console.log('Render 404 page.')
 
@@ -17,5 +19,7 @@ const NotFound = () => {
 		Page not found!
 	</div>
 }
+
+Router.setNotFound(<NotFound />, "Page Not Found")
 
 export default NotFound

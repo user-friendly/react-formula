@@ -3,7 +3,7 @@
  */
 
 const NavBar = ({children}) => {
-	// console.log('Render NavBar.')
+	console.log('Render NavBar component.')
 
 	return <div className="
 		text-lg

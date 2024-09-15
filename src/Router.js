@@ -31,32 +31,25 @@ class Route {
 }
 
 class RouterImpl {
-	// Current path.
-	#current = null;
-	
 	// TODO Just use a Map class.
 	#map = {}
 	
-	constructor() {
-		this.#current = this.processPath(window.location.pathname)
-	}
+	#e404 = null
 	
-	getCurrent() {
-		return this.getRoute([this.#current])
+	getInitialRoute() {
+		return this.getRoute(window.location.pathname)
 	}
-	
-	getCurrentPath() {
-		return this.#current
-	}
-	
+
 	addRoute(path, component, title) {
+		path = this.processPath(path)
 		console.log(`add route: ${path}`)
 		this.#map[path] = new Route(path, component, title)
 	}
 	
 	getRoute(path) {
+		path = this.processPath(path)
 		// TODO Fix this...
-		return this.#map[path] !== undefined ? this.#map[path] : this.#map[undefined]
+		return this.#map[path] !== undefined ? this.#map[path] : this.#e404
 	}
 	
 	getPaths() {
@@ -69,14 +62,14 @@ class RouterImpl {
 		return _.clone(this.#map)
 	}
 	
+	setNotFound(notfound, title) {
+		this.#e404 = new Route('<error_404>', notfound, title)
+	}
+	
 	processPath(path) {
 		path = _.trimEnd(path, ' /')
 		// Check for homepage case.
 		return path === '' ? '/' : path
-	}
-	
-	navigate(path) {
-		this.#current = this.processPath(path)
 	}
 }
 
