@@ -20,7 +20,8 @@ export default defineConfig({
   },
   clearScreen: false,
   build: {
-	outDir: 'build/'
+	outDir: 'build/',
+	manifest: 'manifest.json'
   },
   importRoutes: {
 	// The base dir where all the routes are.
