@@ -45,7 +45,7 @@ const App = () => {
   }))
   routes.push({key: 0, value: '<none>', label: '-- Select Lesson --'})
   
-  return <div className="flex flex-col justify-between h-dvh">
+  return <div className="h-dvh flex flex-col justify-between">
   	{/* Header */}
   	<div className="bg-indigo-100">
 	  	<NavBar>
@@ -62,7 +62,7 @@ const App = () => {
 		text-sans
 		${bpStyles}
 		px-6 py-4
-		grow
+		flex-1
 	`}>
 		<PageView view={currentRoute.component} />
 	</div>
