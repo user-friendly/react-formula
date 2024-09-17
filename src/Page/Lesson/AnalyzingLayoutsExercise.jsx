@@ -118,6 +118,6 @@ const AnalyzingLayoutsExercise = () => {
 	</div>
 }
 
-Router.addRoute('/lesson/analyzing-layouts-exercise', <AnalyzingLayoutsExercise />, 'Analyzing Layouts Exercise')
+Router.setRoute('/lesson/analyzing-layouts-exercise', <AnalyzingLayoutsExercise />, 'Analyzing Layouts Exercise')
 
 export default AnalyzingLayoutsExercise

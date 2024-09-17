@@ -41,7 +41,7 @@ const Home = () => {
 	</div>
 }
 
-Router.addRoute('/', <Home />, "Home")
-Router.addRoute('/home', <Home />, "Home")
+Router.setRoute('/', <Home />, "Home")
+Router.setRoute('/home', <Home />, "Home")
 
 export default Home

@@ -25,7 +25,7 @@ const Template = () => {
 }
 
 // TODO Uncomment and modify with actual paths.
-// Router.addRoute('/template/', <Template />)
-// Router.addRoute('/template/route-2', <Template />)
+// Router.setRoute('/template/', <Template />)
+// Router.setRoute('/template/route-2', <Template />)
 
 export default Template

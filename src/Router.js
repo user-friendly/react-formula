@@ -40,9 +40,9 @@ class RouterImpl {
 		return this.getRoute(window.location.pathname)
 	}
 
-	addRoute(path, component, title) {
+	setRoute(path, component, title) {
 		path = this.processPath(path)
-		console.log(`add route: ${path}`)
+		console.log(`set route: ${path}, to: '${title}`)
 		this.#map[path] = new Route(path, component, title)
 	}
 	

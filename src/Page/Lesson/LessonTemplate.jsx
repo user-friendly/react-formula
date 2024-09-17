@@ -14,7 +14,7 @@ const LessonTemplate = () => {
 }
 
 // TODO Uncomment these and replace with appropriate paths.
-// Router.addRoute('/lesson/template', <LessonTemplate />, 'Lesson Template')
-// Router.addRoute('/lesson', <SearchPageDesign />)
+// Router.setRoute('/lesson/template', <LessonTemplate />, 'Lesson Template')
+// Router.setRoute('/lesson', <SearchPageDesign />)
 
 export default LessonTemplate

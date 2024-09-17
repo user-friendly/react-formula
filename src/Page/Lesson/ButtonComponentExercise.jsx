@@ -24,6 +24,6 @@ const ButtonComponentExercise = () => {
 	</>
 }
 
-Router.addRoute('/lesson/button-component-exercise', <ButtonComponentExercise />, 'Button Component Exercise')
+Router.setRoute('/lesson/button-component-exercise', <ButtonComponentExercise />, 'Button Component Exercise')
 
 export default ButtonComponentExercise

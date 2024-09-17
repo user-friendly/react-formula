@@ -30,6 +30,6 @@ const Portfolio = () => {
 	</div>
 }
 
-Router.addRoute('/portfolio', <Portfolio />)
+Router.setRoute('/portfolio', <Portfolio />)
 
 export default Portfolio
