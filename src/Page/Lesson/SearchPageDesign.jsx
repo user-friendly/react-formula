@@ -20,6 +20,5 @@ const SearchPageDesign = () => {
 }
 
 Router.setRoute('/lesson/search-page-design', <SearchPageDesign />, 'Search Page Design')
-Router.setRoute('/lesson', <SearchPageDesign />)
 
 export default SearchPageDesign
