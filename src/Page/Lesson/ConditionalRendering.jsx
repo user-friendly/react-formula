@@ -23,11 +23,13 @@ const Widget1 = () => {
 const Widget2 = () => {
 	const [toggle, setToggle] = useState(false)
 	
+	const timeout = (e) => {setTimeout(() => setToggle(!toggle), 2000)}
+	
 	return <div className="
 		bg-sky-100 border border-green-300 p-4 rounded-lg m-4 text-center
 		flex flex-col items-center
 	">
-		<button onClick={(e) => setToggle(!toggle)} className={`px-4 py-2 ${toggle ? 'bg-orange-500' : 'bg-blue-500'} text-white rounded-full`}>click me</button>
+		<button onClick={timeout} className={`px-4 py-2 ${toggle ? 'bg-orange-500' : 'bg-blue-500'} text-white rounded-full`}>click me</button>
 	</div>
 }
 
@@ -53,6 +55,5 @@ const ConditionalRendering = () => {
 }
 
 Router.setRoute('/lesson/conditional-rendering-exercise', <ConditionalRendering />, 'Conditional Rendering')
-Router.setRoute('/lesson/', <ConditionalRendering />, 'Current Lesson')
 
 export default ConditionalRendering
