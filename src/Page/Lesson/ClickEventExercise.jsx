@@ -26,6 +26,5 @@ const ClickEventExercise = () => {
 }
 
 Router.setRoute('/lesson/click-event-exercise', <ClickEventExercise />, 'Click Event Exercise')
-Router.setRoute('/lesson', <ClickEventExercise />)
 
 export default ClickEventExercise
