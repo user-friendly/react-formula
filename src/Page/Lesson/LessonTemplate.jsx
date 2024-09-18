@@ -1,7 +1,7 @@
 /**
- * [Lesson title.]
+ * [title].
  * 
- * Path: [path to lesson]
+ * Path: /lesson/[title-hyphenated]
  */
 
 import Router from '#Router'
@@ -14,7 +14,7 @@ const LessonTemplate = () => {
 }
 
 // TODO Uncomment these and replace with appropriate paths.
-// Router.setRoute('/lesson/template', <LessonTemplate />, 'Lesson Template')
-// Router.setRoute('/lesson', <SearchPageDesign />)
+// Router.setRoute('/lesson/[title-hyphenated]', <LessonTemplate />, '[title]')
+// Router.setRoute('/lesson', <LessonTemplate />)
 
 export default LessonTemplate
