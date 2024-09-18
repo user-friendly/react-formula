@@ -30,7 +30,11 @@ export default defineConfig({
 	
 	// These filters are passed to @rollup/pluginutils/createFilter().
 	includeRoute: /src\/Page\/.*\.jsx$/,
-	excludeRoute: ['/node_modules/'],
+	excludeRoute: [
+		'/node_modules/',
+		// Ignore page components.
+		'**/Components/**'
+	],
 	
 	/* TODO Not used, in favor of virtual/dynamic imports.
 	// File(s) the routers will be imported in.

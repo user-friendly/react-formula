@@ -6,9 +6,9 @@
 
 import Router from '#Router'
 
-import Header from './SearchPageDesign/Header'
-import Search from './SearchPageDesign/Search'
-import Footer from './SearchPageDesign/Footer'
+import Header from './Components/SearchPageDesign/Header'
+import Search from './Components/SearchPageDesign/Search'
+import Footer from './Components/SearchPageDesign/Footer'
 
 const SearchPageDesign = () => {
 	
