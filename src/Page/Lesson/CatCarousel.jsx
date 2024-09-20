@@ -41,6 +41,5 @@ const CatCarousel = () => {
 }
 
 Router.setRoute('/lesson/cat-carousel', <CatCarousel />, 'Cat Carousel')
-Router.setRoute('/lesson', <CatCarousel />)
 
 export default CatCarousel
