@@ -37,14 +37,10 @@ export default ({children}) => {
 	for (let i = 0; i < max; i++)
 		squares.push(<Square key={i} />)
 	
-	return <div className="flex flex-col justify-start items-center">
-		<h2 className="my-2 text-2xl">Checkered Grid</h2>
-		
-		<div className="
-			w-[481px] h-[481px] border-l border-t border-black
-			flex fles-row flex-wrap justify-start items-start
-		">
-			{squares}
-		</div>
+	return <div className="
+		self-center w-[481px] h-[481px] border-l border-t border-black
+		flex flex-row flex-wrap justify-start items-start
+	">
+		{squares}
 	</div>
 }
