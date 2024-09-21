@@ -13,14 +13,17 @@ import Router from '#Router'
 import Collapsable from './Components/Collapsable'
 import Stack from './Components/MoreState/Stack'
 import Grid from './Components/MoreState/Grid'
+import DarkMode from './Components/MoreState/DarkMode'
 // import null from './Components/MoreState/null'
 
 const MoreState = () => {
 	const lessons = [
 		<Collapsable key={1} collapse={true} title='Stacker'>
 			<Stack /></Collapsable>,
-		<Collapsable key={2} collapse={false} title='Checkered Grid'>
-			<Grid /></Collapsable>
+		<Collapsable key={2} collapse={true} title='Checkered Grid'>
+			<Grid /></Collapsable>,
+		<Collapsable key={3} collapse={false} title='Simple Dark Mode'>
+			<DarkMode /></Collapsable>
 	]
 	
 	return <div className="h-full flex flex-col justify-start items-strech">
