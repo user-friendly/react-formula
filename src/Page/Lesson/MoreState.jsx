@@ -14,6 +14,7 @@ import Collapsable from './Components/Collapsable'
 import Stack from './Components/MoreState/Stack'
 import Grid from './Components/MoreState/Grid'
 import DarkMode from './Components/MoreState/DarkMode'
+import Modal from './Components/MoreState/Modal'
 // import null from './Components/MoreState/null'
 
 const MoreState = () => {
@@ -22,8 +23,10 @@ const MoreState = () => {
 			<Stack /></Collapsable>,
 		<Collapsable key={2} collapse={true} title='Checkered Grid'>
 			<Grid /></Collapsable>,
-		<Collapsable key={3} collapse={false} title='Simple Dark Mode'>
-			<DarkMode /></Collapsable>
+		<Collapsable key={3} collapse={true} title='Simple Dark Mode'>
+			<DarkMode /></Collapsable>,
+		<Collapsable key={4} collapse={false} title='Modal'>
+			<Modal /></Collapsable>
 	]
 	
 	return <div className="h-full flex flex-col justify-start items-strech">
