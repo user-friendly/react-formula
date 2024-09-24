@@ -1,6 +1,8 @@
 
-const Recipe = ({children}) => {
-	return <div className="flex flex-col items-center p-4">
+import { useState } from 'react'
+
+const Recipe = ({children, isExpanded = false}) => {
+	return <div className={`flex flex-col items-center p-4 ${isExpanded ? 'bg-neutral-700 text-white rounded-xl' : ''}`}>
 	  <div className="w-full max-w-3xl">
 	    <h2 className="my-6 text-3xl">Classic Chocolate Chip Cookies</h2>
 	    <p className="my-4 leading-relaxed">
@@ -34,7 +36,21 @@ const Recipe = ({children}) => {
 }
 
 export default ({children}) => {
-	return <>
-		<Recipe />
-	</>
+	const [isModal, setModal] = useState(true)
+	
+	return <div className={`
+		${isModal ? 'fixed top-0 left-0 w-screen h-screen' : 'relative rounded-xl'}
+		flex flex-col justify-start items-center pt-10
+		bg-neutral-200/80
+	`}>
+		<button className={`
+			absolute px-4 py-1 top-2 right-2 rounded-xl
+			bg-orange-200 text-neutral-600 font-bold font-noto
+		`}
+			onClick={e => setModal(!isModal)}
+		>
+			{isModal ? 'Retract ➖' : 'Expand 🔲'}
+		</button>
+		<Recipe isExpanded={isModal} />
+	</div>
 }
