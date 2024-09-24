@@ -36,7 +36,7 @@ const Recipe = ({children, isExpanded = false}) => {
 }
 
 export default ({children}) => {
-	const [isModal, setModal] = useState(true)
+	const [isModal, setModal] = useState(false)
 	
 	return <div className={`
 		${isModal ? 'fixed top-0 left-0 w-screen h-screen' : 'relative rounded-xl'}
