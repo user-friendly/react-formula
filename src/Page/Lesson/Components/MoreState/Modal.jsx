@@ -39,9 +39,10 @@ export default ({children}) => {
 	const [isModal, setModal] = useState(false)
 	
 	return <div className={`
-		${isModal ? 'fixed top-0 left-0 w-screen h-screen' : 'relative rounded-xl'}
+		${isModal ? 'fixed top-0 left-0 w-full h-full' : 'relative rounded-xl'}
 		flex flex-col justify-start items-center pt-10
-		bg-neutral-200/80
+		${isModal ? 'bg-neutral-500/75 backdrop-blur-sm' : 'bg-neutral-200'}
+		
 	`}>
 		<button className={`
 			absolute px-4 py-1 top-2 right-2 rounded-xl
