@@ -29,6 +29,8 @@ export default ({children}) => {
 		hand.push(card)
 	}
 	
+	
+	
 	return <div className="flex flex-row flex-wrap justify-center items-start gap-2">
 		{/*<Card flip={true} />*/}
 		

@@ -1,5 +1,5 @@
 
-import _ from 'lodash'
+/*import _ from 'lodash'*/
 
 import Card from './index'
 
@@ -13,11 +13,11 @@ const [ace, king, queen, jack] = [
 	'A', '🤴', '👸', '💂‍♂️'
 ]
 
-// Suit range.
+/*// Suit range.
 const deck = _.range(2, 11)
 
 // Deck size.
-const deckSize = deck.length * 4 + 16
+const deckSize = deck.length * 4 + 16*/
 
 // Ranked suits
 export const Spade = ({children, rank=2, face=false, isSuitFace=false, flip=false}) => {

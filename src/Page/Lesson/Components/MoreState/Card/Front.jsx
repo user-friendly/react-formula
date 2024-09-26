@@ -1,6 +1,4 @@
 
-import _ from 'lodash'
-
 // Suit/face & rank corner.
 const CardLabel = ({rank, suit, face}) => {
 	rank = face === false ? rank : 
@@ -48,50 +46,56 @@ const RankCenter = ({suit, rank, face, isSuitFace=false}) => {
 
 	switch (rank) {
 		case 1:
-			output = <CenterRow>{suitLabel}</CenterRow>
+			return <>
+				<CenterRow>{suitLabel}</CenterRow>
+			</>
 		break;
 		case 2:
-			output = <CenterRow>{suitLabel}{suitLabel}</CenterRow>
+			return <>
+				<CenterRow>{suitLabel}{suitLabel}</CenterRow>
+			</>
 		break;
 		case 3:
-			output = <CenterRow>{suitLabel}{suitLabel}{suitLabel}</CenterRow>
+			return <>
+				<CenterRow>{suitLabel}{suitLabel}{suitLabel}</CenterRow>
+			</>
 		break;
 		case 4:
-			output = <>
+			return <>
 				<CenterRow>{suitLabel}{suitLabel}</CenterRow>
 				<CenterRow>{suitLabel}{suitLabel}</CenterRow>
 			</>
 		break;
 		case 5:
-			output = <>
+			return <>
 				<CenterRow>{suitLabel}{suitLabel}</CenterRow>
 				<CenterRow>{suitLabel}</CenterRow>
 				<CenterRow>{suitLabel}{suitLabel}</CenterRow>
 			</>
 		break;
 		case 6:
-			output = <>
+			return <>
 				<CenterRow>{suitLabel}</CenterRow>
 				<CenterRow>{suitLabel}{suitLabel}</CenterRow>
 				<CenterRow>{suitLabel}</CenterRow>
 			</>
 		break;
 		case 7:
-			output = <>
+			return <>
 				<CenterRow>{suitLabel}</CenterRow>
 				<CenterRow>{suitLabel}{suitLabel}{suitLabel}</CenterRow>
 				<CenterRow>{suitLabel}</CenterRow>
 			</>
 		break;
 		case 8:
-			output = <>
+			return <>
 				<CenterRow>{suitLabel}{suitLabel}{suitLabel}</CenterRow>
 				<CenterRow>{suitLabel}{suitLabel}{suitLabel}</CenterRow>
 			</>
 		break;
 	}
 	
-	return <>{output}</>
+	return <></>
 }
 
 // Rank should be guaranteed to be greater than 0, by the main component.
