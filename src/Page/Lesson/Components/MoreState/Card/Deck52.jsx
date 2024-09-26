@@ -10,7 +10,7 @@ const [spade, heart, diamond, club] = [
 
 // Faces.
 const [ace, king, queen, jack] = [
-	'A', '🤴', '👸', 'J'
+	'A', '🤴', '👸', '💂‍♂️'
 ]
 
 // Suit range.

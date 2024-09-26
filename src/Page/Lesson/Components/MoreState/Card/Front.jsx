@@ -43,7 +43,6 @@ const RankCenter = ({suit, rank, face, isSuitFace=false}) => {
 	// Subtract the two header/footer ranks.
 	rank -= 2
 	
-	let ranks = []
 	let suitLabel = <span>{suit}</span>
 	let output = null
 
@@ -52,8 +51,10 @@ const RankCenter = ({suit, rank, face, isSuitFace=false}) => {
 			output = <CenterRow>{suitLabel}</CenterRow>
 		break;
 		case 2:
+			output = <CenterRow>{suitLabel}{suitLabel}</CenterRow>
+		break;
 		case 3:
-			output = <CenterRow>{_.fill(Array(rank), suitLabel)}</CenterRow>
+			output = <CenterRow>{suitLabel}{suitLabel}{suitLabel}</CenterRow>
 		break;
 		case 4:
 			output = <>
