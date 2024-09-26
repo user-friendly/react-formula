@@ -6,35 +6,32 @@ import { useState } from 'react'
 import { default as Card, Deck52 } from './Card'
 
 export default ({children}) => {
-	const hand = []
-	
-	let card = null
-	
-	for (let i = 0, rank = 1; i < 10; i++, rank++) {
+	function pickRandomSuitCard(rank, key, flip = true) {
 		switch (_.random(0, 3)) {
 			case 0:
-				card = <Deck52.Spade rank={rank} flip={true} key={i} />
+				return <Deck52.Spade rank={rank} flip={flip} key={key} />
 			break;
 			case 1:
-				card = <Deck52.Heart rank={rank} flip={true} key={i} />
+				return <Deck52.Heart rank={rank} flip={flip} key={key} />
 			break;
 			case 2:
-				card = <Deck52.Diamond rank={rank} flip={true} key={i} />
+				return <Deck52.Diamond rank={rank} flip={flip} key={key} />
 			break;
 			case 3:
-				card = <Deck52.Club rank={rank} flip={true} key={i} />
+				return <Deck52.Club rank={rank} flip={flip} key={key} />
 			break;
 		}
-		
-		hand.push(card)
+		return <Deck52.Heart rank={rank} flip={flip} key={key} />
 	}
 	
-	
+	function randomSuitCards(n) {
+		return _.range(0, n).map((i) => pickRandomSuitCard(i+1, i))
+	}
 	
 	return <div className="flex flex-row flex-wrap justify-center items-start gap-2">
 		{/*<Card flip={true} />*/}
 		
-		{hand}
+		{randomSuitCards(10)}
 
 		<Deck52.AceOfHearts flip={true} />
 		<Deck52.AceOfDiamonds flip={true} />
@@ -55,5 +52,12 @@ export default ({children}) => {
 		<Deck52.JackOfDiamonds flip={true} />
 		<Deck52.JackOfSpades flip={true} />
 		<Deck52.JackOfClubs flip={true} />
+		
+		{pickRandomSuitCard(10, undefined, false)}
+		{pickRandomSuitCard(11, undefined, false)}
+		{pickRandomSuitCard(12, undefined, false)}
+		
+		
+		<Deck52.AceOfHearts />
 	</div>
 }
