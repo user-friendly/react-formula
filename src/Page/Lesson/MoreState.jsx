@@ -15,6 +15,7 @@ import Stack from './Components/MoreState/Stack'
 import Grid from './Components/MoreState/Grid'
 import DarkMode from './Components/MoreState/DarkMode'
 import Modal from './Components/MoreState/Modal'
+import PlayingCard from './Components/MoreState/PlayingCard'
 // import null from './Components/MoreState/null'
 
 const MoreState = () => {
@@ -25,8 +26,10 @@ const MoreState = () => {
 			<Grid /></Collapsable>,
 		<Collapsable key={3} collapse={true} title='Simple Dark Mode'>
 			<DarkMode /></Collapsable>,
-		<Collapsable key={4} collapse={false} title='Modal'>
-			<Modal /></Collapsable>
+		<Collapsable key={4} collapse={true} title='Modal'>
+			<Modal /></Collapsable>,
+		<Collapsable key={5} collapse={false} title='Playing Card'>
+			<PlayingCard /></Collapsable>
 	]
 	
 	return <div className="h-full flex flex-col justify-start items-strech">
