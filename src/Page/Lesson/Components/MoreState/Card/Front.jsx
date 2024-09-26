@@ -15,7 +15,7 @@ const RankHeader = ({suit, rank, face}) => {
 		return <div className="text-3xl font-noto pt-4">
 			<span>{suit}</span>
 		</div>
-	} else if (rank >= 8) {
+	} else if (rank >= 8 && rank < 11) {
 		return <div className="text-3xl font-noto pt-4 flex-1 flex flex-row justify-between">
 			<span>{suit}</span>
 			<span>{suit}</span>
@@ -34,7 +34,7 @@ const CenterRow = ({children}) => {
 const RankCenter = ({suit, rank, face, isSuitFace=false}) => {
 	if (face !== false && isSuitFace === false) {
 		return <div className="text-6xl font-noto flex justify-center items-center">{face}</div>
-	} else if (rank <= 1) {
+	} else if (rank <= 1 || rank > 10) {
 		return <div className="text-6xl font-noto flex justify-center items-center">{suit}</div>
 	}
 	
@@ -95,7 +95,7 @@ const RankCenter = ({suit, rank, face, isSuitFace=false}) => {
 		break;
 	}
 	
-	return <></>
+	return <div className="text-6xl font-noto flex justify-center items-center">{suit}</div>
 }
 
 // Rank should be guaranteed to be greater than 0, by the main component.
