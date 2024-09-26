@@ -13,8 +13,13 @@ const CardLabel = ({rank, suit, face}) => {
 }
 
 const RankHeader = ({suit, rank, face}) => {
-	if (rank > 1) { 
+	if (rank > 1 && rank < 8) { 
 		return <div className="text-3xl font-noto pt-4">
+			<span>{suit}</span>
+		</div>
+	} else if (rank >= 8) {
+		return <div className="text-3xl font-noto pt-4 flex-1 flex flex-row justify-between">
+			<span>{suit}</span>
 			<span>{suit}</span>
 		</div>
 	} else {
@@ -29,19 +34,23 @@ const CenterRow = ({children}) => {
 }
 
 const RankCenter = ({suit, rank, face, isSuitFace=false}) => {
-	if (face !== false) {
-		return <div className="text-6xl font-noto flex justify-center items-center">
-			{isSuitFace ? suit : face}
-		</div>
+	if (face !== false && isSuitFace === false) {
+		return <div className="text-6xl font-noto flex justify-center items-center">{face}</div>
 	} else if (rank <= 1) {
 		return <div className="text-6xl font-noto flex justify-center items-center">{suit}</div>
 	}
+	
+	// Subtract the two header/footer ranks.
+	rank -= 2
 	
 	let ranks = []
 	let suitLabel = <span>{suit}</span>
 	let output = null
 
 	switch (rank) {
+		case 1:
+			output = <CenterRow>{suitLabel}</CenterRow>
+		break;
 		case 2:
 		case 3:
 			output = <CenterRow>{_.fill(Array(rank), suitLabel)}</CenterRow>
@@ -52,15 +61,40 @@ const RankCenter = ({suit, rank, face, isSuitFace=false}) => {
 				<CenterRow>{suitLabel}{suitLabel}</CenterRow>
 			</>
 		break;
-		default:
-			output = <CenterRow>{_.fill(Array(rank), suitLabel)}</CenterRow>
+		case 5:
+			output = <>
+				<CenterRow>{suitLabel}{suitLabel}</CenterRow>
+				<CenterRow>{suitLabel}</CenterRow>
+				<CenterRow>{suitLabel}{suitLabel}</CenterRow>
+			</>
+		break;
+		case 6:
+			output = <>
+				<CenterRow>{suitLabel}</CenterRow>
+				<CenterRow>{suitLabel}{suitLabel}</CenterRow>
+				<CenterRow>{suitLabel}</CenterRow>
+			</>
+		break;
+		case 7:
+			output = <>
+				<CenterRow>{suitLabel}</CenterRow>
+				<CenterRow>{suitLabel}{suitLabel}{suitLabel}</CenterRow>
+				<CenterRow>{suitLabel}</CenterRow>
+			</>
+		break;
+		case 8:
+			output = <>
+				<CenterRow>{suitLabel}{suitLabel}{suitLabel}</CenterRow>
+				<CenterRow>{suitLabel}{suitLabel}{suitLabel}</CenterRow>
+			</>
 		break;
 	}
 	
 	return <>{output}</>
 }
 
-export default ({children, suit, rank=0, face=false, isSuitFace=false}) => {
+// Rank should be guaranteed to be greater than 0, by the main component.
+export default ({children, suit, rank, face=false, isSuitFace=false}) => {
 	return <div className="
 		h-full flex flex-col justify-between items-strech
 		p-1 bg-neutral-100

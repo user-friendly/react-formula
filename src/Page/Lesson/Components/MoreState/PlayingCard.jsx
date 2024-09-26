@@ -31,8 +31,27 @@ export default ({children}) => {
 	
 	return <div className="flex flex-row flex-wrap justify-center items-start gap-2">
 		{/*<Card flip={true} />*/}
+		
 		{hand}
-		<Deck52.QueenOfSpades flip={true} />
+
+		<Deck52.AceOfHearts flip={true} />
 		<Deck52.AceOfDiamonds flip={true} />
+		<Deck52.AceOfSpades flip={true} />
+		<Deck52.AceOfClubs flip={true} />
+		
+		<Deck52.QueenOfHearts flip={true} />
+		<Deck52.QueenOfDiamonds flip={true} />
+		<Deck52.QueenOfSpades flip={true} />
+		<Deck52.QueenOfClubs flip={true} />
+		
+		<Deck52.KingOfHearts flip={true} />
+		<Deck52.KingOfDiamonds flip={true} />
+		<Deck52.KingOfSpades flip={true} />
+		<Deck52.KingOfClubs flip={true} />
+		
+		<Deck52.JackOfHearts flip={true} />
+		<Deck52.JackOfDiamonds flip={true} />
+		<Deck52.JackOfSpades flip={true} />
+		<Deck52.JackOfClubs flip={true} />
 	</div>
 }
