@@ -1,9 +1,20 @@
 
-// import _ from 'lodash'
+import _ from 'lodash'
 
-const RankHeader = ({children, suit, rank}) => {
-	if (rank > 0) { 
-		return <div className="text-3xl font-noto pt-2">
+// Suit/face & rank corner.
+const CardLabel = ({rank, suit, face}) => {
+	rank = face === false ? rank : 
+		(<span className="font-noto">{face}</span>)
+	
+	return <div className="flex flex-col justify-start items-center">
+		<span className="text-2xl">{rank}</span>
+		<span className="text-xl font-noto">{suit}</span>
+	</div>
+}
+
+const RankHeader = ({suit, rank, face}) => {
+	if (rank > 1) { 
+		return <div className="text-3xl font-noto pt-4">
 			<span>{suit}</span>
 		</div>
 	} else {
@@ -11,55 +22,70 @@ const RankHeader = ({children, suit, rank}) => {
 	}
 }
 
+const CenterRow = ({children}) => {
+	return <div className="text-3xl font-noto flex flex-row justify-evenly items-center">
+		{children}
+	</div>
+}
 
-
-export default ({children, suit, rank=0, face=false}) => {
-	const rankLabel = face === false ? rank : face
+const RankCenter = ({suit, rank, face, isSuitFace=false}) => {
+	if (face !== false) {
+		return <div className="text-6xl font-noto flex justify-center items-center">
+			{isSuitFace ? suit : face}
+		</div>
+	} else if (rank <= 1) {
+		return <div className="text-6xl font-noto flex justify-center items-center">{suit}</div>
+	}
 	
+	let ranks = []
+	let suitLabel = <span>{suit}</span>
+	let output = null
+
+	switch (rank) {
+		case 2:
+		case 3:
+			output = <CenterRow>{_.fill(Array(rank), suitLabel)}</CenterRow>
+		break;
+		case 4:
+			output = <>
+				<CenterRow>{suitLabel}{suitLabel}</CenterRow>
+				<CenterRow>{suitLabel}{suitLabel}</CenterRow>
+			</>
+		break;
+		default:
+			output = <CenterRow>{_.fill(Array(rank), suitLabel)}</CenterRow>
+		break;
+	}
+	
+	return <>{output}</>
+}
+
+export default ({children, suit, rank=0, face=false, isSuitFace=false}) => {
 	return <div className="
 		h-full flex flex-col justify-between items-strech
 		p-1 bg-neutral-100
 	">
 		<div className="flex flex-row justify-between items-center">
 			{/* top left */}
-			<div className="flex flex-col justify-start items-center">
-				<span className="text-2xl">{rankLabel}</span>
-				<span className="text-lg font-noto">{suit}</span>
-			</div>
+			<CardLabel rank={rank} suit={suit} face={face} />
 			
-			<RankHeader rank={rank} suit={suit} />
+			<RankHeader rank={rank} suit={suit} face={face} />
 			
 			{/* top right */}
-			<div className="flex flex-col justify-start items-center">
-				<span className="text-2xl">{rankLabel}</span>
-				<span className="text-lg font-noto">{suit}</span>
-			</div>
+			<CardLabel rank={rank} suit={suit} face={face} />
 		</div>
 		
 		{/* Can hold max 12 of suit icons. */}
-		<div className="text-3xl font-noto flex flex-row flex-wrap justify-evenly items-center">
-			<span>{suit}</span>
-			<span>{suit}</span>
-		</div>
-		<div className="text-3xl font-noto flex flex-row flex-wrap justify-evenly items-center">
-			<span>{suit}</span>
-			<span>{suit}</span>
-		</div>
+		<RankCenter rank={rank} suit={suit} face={face} isSuitFace={isSuitFace} />
 
 		<div className="rotate-180 flex flex-row justify-between items-center">
 			{/* bottom left */}
-			<div className="flex flex-col justify-start items-center">
-				<span className="text-2xl">{rankLabel}</span>
-				<span className="text-lg font-noto">{suit}</span>
-			</div>
+			<CardLabel rank={rank} suit={suit} face={face} />
 			
 			<RankHeader rank={rank} suit={suit} />
 			
 			{/* bottom right */}
-			<div className="flex flex-col justify-start items-center">
-				<span className="text-2xl">{rankLabel}</span>
-				<span className="text-lg font-noto">{suit}</span>
-			</div>
+			<CardLabel rank={rank} suit={suit} face={face} />
 		</div>
 	</div>
 }

@@ -6,27 +6,17 @@ import { useState } from 'react'
 import Front from './Front'
 import Back from './Back'
 
-// Suits.
-const [spade, heart, diamond, club] = [
-	'♠', '♥', '♦', '♣'
-]
+// TODO Could the isSuitFace property be part of a context?
 
-// Faces.
-const [ace, king, queen, jack] = [
-	'A', '🤴', '👸', 'J'
-]
-
-// Suit range.
-const deck = _.range(2, 11)
-
-// Deck size.
-const deckSize = deck.length * 4 + 16
-
-const Card = ({children, suit=heart, rank=2, face=false, flip=false}) => {
+const Card = ({children, suit=heart, rank=1, face=false, isSuitFace=false, flip=false}) => {
 	const [isFlipped, setFlipped] = useState(flip)
 	
+	if (!_.isInteger(rank) || rank < 1) {
+		rank = 1
+	}
+	
 	const card = isFlipped ?
-		<Front suit={suit} rank={rank} face={face} /> :
+		<Front suit={suit} rank={rank} face={face} isSuitFace={isSuitFace} /> :
 		<Back /> 
 	
 	return <div className="
@@ -37,23 +27,5 @@ const Card = ({children, suit=heart, rank=2, face=false, flip=false}) => {
 	</div>
 }
 
-const Spade = ({children, rank=2, flip=false}) => {
-	return <Card suit={spade} rank={rank} face={false} flip={flip} />
-}
-const Heart = ({children, rank=2, flip=false}) => {
-	return <Card suit={heart} rank={rank} face={false} flip={flip} />
-}
-const Diamond = ({children, rank=2, flip=false}) => {
-	return <Card suit={diamond} rank={rank} face={false} flip={flip} />
-}
-const Club = ({children, rank=2, flip=false}) => {
-	return <Card suit={club} rank={rank} face={false} flip={flip} />
-}
-
-const SpadeQueen = ({children, flip=false}) => {
-	return <Card suit={spade} rank={0} face={queen} flip={flip} />
-}
-
+export * as Deck52 from './Deck52'
 export default Card
-export { Spade, Heart, Diamond, Club }
-export { SpadeQueen }
