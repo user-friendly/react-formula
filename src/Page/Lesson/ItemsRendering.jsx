@@ -12,7 +12,7 @@ import Collapsable from './Components/Collapsable'
 
 import MapExercise from './Components/ItemsRendering/MapExercise'
 import SongList from './Components/ItemsRendering/SongList'
-//import MapExercise from './Components/ItemsRendering/MapExercise'
+import PropertyListings from './Components/ItemsRendering/PropertyListings'
 //import MapExercise from './Components/ItemsRendering/MapExercise'
 //import MapExercise from './Components/ItemsRendering/MapExercise'
 
@@ -23,8 +23,10 @@ const ItemsRendering = () => {
 	const lessons = [
 		<Collapsable key={i++} collapse={true} title='Map Exercise'>
 			<MapExercise /></Collapsable>,
-		<Collapsable key={i++} collapse={false} title='Song List'>
-			<SongList /></Collapsable>
+		<Collapsable key={i++} collapse={true} title='Song List'>
+			<SongList /></Collapsable>,
+		<Collapsable key={i++} collapse={false} title='Property Listings'>
+			<PropertyListings /></Collapsable>
 	]
 	
 	return <div className="h-full flex flex-col justify-start items-strech">
