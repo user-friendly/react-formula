@@ -9,7 +9,7 @@ const SongItem = ({children, song}) => {
 			</div>
 			<div className="flex flex-col items-end text-neutral-200">
 				<span>{song.album}</span>
-				<span>{Math.floor(song.duration / 60)}:{song.duration % 60}</span>
+				<span>{Math.floor(song.duration / 60)}:{String(song.duration % 60).padStart(2, '0')}</span>
 			</div>
 		</div>
 	</div>
