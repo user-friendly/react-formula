@@ -34,6 +34,8 @@ class RouterImpl {
 	// TODO Just use a Map class.
 	#map = {}
 	
+	#redirect = {}
+	
 	#e404 = null
 	
 	getInitialRoute() {
@@ -46,8 +48,22 @@ class RouterImpl {
 		this.#map[path] = new Route(path, component, title)
 	}
 	
+	setRedirect(path, redirect) {
+		console.log(`set redirect for: ${path}, to: ${redirect}`)
+		this.#redirect[path] = redirect
+	}
+	
 	getRoute(path) {
 		path = this.processPath(path)
+		
+		let guard = 0
+		while (this.#redirect[path] !== undefined && guard++ <= 32) {
+			path = this.processPath(this.#redirect[path])
+		}
+		if (guard > 32) {
+			throw 'path redirects exceeded limit'
+		}
+		
 		// TODO Fix this...
 		return this.#map[path] !== undefined ? this.#map[path] : this.#e404
 	}
