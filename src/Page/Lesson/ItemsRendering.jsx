@@ -11,13 +11,20 @@ import Router from '#Router'
 import Collapsable from './Components/Collapsable'
 
 import MapExercise from './Components/ItemsRendering/MapExercise'
+import SongList from './Components/ItemsRendering/SongList'
+//import MapExercise from './Components/ItemsRendering/MapExercise'
+//import MapExercise from './Components/ItemsRendering/MapExercise'
+//import MapExercise from './Components/ItemsRendering/MapExercise'
 
 // import null from './Components/ItemsRendering/null'
 
 const ItemsRendering = () => {
+	let i = 0
 	const lessons = [
-		<Collapsable key={1} collapse={false} title='Map Exercise'>
-			<MapExercise /></Collapsable>
+		<Collapsable key={i++} collapse={true} title='Map Exercise'>
+			<MapExercise /></Collapsable>,
+		<Collapsable key={i++} collapse={false} title='Song List'>
+			<SongList /></Collapsable>
 	]
 	
 	return <div className="h-full flex flex-col justify-start items-strech">
