@@ -1,7 +1,8 @@
 {
   "name": "react-formula",
-  "private": true,
-  "version": "0.0.0",
+  "author": "User Friendly",
+  "homepage": "https://github.com/user-friendly",
+  "version": "0.1.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
