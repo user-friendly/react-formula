@@ -1,0 +1,139 @@
+[attributes]
+Main character:
+8 endurance
+3 cunning
+10 social
+
+[focus_points]
+Focus points:
+ Charm
+ Bow
+ Riding
+ Smithing
+ Two Handed
+ Scout
+ Leadership
+ Athletics
+
+[perks]
+Important skill picks:
+
+2H:
+	Wood Chopper,
+	On the Edge,
+	Shield breaker,
+	Terror,
+	Thick Hides,
+	Vandal
+
+Bow:
+	Dead Aim,
+	Rapid Fire,
+	Merry Men,
+	Skirmish Phase Master
+
+Riding:
+	Nomadic Traditions,
+	Sweeping Wind,
+	Shepherd,
+	Mounted Patrols @225 (prisoner escape chance -50% both party leader and govener)
+
+Athletics:
+	Imposing Stature,
+	Durable,
+	Strong,
+	Ignore Pain,
+	Mighty Blow
+
+Smithing:
+	Charcoal Maker,
+	Curious Smelter/Smith
+	Experienced Smith,
+	Practical Smelter,
+	Vigorous Smith,
+	Practical Smith,
+	Enduring Smith,
+	Sharpened Edge
+
+Scouting:
+	Day Travler,
+	Desert Born,
+	Forced March,
+	Tracker,
+	Beast Whisperer,
+	Keen Sight @225 (prisoner escape chance -50% both party leader only),
+
+Tactics:
+	Horde Leader @75,
+	(Pick all top skills, top as in north of the middle line.)
+	
+Rougery:
+	In Best Light,
+
+Charm:
+	Warlord,
+	Meaningful Favors,
+	Natural Leader,
+	Parade,
+	Immortal Charm,
+
+Leadership:
+	Combat Tips,
+	Stout Defender,
+	Loyalty and Honor,
+	Presence,
+	Uplifting Spirit,
+
+	Lead by Example/Trusted Commander,
+
+	Talent Magnet,
+	Ultimate Leader (last skill)
+
+Trade:
+	Artisan Community @125, a bit high, maybe it's not worth it
+
+[companion_perks]
+Companions handle the Int skills:
+
+Steward:
+	Frugal,
+	Sweatshops,
+	Efficient Campaigner,
+	Contractors,
+	Master of Warcraft,
+	Price of Loyalty (last skill)
+
+Medicine:
+	Pristine Streets @150
+
+Engineering:
+	Military Planner @75
+
+[govener_perks]
+Prison guard companion (governer perks):
+Rougery:
+	Sweet Talker @25 (-20% escape chance)
+Engineering:
+	Dungeon Architect @50 (-25% escape chance)
+Riding:
+	Mounted Patrols @225 (-50% escape chance)
+
+[party_template]
+Current party composition, max 290:
+Infantry:	 100,	34.4 %
+Archers:	 80,	27.5 %
+Cavalry:	 70,	24.1 %
+Mounted archers: 40,	13.7 %
+
+[policies]
+Kingdom policies:
+
+	Sacred Majesty
+	Magistrates
+	Royal Guard
+	Senate
+	Bailiffs
+	Citizenship
+	Forgiveness of Debts
+	Tribunes of the People
+	Cantonos
