@@ -49,7 +49,6 @@ export default ({children, displaySize = 6}) => {
 		<div className="text-5xl border-b-4 border-gray-400 pb-3 mb-7">Recent Posts</div>
 		
 		<div className="text-lg">
-			<span>Set page size: </span>
 			<button className={`text-lg border rounded-md px-3 py-1 mx-1 ${pageSize == 3 ? selected : notSelected }`}
 				onClick={e => updatePageSize(3)}>3</button>
 			<button className={`text-lg border rounded-md px-3 py-1 mx-1 ${pageSize == 6 ? selected : notSelected }`}
