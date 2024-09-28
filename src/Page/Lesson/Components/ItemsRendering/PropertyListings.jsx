@@ -6,32 +6,42 @@ const dollarUSLocale = Intl.NumberFormat('en-US');
 const PropertyItem = ({children, property}) => {
 	const price = _.random(15000000, 25000000)
 	
-	return <div className="m-4 p-4">
+	return <div className="
+		w-80 m-3 drop-shadow-lg
+		cursor-pointer
+		hover:scale-105 transition-transform
+	">
 		<div>
-			<img src={property.imageUrl} />
+			<img className="h-64 w-full object-cover object-center rounded-t-lg" src={property.imageUrl} />
 		</div>
 		
-		<div>
-			{property.address}
-		</div>
-		
-		<div>
-			{property.city}, {property.state}
-		</div>
-		
-		<div>
-			$ {dollarUSLocale.format(price)}
-		</div>
-		
-		<div className="flex justify-between">
-			<span>🛏 {property.bedrooms}</span>
-			<span>🛁 {property.bathrooms}</span>
+		<div className="
+			h-48 p-4 rounded-b-lg
+			flex flex-col justify-start
+			bg-slate-100 border border-t-0 border-slate-300	text-lg
+		">
+			<div className="text-2xl">
+				{property.address}
+			</div>
+			
+			<div>
+				{property.city}, {property.state}
+			</div>
+			
+			<div className="mt-2 flex-1">
+				${dollarUSLocale.format(price)}
+			</div>
+			
+			<div className="mt-3 flex justify-between">
+				<span>🛏 {property.bedrooms}</span>
+				<span>🛁 {property.bathrooms}</span>
+			</div>
 		</div>
 	</div>
 }
 
 export default ({children}) => {
-	return <div className="md:self-center md:w-[38rem]">
+	return <div className="md:self-center md:max-w-[65rem] flex flex-wrap justify-center">
 		{properties.map((p, i) => <PropertyItem property={p} key={i} />)}
 	</div>
 }
