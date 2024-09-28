@@ -27,19 +27,38 @@ const Pagination = ({children, data, pageSize, onClick}) => {
 	</div>
 }
 
-export default ({children, displaySize = 9}) => {
+export default ({children, displaySize = 6}) => {
 	const [offset, setOffset] = useState(0)
+	const [pageSize, setPageSize] = useState(displaySize)
 	
-	const paginator = <Pagination data={data} pageSize={displaySize} onClick={(e, p) => setOffset(p*displaySize)} />
+	const paginator = <Pagination data={data} pageSize={pageSize} onClick={(e, p) => setOffset(p*pageSize)} />
+	
+	function updatePageSize(p) {
+		setPageSize(p)
+		setOffset(0)
+	}
+	
+	const selected = 'text-white border-white bg-neutral-500'
+	const notSelected = 'text-neutral-500 border-neutral-400 bg-white'
 	
 	return <div className="flex flex-col items-center text-neutral-600">
 		<div className="text-5xl border-b-4 border-gray-400 pb-3 mb-7">Recent Posts</div>
+		
+		<div className="text-lg">
+			<span>Set page size: </span>
+			<button className={`text-lg border rounded-md px-3 py-1 mx-1 ${pageSize == 3 ? selected : notSelected }`}
+				onClick={e => updatePageSize(3)}>3</button>
+			<button className={`text-lg border rounded-md px-3 py-1 mx-1 ${pageSize == 6 ? selected : notSelected }`}
+				onClick={e => updatePageSize(6)}>6</button>
+			<button className={`text-lg border rounded-md px-3 py-1 mx-1 ${pageSize == 9 ? selected : notSelected }`}
+				onClick={e => updatePageSize(9)}>9</button>
+		</div>
 		
 		{paginator}
 		
 		{/* Lift this into a seperate component. */}
 		<div className="max-w-6xl flex flex-wrap justify-center">
-			{data.slice(offset, offset+displaySize).map((d, i) => <ListItem data={d} key={i} />)}
+			{data.slice(offset, offset+pageSize).map((d, i) => <ListItem data={d} key={i} />)}
 		</div>
 		
 		{paginator}
