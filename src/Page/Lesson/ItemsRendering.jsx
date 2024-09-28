@@ -13,6 +13,9 @@ import Collapsable from './Components/Collapsable'
 import MapExercise from './Components/ItemsRendering/MapExercise'
 import SongList from './Components/ItemsRendering/SongList'
 import PropertyListings from './Components/ItemsRendering/PropertyListings'
+import TestimonialCarousel from './Components/ItemsRendering/TestimonialCarousel'
+//import MapExercise from './Components/ItemsRendering/MapExercise'
+//import MapExercise from './Components/ItemsRendering/MapExercise'
 //import MapExercise from './Components/ItemsRendering/MapExercise'
 //import MapExercise from './Components/ItemsRendering/MapExercise'
 
@@ -25,8 +28,10 @@ const ItemsRendering = () => {
 			<MapExercise /></Collapsable>,
 		<Collapsable key={i++} collapse={true} title='Song List'>
 			<SongList /></Collapsable>,
-		<Collapsable key={i++} collapse={false} title='Property Listings'>
-			<PropertyListings /></Collapsable>
+		<Collapsable key={i++} collapse={true} title='Property Listings'>
+			<PropertyListings /></Collapsable>,
+		<Collapsable key={i++} collapse={false} title='Testimonial Carousel'>
+			<TestimonialCarousel /></Collapsable>
 	]
 	
 	return <div className="h-full flex flex-col justify-start items-strech">
