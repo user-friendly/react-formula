@@ -11,17 +11,20 @@ const ListItem = ({children, data}) => {
 	</div>
 }
 
-const Pagination = ({children, data, pageSize, onClick}) => {
+const Pagination = ({children, data, current, pageSize, onClick}) => {
 	if (data.length <= pageSize) {
 		return <></>
 	}
 	
 	const pages = _.range(0, Math.ceil(data.length / pageSize))
+
+	const selected = 'text-neutral-400 bg-white border border-neutral-400'
+	const notSelected = 'text-white bg-neutral-400'
 	
 	return <div className="my-3">
 		{pages.map(i => 
 			<button onClick={e => onClick(e, i)}
-				className="text-lg text-white bg-neutral-400 rounded-md px-3 py-1 mx-1"
+				className={`text-lg rounded-md px-3 py-1 mx-1 ${i === Math.floor(current/pageSize) ? selected : notSelected}`}
 				key={i}>{i+1}</button>
 		)}
 	</div>
@@ -31,11 +34,12 @@ export default ({children, displaySize = 6}) => {
 	const [offset, setOffset] = useState(0)
 	const [pageSize, setPageSize] = useState(displaySize)
 	
-	const paginator = <Pagination data={data} pageSize={pageSize} onClick={(e, p) => setOffset(p*pageSize)} />
+	const paginator = <Pagination data={data} current={offset} pageSize={pageSize} onClick={(e, p) => setOffset(p*pageSize)} />
 	
 	function updatePageSize(p) {
 		setPageSize(p)
-		setOffset(0)
+		const newOffset = Math.floor(offset/p) * p
+		setOffset(() => newOffset)
 	}
 	
 	const selected = 'text-white border-white bg-neutral-500'
