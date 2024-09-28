@@ -38,7 +38,7 @@ export default ({children, displaySize = 9}) => {
 		{paginator}
 		
 		{/* Lift this into a seperate component. */}
-		<div className="flex flex-wrap justify-center">
+		<div className="max-w-6xl flex flex-wrap justify-center">
 			{data.slice(offset, offset+displaySize).map((d, i) => <ListItem data={d} key={i} />)}
 		</div>
 		
