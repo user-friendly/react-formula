@@ -4,7 +4,9 @@
 
 import Router from '#Router'
 
-import { SkillGroup } from './Components/Bannerlord'
+import { SkillGroup, PerksData } from './Components/Bannerlord'
+
+console.log(PerksData)
 
 const Bannerlord = () => {
 	return <div className="
@@ -12,7 +14,7 @@ const Bannerlord = () => {
 	">
 		<h1 className="my-2 text-center text-2xl">Bannerlord Perks Checklist</h1>
 		
-		<h2 className="text-xl mb-2">Important skills to pick:</h2>
+		<h2 className="text-xl mb-2">Priority skill picks:</h2>
 		
 		<form>
 			<h3>Two Handed</h3>
