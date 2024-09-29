@@ -13,6 +13,8 @@ import SelectItem from './SelectItem'
 import NavBar from './NavBar'
 import NotFound from './Page/NotFound'
 
+Router.setRedirect('/', '/lesson')
+
 const App = () => {
   // TODO Remove debug stmt.
   console.log('Redner App component.')
@@ -55,7 +57,7 @@ const App = () => {
   	{/* Header */}
   	<div className="bg-indigo-100">
 	  	<NavBar>
-			<Button	route="/" onClick={onRouteSelected}>Home</Button>
+			<Button	route="/home" onClick={onRouteSelected}>Home</Button>
 			<SelectItem name="routes" items={lessonRoutes} value={currentRoute.path} onSelect={onLessonSelected} />
 			<Button route="/lesson/" onClick={onRouteSelected}>Current</Button>
 			<Button route="/lesson/search-page-design" onClick={onRouteSelected}>Search</Button>

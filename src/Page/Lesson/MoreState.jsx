@@ -39,7 +39,6 @@ const MoreState = () => {
 	</div>
 }
 
-Router.setRoute('/lesson/more-state', <MoreState />, 'More State')
-Router.setRoute('/lesson', <MoreState />)
+Router.setRoute('/lesson/more-state', <MoreState />, 'Module 4: More State')
 
 export default MoreState
