@@ -4,8 +4,6 @@
  * Path: /lesson/repeated-item-rendering
  */
 
-import { useState, Fragment } from 'react'
-
 import Router from '#Router'
 
 import Collapsable from './Components/Collapsable'
@@ -15,9 +13,6 @@ import SongList from './Components/ItemsRendering/SongList'
 import PropertyListings from './Components/ItemsRendering/PropertyListings'
 import TestimonialCarousel from './Components/ItemsRendering/TestimonialCarousel'
 import Pagination from './Components/ItemsRendering/Pagination'
-//import MapExercise from './Components/ItemsRendering/MapExercise'
-//import MapExercise from './Components/ItemsRendering/MapExercise'
-//import MapExercise from './Components/ItemsRendering/MapExercise'
 
 // import null from './Components/ItemsRendering/null'
 
@@ -45,6 +40,5 @@ const ItemsRendering = () => {
 }
 
 Router.setRoute('/lesson/repeated-item-rendering', <ItemsRendering />, 'Module 5: Repeated Item Rendering')
-Router.setRoute('/lesson', <ItemsRendering />)
 
 export default ItemsRendering

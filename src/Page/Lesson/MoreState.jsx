@@ -6,8 +6,6 @@
  * Bundles up a lessons in the More State group.
  */
 
-import { useState, Fragment } from 'react'
-
 import Router from '#Router'
 
 import Collapsable from './Components/Collapsable'
