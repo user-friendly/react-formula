@@ -47,7 +47,7 @@ export default ({children}) => {
 	
 	return <div className="flex flex-col items-center">
 		<form method="post" action="/" onSubmit={submitHandler}
-			className="my-4 h-11"
+			className="my-4 flex flex-row justify-center items-center"
 		>
 			<TextInput value={filter} onChange={v => setFilter(v)} delay={500}
 				name="search" placeholder="enter a string or /regexp/i"
