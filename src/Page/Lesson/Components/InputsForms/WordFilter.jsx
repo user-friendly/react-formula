@@ -47,16 +47,16 @@ export default ({children}) => {
 	
 	return <div className="flex flex-col items-center">
 		<form method="post" action="/" onSubmit={submitHandler}
-			className="my-4"
+			className="my-4 flex flex-row justify-center items-center"
 		>
 			<TextInput value={filter} onChange={v => setFilter(v)} delay={500}
 				name="search" placeholder="enter a string or /regexp/i"
 				className="w-60 px-4 py-2 bg-neutral-300 rounded-xl rounded-r-none outline-none
 					border-2 border-r-0 border-transparent focus:border-green-400"
 			/>
-			<button id={useId()} type="submit" value="search"
+			<input id={useId()} type="submit" value="search"
 				className="px-4 py-2 bg-green-400 text-white rounded-xl rounded-l-none cursor-pointer border-2 border-l-0 border-green-400"
-			>search</button>
+			/>
 		</form>
 		
 		<div className="flex flex-wrap justify-center w-full max-w-lg">
