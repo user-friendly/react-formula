@@ -26,12 +26,11 @@ export default ({children}) => {
 			search = new RegExp(search[1], search[2])
 		} catch (e) {
 			console.log('error: invalid regexp')
-			console.log(e)
 			search = filter.trim()
 		}
 	}
 	else {
-		search = filter.trim()
+		search = filter.trim().toLowerCase()
 	}
 	const worditems = words.map((w, i) => {
 		if (_.isRegExp(search)) {
