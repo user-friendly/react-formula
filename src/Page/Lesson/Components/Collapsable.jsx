@@ -5,7 +5,7 @@ export default ({children, collapse, title}) => {
 	
 	return <>
 		<h2 className="self-center my-2 text-2xl cursor-pointer bg-blue-300 rounded-lg px-2 py-1" onClick={e => setShow(!show)}>
-			{title} <span className="font-noto">{show ? '⏬' : '⏫'}</span>
+			{title} <span>{show ? '⏬' : '⏫'}</span>
 		</h2>
 		{show && children}
 	</>
