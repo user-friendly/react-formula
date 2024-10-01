@@ -3,7 +3,7 @@ import _ from 'lodash'
 
 import { useState, useEffect, useId } from 'react'
 
-const InternalTextInput = ({name, id, type='text', className, placeholder, value='', delay=500, onChange}) => {
+const InternalTextInput = ({name, id, type='text', className, placeholder, value='', delay=false, onChange}) => {
 	const [internal, setInternal] = useState(value)
 	
 	let internalOnChange = (e) => setInternal(e.target.value)
