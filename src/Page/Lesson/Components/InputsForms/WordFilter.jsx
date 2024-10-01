@@ -22,10 +22,11 @@ export default ({children}) => {
 	let search = filter.trim().match(regex)
 	if (_.isArray(search) && search.length > 0) {
 		try {
-			search = search[0].matchAll(regex).toArray()[0]
+			search = [...search[0].matchAll(regex)][0]
 			search = new RegExp(search[1], search[2])
 		} catch (e) {
 			console.log('error: invalid regexp')
+			console.log(e)
 			search = filter.trim()
 		}
 	}
