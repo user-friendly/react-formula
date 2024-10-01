@@ -10,9 +10,29 @@ const WordItem = ({word}) => {
 }
 
 export default ({children}) => {
-	const worditems = words.map((word, idx) => <WordItem word={word} key={idx} />)
+	const submitHandler = (e) => {
+		e.preventDefault()
+		console.log(`Post form to API backend.`)
+	}
 	
-	return 	<div className="flex flex-col items-center">
+	const worditems = words.map((w, i) => {
+		return <WordItem word={w} key={i} />
+	})
+	
+	return <div className="flex flex-col items-center">
+		<form method="post" action="/" onSubmit={submitHandler}
+			className="my-4"
+		>
+			<TextInput name="search" placeholder="enter a string" delay={500}
+				className="px-4 py-2 bg-neutral-300 rounded-xl rounded-r-none outline-none
+					border-2 border-r-0 border-transparent focus:border-green-400
+				"
+			/>
+			<input type="submit" value="search"
+				className="px-4 py-2 bg-green-400 text-white rounded-xl rounded-l-none cursor-pointer border-2 border-l-0 border-green-400"
+			/>
+		</form>
+		
 		<div className="flex flex-wrap justify-center w-full max-w-lg">
 	  		{worditems}
 		</div>
