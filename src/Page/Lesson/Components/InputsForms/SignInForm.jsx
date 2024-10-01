@@ -51,35 +51,36 @@ export default ({children}) => {
 		console.log(`Post form to API backend: ${login}`)
 	}
 	
-	return <div className="mt-4 flex flex-col justify-center items-center">
-		
-		<form method="post" action="/" onSubmit={submitHandler}
-			className="flex flex-col justify-center items-center"
+	return <form method="post" action="/" onSubmit={submitHandler}
+			className="mt-4 self-center flex flex-col shadow-lg rounded-xl border border-neutral-300 overflow-clip"
 		>
+		<div className="bg-white p-4
+			flex flex-col items-center
+		">
+			<h3 className="text-4xl mb-4">Sign-In</h3>
 			
 			{/* FIXME The Lodash assignment looks a bit too overcomplicated. */}
 			{/* FIXME classNameLabel? No good. */}
 			<TextInput
 				classNameLabel="text-xl min-w-80 flex items-center justify-between"
 				className="text-base my-1 bg-orange-100 rounded-lg p-1 text-neutral-700 border-2 border-neutral-300 focus:border-green-400 outline-none"
-				label='Username' name='username' placeholder='JohnDoe86' value={username} delay={600}
+				label='Username' name='username' placeholder='JohnDoe86' value={username}
 				onChange={value => setUsername(value)}
 			/>
 			
 			<TextInput
 				classNameLabel="text-xl min-w-80 flex items-center justify-between"
 				className="text-base my-1 bg-orange-100 rounded-lg p-1 text-neutral-700 border-2 border-neutral-300 focus:border-green-400 outline-none"
-				label='Password' name='password' type="password" value={password} delay={200}
+				label='Password' name='password' type="password" value={password}
 				onChange={value => setPassword(value)}
 			/>
-			
-			<input type="submit" className="
-				cursor-pointer text-xl px-1 my-2 rounded-xl
-				border-8
-				bg-neutral-200 hover:border-green-200 active:border-green-600
-			" />
-		</form>
-	</div>
+		</div>
+		
+		<input type="submit" className="
+			p-4 text-xl text-white bg-sky-400 cursor-pointer
+			hover:bg-sky-600 active:bg-sky-700
+		" />
+	</form>
 }
 
 
