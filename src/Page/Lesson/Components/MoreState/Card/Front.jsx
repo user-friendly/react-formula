@@ -2,21 +2,21 @@
 // Suit/face & rank corner.
 const CardLabel = ({rank, suit, face}) => {
 	rank = face === false ? rank : 
-		(<span className="font-noto">{face}</span>)
+		(<span className="">{face}</span>)
 	
 	return <div className="flex flex-col justify-start items-center">
 		<span className="text-2xl">{rank}</span>
-		<span className="text-xl font-noto">{suit}</span>
+		<span className="text-xl ">{suit}</span>
 	</div>
 }
 
 const RankHeader = ({suit, rank, face}) => {
 	if (rank > 1 && rank < 8) { 
-		return <div className="text-3xl font-noto pt-4">
+		return <div className="text-3xl pt-4">
 			<span>{suit}</span>
 		</div>
 	} else if (rank >= 8 && rank < 11) {
-		return <div className="text-3xl font-noto pt-4 flex-1 flex flex-row justify-between">
+		return <div className="text-3xl pt-4 flex-1 flex flex-row justify-between">
 			<span>{suit}</span>
 			<span>{suit}</span>
 		</div>
@@ -26,16 +26,16 @@ const RankHeader = ({suit, rank, face}) => {
 }
 
 const CenterRow = ({children}) => {
-	return <div className="text-3xl font-noto flex flex-row justify-evenly items-center">
+	return <div className="text-3xl flex flex-row justify-evenly items-center">
 		{children}
 	</div>
 }
 
 const RankCenter = ({suit, rank, face, isSuitFace=false}) => {
 	if (face !== false && isSuitFace === false) {
-		return <div className="text-6xl font-noto flex justify-center items-center">{face}</div>
+		return <div className="text-6xl flex justify-center items-center">{face}</div>
 	} else if (rank <= 1 || rank > 10) {
-		return <div className="text-6xl font-noto flex justify-center items-center">{suit}</div>
+		return <div className="text-6xl flex justify-center items-center">{suit}</div>
 	}
 	
 	// Subtract the two header/footer ranks.
@@ -95,7 +95,7 @@ const RankCenter = ({suit, rank, face, isSuitFace=false}) => {
 		break;
 	}
 	
-	return <div className="text-6xl font-noto flex justify-center items-center">{suit}</div>
+	return <div className="text-6xl flex justify-center items-center">{suit}</div>
 }
 
 // Rank should be guaranteed to be greater than 0, by the main component.

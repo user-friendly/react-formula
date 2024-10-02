@@ -6,6 +6,6 @@ export default ({children}) => {
 		h-full flex flex-col justify-center items-center
 		bg-green-500
 	">
-		<span className="font-noto block text-5xl">{back}</span>
+		<span className="block text-5xl">{back}</span>
 	</div>
 }
