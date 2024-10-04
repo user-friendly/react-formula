@@ -40,6 +40,5 @@ const InputsForms = ({children}) => {
 }
 
 Router.setRoute('/lesson/inputs-and-forms', <InputsForms />, 'Module 6: Inputs and Forms')
-Router.setRoute('/lesson', <InputsForms />)
 
 export default InputsForms
