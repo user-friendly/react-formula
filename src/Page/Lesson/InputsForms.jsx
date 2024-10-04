@@ -12,7 +12,7 @@ import TextInput from './Components/InputsForms/TextInput'
 import SignInForm from './Components/InputsForms/SignInForm'
 import WordFilter from './Components/InputsForms/WordFilter'
 import MessageProject from './Components/InputsForms/MessageProject'
-//import TextInput from './Components/InputsForms/TextInput'
+import InputTypes from './Components/InputsForms/InputTypes'
 //import TextInput from './Components/InputsForms/TextInput'
 //import TextInput from './Components/InputsForms/TextInput'
 
@@ -25,8 +25,10 @@ const InputsForms = ({children}) => {
 			<SignInForm /></Collapsable>,
 		<Collapsable key={i++} collapse={true} title='Word Filter'>
 			<WordFilter /></Collapsable>,
-		<Collapsable key={i++} collapse={false} title='Message Project'>
-			<MessageProject /></Collapsable>
+		<Collapsable key={i++} collapse={true} title='Message Project'>
+			<MessageProject /></Collapsable>,
+		<Collapsable key={i++} collapse={false} title='Input Types'>
+			<InputTypes /></Collapsable>
 	]
 	
 	return <div className="h-full flex flex-col justify-start items-strech">
