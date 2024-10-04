@@ -1,4 +1,8 @@
+
 import { useState } from "react";
+
+import Form from './Components/Form'
+
 
 const CatItem = (props) => {
   const { cat } = props;
@@ -29,11 +33,51 @@ export default () => {
   const [cats, setCats] = useState(initialCats);
   
   const catItems = cats.map((cat, idx) => <CatItem key={idx} cat={cat} />);
+  
+  const submitHandler = (e) => {
+	e.preventDefault()
+	console.log('new cat posted')
+  }
 
   return <div className="flex flex-col items-center justify-center py-10 bg-indigo-50">
-	  <div className="flex flex-col items-center w-full max-w-2xl">
-	    {catItems}
-	  </div>
+  		<Form onSubmit={submitHandler}
+			className="flex flex-col bg-slate-50 rounded-lg overflow-clip shadow-lg min-w-96"
+		>
+			<h3 className="bg-purple-400 text-white text-center py-2 text-xl">Create a Cat Profile</h3>
+			
+			<div className="flex flex-col p-4">
+				<div className="flex flex-col">
+					<label htmlFor="name" className="text-slate-500 mx-2">Name</label>
+					<input name="name" id="name" type="text" placeholder="name" value="" onChange={e => null}
+						className="m-2 p-2 rounded-md text-sm border border-slate-200"
+					/>
+				</div>
+				
+				<div className="flex">
+					<div className="flex flex-col">
+						<label htmlFor="age" className="text-slate-500 mx-2">Age</label>
+						<input name="age" id="age" type="number" placeholder="age" value="" onChange={e => null}
+							className="m-2 p-2 rounded-md text-sm border border-slate-200 w-14"
+						/>
+					</div>
+					
+					<div className="flex-1 flex flex-col">
+						<label htmlFor="image" className="text-slate-500 mx-2">Image URL</label>
+						<input name="image" id="image" type="text" placeholder="https://example.com/cat.png" value="" onChange={e => null}
+							className="m-2 p-2 rounded-md text-sm border border-slate-200"
+						/>
+					</div>
+				</div>
+				
+				<textarea name="bio" placeholder="bio" row={3} className="m-2 p-2 rounded-md text-sm border border-slate-200" />
+			</div>	
+			
+			<input type="submit" className="mx-6 mb-4 p-2 bg-rose-200 rounded-md text-purple-800 text-xl cursor-pointer"
+				value="Create" />
+		</Form>
+		<div className="flex flex-col items-center w-full max-w-2xl">
+			{catItems}
+		</div>
 	</div>
 }
 
