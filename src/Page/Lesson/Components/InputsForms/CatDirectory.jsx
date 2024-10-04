@@ -46,7 +46,7 @@ export default () => {
 		name: name,
 		age: age,
 		imageUrl: imageUrl,
-		bio, bio
+		bio: bio
 	}, ...cats])
 	setName('')
 	setAge(1)
