@@ -21,7 +21,7 @@ import UsingFetch from './Components/FetchingData/UsingFetch'
 const FetchingData = ({children}) => {
 	let i = 0
 	const lessons = [
-		<Collapsable key={i++} collapse={true} title='Using Fetch'>
+		<Collapsable key={i++} collapse={false} title='Using Fetch'>
 			<UsingFetch /></Collapsable>,
 /*		<Collapsable key={i++} collapse={true} title='Using Fetch'>
 			<UsingFetch /></Collapsable>,
