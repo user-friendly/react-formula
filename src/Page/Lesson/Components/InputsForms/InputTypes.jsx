@@ -24,14 +24,13 @@ export default ({children}) => {
 	
 	const priceHandler = (e) => {
 		const newPrice = Number(e.target.value)
-		if (newPrice > 1 && newPrice <= 60) {
+		if (newPrice >= 1 && newPrice <= 60) {
 			setError('')
 			setPrice(newPrice)
 		} else {
 			setError('price is out of range')
 		}
 	}
-	
 	
 	return <div className="flex justify-center">
 		<Form className="flex flex-col items-center max-w-xl mt-4">
