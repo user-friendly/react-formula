@@ -21,7 +21,7 @@ const CatItem = (props) => {
           <img className="relative z-[-1]" src={cat.imageUrl} />
         </div>
         <div className="mx-10 max-w-[260px] w-full py-4">
-          <div className="text-lg text-teal-100">{cat.interests}</div>
+          <div className="text-lg text-teal-100">{cat.bio}</div>
         </div>
       </div>
       <i className="absolute scale-150 rotate-45 top-9 right-7 text-transparent/10 text-8xl">🐾</i>
@@ -32,11 +32,26 @@ const CatItem = (props) => {
 export default () => {
   const [cats, setCats] = useState(initialCats);
   
+  const [name, setName] = useState('');
+  const [age, setAge] = useState(1);
+  const [imageUrl, setImageUrl] = useState('');
+  const [bio, setBio] = useState('');
+  
   const catItems = cats.map((cat, idx) => <CatItem key={idx} cat={cat} />);
   
   const submitHandler = (e) => {
 	e.preventDefault()
 	console.log('new cat posted')
+	setCats([{
+		name: name,
+		age: age,
+		imageUrl: imageUrl,
+		bio, bio
+	}, ...cats])
+	setName('')
+	setAge(1)
+	setImageUrl('')
+	setBio('')
   }
 
   return <div className="flex flex-col items-center justify-center py-10 bg-indigo-50">
@@ -48,7 +63,8 @@ export default () => {
 			<div className="flex flex-col p-4">
 				<div className="flex flex-col">
 					<label htmlFor="name" className="text-slate-500 mx-2">Name</label>
-					<input name="name" id="name" type="text" placeholder="name" value="" onChange={e => null}
+					<input name="name" id="name" type="text" placeholder="name"
+						required value={name} onChange={e => setName(e.target.value)}
 						className="m-2 p-2 rounded-md text-sm border border-slate-200"
 					/>
 				</div>
@@ -56,20 +72,24 @@ export default () => {
 				<div className="flex">
 					<div className="flex flex-col">
 						<label htmlFor="age" className="text-slate-500 mx-2">Age</label>
-						<input name="age" id="age" type="number" placeholder="age" value="" onChange={e => null}
+						<input name="age" id="age" type="number" placeholder="age"
+							required min={1} max={25}
+							value={age} onChange={e => setAge(Number(e.target.value))}
 							className="m-2 p-2 rounded-md text-sm border border-slate-200 w-14"
 						/>
 					</div>
 					
 					<div className="flex-1 flex flex-col">
 						<label htmlFor="image" className="text-slate-500 mx-2">Image URL</label>
-						<input name="image" id="image" type="text" placeholder="https://example.com/cat.png" value="" onChange={e => null}
+						<input name="image" id="image" type="text" placeholder="https://example.com/cat.png"
+							required value={imageUrl} onChange={e => setImageUrl(e.target.value)}
 							className="m-2 p-2 rounded-md text-sm border border-slate-200"
 						/>
 					</div>
 				</div>
 				
-				<textarea name="bio" placeholder="bio" row={3} className="m-2 p-2 rounded-md text-sm border border-slate-200" />
+				<textarea name="bio" placeholder="bio" row={3} className="m-2 p-2 rounded-md text-sm border border-slate-200"
+					required maxLength={80} value={bio} onChange={e => setBio(e.target.value)} />
 			</div>	
 			
 			<input type="submit" className="mx-6 mb-4 p-2 bg-rose-200 rounded-md text-purple-800 text-xl cursor-pointer"
@@ -85,37 +105,37 @@ const initialCats = [
   {
     name: "Mittens",
     imageUrl: "https://static-task-assets.react-formula.com/698552.jpg",
-    interests: "Chasing birds and sitting in enclosed spaces",
+    bio: "Chasing birds and sitting in enclosed spaces",
     age: 4,
   },
   {
     name: "Biscuit",
     imageUrl: "https://static-task-assets.react-formula.com/302683.jpg",
-    interests: "Staring out the window, scratching furniture, and treats",
+    bio: "Staring out the window, scratching furniture, and treats",
     age: 6,
   },
   {
     name: "Winnie",
     imageUrl: "https://static-task-assets.react-formula.com/413459.jpg",
-    interests: "Eating catnip and drinking out of cups that aren't hers.",
+    bio: "Eating catnip and drinking out of cups that aren't hers.",
     age: 11,
   },
   {
     name: "Tubbs",
     imageUrl: "https://static-task-assets.react-formula.com/893293.jpg",
-    interests: "Naps in the sunlight, watching animal planet.",
+    bio: "Naps in the sunlight, watching animal planet.",
     age: 3,
   },
   {
     name: "Chester",
     imageUrl: "https://static-task-assets.react-formula.com/416375.jpg",
-    interests: "Sitting in high places and stretching.",
+    bio: "Sitting in high places and stretching.",
     age: 8,
   },
   {
     name: "Mr. Sparkles",
     imageUrl: "https://static-task-assets.react-formula.com/561625.jpg",
-    interests: "Knocking over things and sleeping in clean laundry.",
+    bio: "Knocking over things and sleeping in clean laundry.",
     age: 11,
   },
 ];
