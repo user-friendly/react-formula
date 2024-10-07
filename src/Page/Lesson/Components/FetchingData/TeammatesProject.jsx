@@ -1,5 +1,5 @@
 
-import { useState, useEffect } from 'react'
+import { lazy, useState, useEffect, Suspense } from 'react'
 
 const ENDPOINT_URL = 'https://api.react-formula.com/learning-api/demos/teammates-project/profiles'
 
@@ -16,27 +16,31 @@ const ProfileCard = ({profile}) => {
 	</div>
 }
 
+const Spinner = () => {
+	return <div className="m-auto w-8 h-8 rounded-full animate-spin border-4 border-teal-500 border-t-transparent bg-gray-200"></div>
+}
+
 export default (props) => {
+	const [loaded, setLoaded] = useState(false)
 	const [profiles, setProfiles] = useState([])
 	
 	const fetchProfiles = () => {
 		fetch(ENDPOINT_URL)
 			.then(r => r.json())
-			.then(d => setProfiles(d))
+			.then(d => setTimeout(() => {
+				setProfiles(d)
+				setLoaded(true)
+			}, 1500))
 	}
 	
 	useEffect(() => {
 		fetchProfiles()
-		// Cleanup function.
-		// return () => {}
 	},[])
 	
-	const items = profiles.map((p, i) => {
-		return <ProfileCard profile={p} key={i} />
-	})
+	const items = loaded ? profiles.map((p, i) => <ProfileCard profile={p} key={i} />) : <Spinner />
 	
 	return <div className="flex flex-col items-center">
-		<div className="w-full max-w-lg">
+		<div className="w-full max-w-lg pt-4">
 			{items}
 		</div>
 	</div>
