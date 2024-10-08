@@ -9,7 +9,7 @@ const ENDPOINT_URL = 'https://api.react-formula.com/learning-api/demos/stocks-pr
 const StockCard = ({name, current_price, previous_price, symbol}) => {
 	// TODO Remove text code.
 	// previous_price = _.random(0, 2) === 1 ? current_price : previous_price
-	const move = ((current_price - previous_price) / current_price) * 100
+	const move = ((current_price - previous_price) / previous_price) * 100
 	const price = current_price / 100
 	
 	const up = 'bg-green-200 text-green-600'
