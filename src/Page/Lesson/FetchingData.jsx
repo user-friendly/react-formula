@@ -40,7 +40,7 @@ const FetchingData = ({children}) => {
 	]
 	
 	return <div className="h-full flex flex-col justify-start items-strech">
-		<h1 className="my-4 text-5xl self-center">Inputs and Forms</h1>
+		<h1 className="my-4 text-5xl self-center">Fetching Data</h1>
 		
 		{lessons}
 	</div>
