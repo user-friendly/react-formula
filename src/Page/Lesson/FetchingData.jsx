@@ -12,7 +12,7 @@ import UsingFetch from './Components/FetchingData/UsingFetch'
 import RandomJoke from './Components/FetchingData/RandomJoke'
 import TeammatesProject from './Components/FetchingData/TeammatesProject'
 import StocksProject from './Components/FetchingData/StocksProject'
-//import ModuleLesson from './Components/FetchingData/ModuleLesson'
+import WeatherForecast from './Components/FetchingData/WeatherForecast'
 //import ModuleLesson from './Components/FetchingData/ModuleLesson'
 //import ModuleLesson from './Components/FetchingData/ModuleLesson'
 //import ModuleLesson from './Components/FetchingData/ModuleLesson'
@@ -27,11 +27,11 @@ const FetchingData = ({children}) => {
 			<RandomJoke /></Collapsable>,
 		<Collapsable key={i++} collapse={true} title='Teammates Project'>
 			<TeammatesProject /></Collapsable>,
-		<Collapsable key={i++} collapse={false} title='Stocks Project'>
+		<Collapsable key={i++} collapse={true} title='Stocks Project'>
 			<StocksProject /></Collapsable>,
+		<Collapsable key={i++} collapse={false} title='Weather Forecast'>
+			<WeatherForecast /></Collapsable>,
 /*		<Collapsable key={i++} collapse={true} title='Using Fetch'>
-			<UsingFetch /></Collapsable>,
-		<Collapsable key={i++} collapse={true} title='Using Fetch'>
 			<UsingFetch /></Collapsable>,
 		<Collapsable key={i++} collapse={true} title='Using Fetch'>
 			<UsingFetch /></Collapsable>,
