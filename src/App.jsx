@@ -60,7 +60,7 @@ const App = () => {
 			<Button	route="/home" onClick={onRouteSelected}>Home</Button>
 			<SelectItem name="routes" items={lessonRoutes} value={currentRoute.path} onSelect={onLessonSelected} />
 			<Button route="/lesson/" onClick={onRouteSelected}>Current</Button>
-			<Button route="/lesson/search-page-design" onClick={onRouteSelected}>Search</Button>
+			<Button route="/weather" onClick={onRouteSelected}>Weather</Button>
 			<Button route="/about" onClick={onRouteSelected}>About</Button>
 		</NavBar>
 	</div>
