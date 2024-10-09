@@ -116,6 +116,6 @@ const Counter = () => {
 	</div>
 }
 
-Router.setRoute('/lesson/counter', <Counter />, 'Counter Exercise')
+// Router.setRoute('/lesson/counter', <Counter />, 'Counter Exercise')
 
 export default Counter

@@ -85,6 +85,6 @@ const FlexExercise = () => {
 	</>
 }
 
-Router.setRoute('/lesson/flex-exercise', <FlexExercise />, 'Flex Exercise')
+// Router.setRoute('/lesson/flex-exercise', <FlexExercise />, 'Flex Exercise')
 
 export default FlexExercise

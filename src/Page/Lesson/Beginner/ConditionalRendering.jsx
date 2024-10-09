@@ -54,6 +54,6 @@ const ConditionalRendering = () => {
 	</div>
 }
 
-Router.setRoute('/lesson/conditional-rendering-exercise', <ConditionalRendering />, 'Conditional Rendering')
+// Router.setRoute('/lesson/conditional-rendering-exercise', <ConditionalRendering />, 'Conditional Rendering')
 
 export default ConditionalRendering

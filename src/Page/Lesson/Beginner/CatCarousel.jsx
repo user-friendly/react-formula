@@ -10,9 +10,9 @@ import { useState } from 'react'
 
 import Router from '#Router'
 
-import CatData from './Components/CatCarousel/CatData'
-import CatCard from './Components/CatCarousel/CatCard'
-import NavButton from './Components/CatCarousel/NavButton'
+import CatData from '../Components/CatCarousel/CatData'
+import CatCard from '../Components/CatCarousel/CatCard'
+import NavButton from '../Components/CatCarousel/NavButton'
 
 const getNext = (index) => {
 	if (index >= CatData.length) {
@@ -40,6 +40,6 @@ const CatCarousel = () => {
 	</div>
 }
 
-Router.setRoute('/lesson/cat-carousel', <CatCarousel />, 'Cat Carousel')
+// Router.setRoute('/lesson/cat-carousel', <CatCarousel />, 'Cat Carousel')
 
 export default CatCarousel

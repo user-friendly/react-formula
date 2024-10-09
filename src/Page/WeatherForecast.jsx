@@ -1,3 +1,7 @@
+/**
+ * TODO This mini-app needs to be redone.
+ */
+
 import _ from 'lodash'
 
 import { useState, useEffect } from 'react'
