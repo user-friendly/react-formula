@@ -39,13 +39,10 @@ export default () => {
 	const [loading, setLoading] = useState(true)
 	const [stocks, setStocks] = useState([])
 	
-	const fetchStocks = () => {
-		fetch(ENDPOINT_URL)
-			.then(r => r.json())
-			.then(d => {
-				setStocks(d)
-				setLoading(false)
-			})
+	const fetchStocks = async () => {
+		const r = await fetch(ENDPOINT_URL)
+		setStocks(await r.json())
+		setLoading(false)
 	}
 	
 	useEffect(() => {
