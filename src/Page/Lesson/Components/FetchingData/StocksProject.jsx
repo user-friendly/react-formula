@@ -2,7 +2,7 @@ import _ from 'lodash'
 
 import { useState, useEffect } from 'react'
 
-import Spinner from './Components/Spinner'
+import Spinner from '#Components/Spinner'
 
 const ENDPOINT_URL = 'https://api.react-formula.com/learning-api/demos/stocks-project/stocks'
 
