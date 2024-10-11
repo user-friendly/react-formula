@@ -7,7 +7,9 @@ import Router from '#Router'
 const NotFound = () => {
 	// console.log('Render 404 page.')
 
-	return <div	className="
+	return (
+		<div
+			className="
 		py-2 px-4
 
 		text-xl
@@ -15,11 +17,13 @@ const NotFound = () => {
 		font-mono
 		
 		rounded-xl bg-orange-500
-	">
-		Page not found!
-	</div>
+	"
+		>
+			Page not found!
+		</div>
+	)
 }
 
-Router.setNotFound(<NotFound />, "Page Not Found")
+Router.setNotFound(<NotFound />, 'Page Not Found')
 
 export default NotFound

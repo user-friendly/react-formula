@@ -1,16 +1,17 @@
 /**
  * [title].
- * 
+ *
  * Path: /lesson/[title-hyphenated]
  */
 
 import Router from '#Router'
 
 const LessonTemplate = () => {
-	
-	return <div className="h-full">
-		[This is a generic lesson template. Replace this with conent.]
-	</div>
+	return (
+		<div className="h-full">
+			[This is a generic lesson template. Replace this with conent.]
+		</div>
+	)
 }
 
 // TODO Uncomment these and replace with appropriate paths.

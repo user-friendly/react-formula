@@ -1,69 +1,87 @@
 import _ from 'lodash'
 
-import { useState, useEffect } from 'react'
+import {useState, useEffect} from 'react'
 
 import Spinner from '#Components/Spinner'
 
-const ENDPOINT_URL = 'https://api.react-formula.com/learning-api/demos/stocks-project/stocks'
+const ENDPOINT_URL =
+	'https://api.react-formula.com/learning-api/demos/stocks-project/stocks'
 
 const StockCard = ({name, current_price, previous_price, symbol}) => {
 	// TODO Remove text code.
 	// previous_price = _.random(0, 2) === 1 ? current_price : previous_price
 	const move = ((current_price - previous_price) / previous_price) * 100
 	const price = current_price / 100
-	
+
 	const up = 'bg-green-200 text-green-600'
 	const down = 'bg-red-200 text-red-600'
 	const noop = 'bg-neutral-200 text-neutral-600'
-	
-	return <div className="
+
+	return (
+		<div
+			className="
 		m-4 p-4 border border-neutral-400 bg-white text-neutral-400
 		flex justify-between
-	">
-		<div className="flex flex-col">
-			<span>{name}</span>
-			<span className="text-2xl text-blue-400 font-bold">{symbol}</span>
-		</div>
-		
-		<div className="flex flex-col items-end">
-			<span className={`
+	"
+		>
+			<div className="flex flex-col">
+				<span>{name}</span>
+				<span className="text-2xl text-blue-400 font-bold">{symbol}</span>
+			</div>
+
+			<div className="flex flex-col items-end">
+				<span
+					className={`
 				px-2 py-1 rounded-full text-xs
 				${move > 0 ? up : null} ${move < 0 ? down : null} ${move == 0 ? noop : null}
-			`}>{move !== 0 ? `${move.toFixed(2)}%` : '-'}</span>
-			<span className="text-2xl text-black">${price.toFixed(2)}</span>
+			`}
+				>
+					{move !== 0 ? `${move.toFixed(2)}%` : '-'}
+				</span>
+				<span className="text-2xl text-black">${price.toFixed(2)}</span>
+			</div>
 		</div>
-	</div>
+	)
 }
 
 export default () => {
 	const [loading, setLoading] = useState(true)
 	const [stocks, setStocks] = useState([])
-	
+
 	const fetchStocks = async () => {
 		const r = await fetch(ENDPOINT_URL)
 		setStocks(await r.json())
 		setLoading(false)
 	}
-	
+
 	useEffect(() => {
 		console.log('add some artificial delay to showcase the spinner ;)')
 		const tid = setTimeout(() => {
 			fetchStocks()
 		}, 1500)
-		
+
 		return () => {
 			clearTimeout(tid)
 		}
 	}, [])
-	
-	return <div className="flex flex-col items-center min-w-80">
-		<div className="w-full max-w-md">
-			{loading
-				? <Spinner bg="bg-white" borderColor="border-blue-400" extra="m-auto mt-4 text-center text-blue-400">^</Spinner>
-				: stocks.map((s, i) => <StockCard {...s} key={i} />)
-			}
+
+	return (
+		<div className="flex flex-col items-center min-w-80">
+			<div className="w-full max-w-md">
+				{loading ? (
+					<Spinner
+						bg="bg-white"
+						borderColor="border-blue-400"
+						extra="m-auto mt-4 text-center text-blue-400"
+					>
+						^
+					</Spinner>
+				) : (
+					stocks.map((s, i) => <StockCard {...s} key={i} />)
+				)}
+			</div>
 		</div>
-	</div>
+	)
 }
 
 /* // TODO Remove text code.
