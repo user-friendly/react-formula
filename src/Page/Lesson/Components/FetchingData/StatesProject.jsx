@@ -11,7 +11,7 @@ const FETCH_ERROR_UNKNOWN = -1
 const ENDPOINT_URL = 'https://api.react-formula.com/learning-api/demos/states-project/states'
 
 const StateCard = ({capital, description, image, name, nickname, population}) => {
-	return <div className="max-w-xl m-4">
+	return <div className="max-w-2xl m-4">
 		<div className="mb-4 flex">
 			<img className="rounded-lg" src={image} />
 			
