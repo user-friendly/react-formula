@@ -20,7 +20,6 @@ export default defineConfig({
   },
   clearScreen: false,
   build: {
-	outDir: 'build/',
 	manifest: 'manifest.json'
   },
   importRoutes: {

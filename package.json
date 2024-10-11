@@ -6,9 +6,10 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build-dev": "vite build --mode development",
-    "build-prod": "vite build",
+    "build-dev": "vite dist --mode development",
+    "build": "vite build",
     "lint": "eslint .",
+    "lint-force-color": "eslint . --color",
     "preview": "vite preview"
   },
   "dependencies": {
