@@ -5,13 +5,14 @@ export default () => {
 	const [messages, setMessages] = useState([])
 	
 	const fetchMessages = () => {
+		// FIXME Endpoint needs auth. Mock it.
 		fetch('https://api.react-formula.com/learning-api/demos/message-board/messages')
 			.then((response) => response.json())
 			.then((data) => setMessages(data))
 	}
 
 	useEffect(() => {
-		fetchMessages()
+		// fetchMessages()
 	}, [])
 	
 	console.log(messages)
