@@ -4,7 +4,7 @@
 
 import _ from 'lodash'
 
-import { useState } from 'react'
+import {useState} from 'react'
 
 let render = true
 
@@ -15,20 +15,27 @@ if (_.isUndefined(window)) {
 
 const ScreenSizeDebug = () => {
 	if (render) {
-		const [dim, setDim] = useState({ w: window.innerWidth, h: window.innerHeight })
-		
+		const [dim, setDim] = useState({
+			w: window.innerWidth,
+			h: window.innerHeight,
+		})
+
 		window.onresize = (e) => {
-			setDim({ w: window.innerWidth, h: window.innerHeight })
+			setDim({w: window.innerWidth, h: window.innerHeight})
 		}
-		
-		return <div className="
+
+		return (
+			<div
+				className="
 			p-1
 			absolute top-0 left-0
 			rounded-md
 			text-xs text-gray-400 bg-gray-100
-		">
-			{dim.w}x{dim.h}
-		</div>
+		"
+			>
+				{dim.w}x{dim.h}
+			</div>
+		)
 	} else {
 		return <></>
 	}

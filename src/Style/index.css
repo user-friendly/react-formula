@@ -9,7 +9,7 @@ body {
 #debug-cols {
 	--rf-debug-odd: rgba(255, 0, 0, 0.3);
 	--rf-debug-even: rgba(0, 255, 0, 0.3);
-	
+
 	background: rgba(0, 0, 255, 0.3);
 }
 

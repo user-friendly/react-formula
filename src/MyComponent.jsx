@@ -16,18 +16,25 @@
  */
 
 const MyComponent = ({children, bgColor, height}) => {
-	 
-	return <div style={{
-		minHeight: height + 'px',
-		backgroundColor: bgColor
-	}}>
-		<span>
-			This is a {children ? <em>component with children</em> : <strong>childless component</strong>}.
-		</span>
-		<div>
-			{children}
+	return (
+		<div
+			style={{
+				minHeight: height + 'px',
+				backgroundColor: bgColor,
+			}}
+		>
+			<span>
+				This is a{' '}
+				{children ? (
+					<em>component with children</em>
+				) : (
+					<strong>childless component</strong>
+				)}
+				.
+			</span>
+			<div>{children}</div>
 		</div>
-	</div>
+	)
 }
 
 export default MyComponent

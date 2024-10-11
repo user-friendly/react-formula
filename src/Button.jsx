@@ -12,17 +12,34 @@ const styleDefault = `
 	bg-sky-400
 	
 	transition-bg
-`;
+`
 
-const Button = ({children, route, type = 'button', style = styleDefault, onClick = e => {}}) => {
+const Button = ({
+	children,
+	route,
+	type = 'button',
+	style = styleDefault,
+	onClick = (e) => {},
+}) => {
 	if (route === undefined) {
-		return <button type={type} onClick={e => onClick(e, route)} className={style}>
-			{children}
-		</button>
+		return (
+			<button type={type} onClick={(e) => onClick(e, route)} className={style}>
+				{children}
+			</button>
+		)
 	} else {
-		return <a href={route} onClick={e => {e.preventDefault(); onClick(e, route)}} className={style}>
-			{children}
-		</a>
+		return (
+			<a
+				href={route}
+				onClick={(e) => {
+					e.preventDefault()
+					onClick(e, route)
+				}}
+				className={style}
+			>
+				{children}
+			</a>
+		)
 	}
 }
 

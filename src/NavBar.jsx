@@ -5,7 +5,9 @@
 const NavBar = ({children}) => {
 	console.log('Render NavBar component.')
 
-	return <div className="
+	return (
+		<div
+			className="
 		text-lg
 		font-semibold
 		font-mono
@@ -16,9 +18,11 @@ const NavBar = ({children}) => {
 		
 		flex flex-row flex-wrap gap-2
 		justify-center
-  	 ">
-		{children}
-	</div>
+  	 "
+		>
+			{children}
+		</div>
+	)
 }
 
 export default NavBar
