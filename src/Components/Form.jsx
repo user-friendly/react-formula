@@ -1,6 +1,6 @@
 import _ from 'lodash'
 
-export default (props) => {
+const Form = (props) => {
 	let newProps = _.assign({}, props)
 	delete newProps.preventDefault
 	newProps.method = _.isString(newProps.method) ? newProps.method : 'POST'
@@ -14,3 +14,5 @@ export default (props) => {
 	}
 	return <form {...newProps}>{newProps.children}</form>
 }
+
+export default Form

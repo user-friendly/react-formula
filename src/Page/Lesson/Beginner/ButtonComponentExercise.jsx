@@ -4,8 +4,6 @@
  * Path: /lesson/button-component-exercise
  */
 
-import Router from '#Router'
-
 const FancyButton = ({children = 'Button', large = false}) => {
 	const largeStyles = large ? "text-3xl rounded-full" : "text-base rounded-md"
 	return <button className={`

@@ -4,8 +4,6 @@
  * Path: /lesson/search-page-design
  */
 
-import Router from '#Router'
-
 import Header from '../Components/SearchPageDesign/Header'
 import Search from '../Components/SearchPageDesign/Search'
 import Footer from '../Components/SearchPageDesign/Footer'

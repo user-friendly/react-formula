@@ -4,6 +4,8 @@
  * Copy/paste this file and modify it.
  */
 
+/* eslint-disable */
+
 import Router from '#Router'
 
 const Template = () => {

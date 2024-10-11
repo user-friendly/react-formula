@@ -8,8 +8,6 @@
 
 import { useState } from 'react'
 
-import Router from '#Router'
-
 import CatData from '../Components/CatCarousel/CatData'
 import CatCard from '../Components/CatCarousel/CatCard'
 import NavButton from '../Components/CatCarousel/NavButton'

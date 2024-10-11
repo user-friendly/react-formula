@@ -4,8 +4,6 @@
  * Path: /lesson/analyzing-layouts-exercise
  */
 
-import Router from '#Router'
-
 const quotes = [
 	{
 	  text: "One of my most productive days was throwing away 1000 lines of code.",

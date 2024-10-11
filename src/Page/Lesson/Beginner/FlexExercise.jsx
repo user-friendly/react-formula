@@ -4,8 +4,6 @@
  * Path: /lesson/flex-exercise
  */
 
-import Router from '#Router'
-
 const catSymbol = '🐈'
 
 const Cat = () => {

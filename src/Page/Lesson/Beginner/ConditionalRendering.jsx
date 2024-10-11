@@ -6,8 +6,6 @@
 
 import { useState } from 'react'
 
-import Router from '#Router'
-
 const Widget1 = () => {
 	const [reveal, setReveal] = useState(false)
 	

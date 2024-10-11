@@ -11,10 +11,12 @@ const defaults = {
 	extra: ''
 }
 
-export default (props) => {
+const Spinner = (props) => {
 	props = _.defaults({}, props, defaults)
 	return <div className={`${props.anim} ${props.rounded} ${props.dim}
 		${props.borderWidth} ${props.borderColor} ${props.borderColorTop}
 		${props.bg} ${props.extra}
 	`}>{props.children}</div>
 }
+
+export default Spinner

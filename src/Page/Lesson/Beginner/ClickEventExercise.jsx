@@ -6,7 +6,6 @@
 
 import { useState } from 'react'
 
-import Router from '#Router'
 // TODO Thic component is not generic. It's really a hyperlink.
 // import Button from '#Button'
 

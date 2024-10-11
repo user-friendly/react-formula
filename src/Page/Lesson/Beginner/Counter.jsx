@@ -8,8 +8,6 @@ import _ from 'lodash'
 
 import { useState, useEffect } from 'react'
 
-import Router from '#Router'
-
 // TODO Base velocity on time between clicks.
 
 const m = 2

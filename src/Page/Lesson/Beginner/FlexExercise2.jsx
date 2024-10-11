@@ -4,8 +4,6 @@
  * Path: /lesson/flex-exercise-ii
  */
 
-import Router from '#Router'
-
 const dogSymbol = '🐕'
 
 const Dog = () => {
