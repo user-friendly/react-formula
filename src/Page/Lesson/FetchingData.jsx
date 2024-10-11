@@ -47,6 +47,5 @@ const FetchingData = ({children}) => {
 }
 
 Router.setRoute('/lesson/fetching-data', <FetchingData />, 'Module 7: Fetching Data')
-Router.setRoute('/lesson', <FetchingData />)
 
 export default FetchingData
