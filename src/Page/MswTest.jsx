@@ -9,6 +9,9 @@ import {useState, useEffect} from 'react'
 import Router from '#Router'
 import Spinner from '#Components/Spinner'
 
+// TODO Need to hoist this into the top level component, i.e. App or main.js.
+//		And only include it conditionally, based the environment.
+//		Otherwise, it just adds to the app bundle size.
 import {default as MswBrowser} from '/msw/src/browser'
 
 const ENDPOINT_BASE_URL = 'https://example.com/user'
@@ -178,16 +181,13 @@ const MswTest = () => {
 	const refreshList = () => setRefresh(refresh + 1)
 
 	useEffect(() => {
-		if (process.env.NODE_ENV !== 'development') {
-			console.log('use actual service')
-			return
-		}
-
 		if (api) {
 			console.log('api is initialized')
 			return
 		}
 
+		// TODO If the service is not moved to top level,
+		//		check wether it is already started. 
 		MswBrowser.start({
 			// Do not log warnings about missing handlers.
 			onUnhandledRequest: 'bypass',

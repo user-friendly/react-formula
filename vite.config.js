@@ -20,7 +20,14 @@ export default defineConfig({
   },
   clearScreen: false,
   build: {
-	manifest: 'manifest.json'
+	manifest: 'manifest.json',
+	rollupOptions: {
+		output: {
+			manualChunks: {
+				services: ['lodash', 'msw'],
+			}
+		}
+	}
   },
   importRoutes: {
 	// The base dir where all the routes are.
