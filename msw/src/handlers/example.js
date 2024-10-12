@@ -48,6 +48,35 @@ const example = [
 			{status: 201}
 		)
 	}),
+	http.put(
+		'https://example.com/user/:id',
+		async ({params, cookies, request}) => {
+			const {id} = params
+			const newUser = await request.json()
+			const user = users.get(id)
+			let status = 400
+			let resp = {
+				message: 'user not found',
+			}
+			if (user !== undefined) {
+				newUser.id = id
+
+				console.log(`Update user from mock DB, by id ${id}.`)
+				console.log('Old data: ')
+				console.log(user)
+				console.log('New data: ')
+				console.log(newUser)
+
+				users.set(id, newUser)
+
+				status = 200
+				resp.message = 'user updated'
+			} else {
+				console.log(`User not found in mock DB, id ${id}.`)
+			}
+			return HttpResponse.json(resp, {status: status})
+		}
+	),
 	http.delete(
 		'https://example.com/user/:id',
 		async ({params, cookies, request}) => {

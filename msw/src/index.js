@@ -83,6 +83,8 @@ async function testSuit() {
 	console.log(resp)
 	console.log()
 
+	// TODO Create PUT/update case.
+
 	resp = await test_GetUser()
 	console.log('test: get user list: ')
 	console.log(resp)

@@ -40,5 +40,10 @@
   },
   "imports": {
     "#*": "/src/*"
+  },
+  "msw": {
+    "workerDirectory": [
+      "public"
+    ]
   }
 }
