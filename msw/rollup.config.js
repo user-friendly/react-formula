@@ -9,12 +9,9 @@ export default {
 		// The patterns in 'include' are additions.
 		// include: './src/**',
 		clearScreen: false,
-		buildDelay: 500
+		buildDelay: 500,
 	},
 	plugins: [
 		// Add necessary plugins like node-resolve, commonjs, etc.
 	],
-	external: [
-		'msw', 'msw/*'
-	]
 }
