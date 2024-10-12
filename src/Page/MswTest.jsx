@@ -276,6 +276,8 @@ const MswTest = () => {
 	)
 }
 
-Router.setRoute('/msw-test', <MswTest />)
+Router.setRoute('/msw-test', <MswTest />, 'Mock Service Worker')
+Router.setRoute('/lesson/msw-test', <MswTest />, 'Mock Service Worker Test')
 
 export default MswTest
+
