@@ -1,5 +1,13 @@
 import {useState, useEffect} from 'react'
 
+/**
+ * Message JSON structure:
+ * {
+ * 		username: "johndoe123",
+ * 		message: "message text goes here"
+ * }
+ */
+
 export default () => {
 	const [messages, setMessages] = useState([])
 
