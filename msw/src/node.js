@@ -1,6 +1,6 @@
 import {setupServer} from 'msw/node'
-import example from './handlers/example.js'
+import Example from './handlers/Example.js'
 
-const node = setupServer(...example)
+const node = setupServer(...Example)
 
 export default node

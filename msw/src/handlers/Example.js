@@ -10,7 +10,7 @@ users.set('c7b3d8e0-5e0b-4b0f-8b3a-3b9f4b3d3b3d', {
 	lastName: 'Maverick',
 })
 
-const example = [
+const Example = [
 	// Intercept "GET https://example.com/user" requests...
 	http.get('https://example.com/user', ({cookies}) => {
 		// ...and respond to them using this JSON response.
@@ -108,4 +108,4 @@ const example = [
 	),
 ]
 
-export default example
+export default Example

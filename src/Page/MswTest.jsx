@@ -12,7 +12,7 @@ import Spinner from '#Components/Spinner'
 // TODO Need to hoist this into the top level component, i.e. App or main.js.
 //		And only include it conditionally, based the environment.
 //		Otherwise, it just adds to the app bundle size.
-import {default as MswBrowser} from '/msw/src/browser'
+import {default as MswBrowser} from '/msw/src/Browser'
 
 const ENDPOINT_BASE_URL = 'https://example.com/user'
 
