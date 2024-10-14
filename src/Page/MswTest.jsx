@@ -216,9 +216,7 @@ const MswTest = () => {
 				<br />
 				<span>Mock API is ready for use.</span>
 				<br />
-				<Button onClick={handleNewUser}>
-					Add User
-				</Button>
+				<Button onClick={handleNewUser}>Add User</Button>
 			</div>
 			{users.map((u, k) => (
 				<UserCard
@@ -236,4 +234,3 @@ Router.setRoute('/msw-test', <MswTest />, 'Mock Service Worker')
 Router.setRoute('/lesson/msw-test', <MswTest />, 'Mock Service Worker Test')
 
 export default MswTest
-

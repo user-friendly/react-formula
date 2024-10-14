@@ -5,17 +5,20 @@ const ENDPOINT_BASE_URL = `${import.meta.env.VITE_API_BASE_URL}/learning-api/dem
 const messages = []
 
 function addMessage(username, message) {
-	const newMessage = 	{
-			username: username,
-			message: message,
-		}
+	const newMessage = {
+		username: username,
+		message: message,
+	}
 	messages.push(newMessage)
 	return newMessage
 }
 
 addMessage('John Doe', 'Hello programmers!')
-addMessage('Jane Dowe', 'How\'s it going?')
-addMessage('John Doe', 'Great! I just finished learning about Mock Service Worker.')
+addMessage('Jane Dowe', "How's it going?")
+addMessage(
+	'John Doe',
+	'Great! I just finished learning about Mock Service Worker.'
+)
 addMessage('Jane Dowe', 'That is amazing!!!')
 addMessage('jacksparrow123', 'pretty nifty :)')
 addMessage('meatcanyon404', 'c0mℇ τo p∀p∀')
@@ -29,11 +32,11 @@ const MessageBoard = [
 			return new HttpResponse(null, {
 				status: 415,
 				headers: {
-					'Accept-Type': 'application/json'
-				}
+					'Accept-Type': 'application/json',
+				},
 			})
 		}
-		
+
 		const reqBody = await request.json()
 		const msg = addMessage(reqBody.username, reqBody.message)
 		return HttpResponse.json(msg, {status: 201})

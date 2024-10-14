@@ -16,14 +16,11 @@ if (import.meta.hot) {
 
 // FIXME Mocking lesson services, since I aint got the monies
 //		 to get a ☁ VM.
-if (true/*import.meta.env.DEV === true*/) {
-	MswBrowser
-		.start({onUnhandledRequest: 'bypass'})
-		.then(() => {
-			ReactDOM.createRoot(document.getElementById('root')).render(<App />)
-		})
-}
-else {
+if (true /*import.meta.env.DEV === true*/) {
+	MswBrowser.start({onUnhandledRequest: 'bypass'}).then(() => {
+		ReactDOM.createRoot(document.getElementById('root')).render(<App />)
+	})
+} else {
 	ReactDOM.createRoot(document.getElementById('root')).render(<App />)
 }
 
