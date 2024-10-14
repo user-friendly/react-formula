@@ -12,8 +12,8 @@
     "build": "vite build",
     "lint": "eslint .",
     "lint-force-color": "eslint . --color",
-    "format": "prettier --write src/",
-    "format-check": "prettier -c src/",
+    "format": "prettier --write src/ msw/",
+    "format-check": "prettier -c src/ msw/",
     "preview": "vite preview",
     "msw-test": "cd msw && rollup -c rollup.config.js --watch --watch.onEnd='node dist/bundle.js'"
   },
