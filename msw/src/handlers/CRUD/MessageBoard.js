@@ -25,7 +25,17 @@ const MessageBoard = [
 		return HttpResponse.json(messages)
 	}),
 	http.post(`${ENDPOINT_BASE_URL}`, async ({cookies, request}) => {
-		const msg = addMessage(await request.json())
+		if (request.headers.get('content-type') !== 'application/json') {
+			return new HttpResponse(null, {
+				status: 415,
+				headers: {
+					'Accept-Type': 'application/json'
+				}
+			})
+		}
+		
+		const reqBody = await request.json()
+		const msg = addMessage(reqBody.username, reqBody.message)
 		return HttpResponse.json(msg, {status: 201})
 	}),
 ]
