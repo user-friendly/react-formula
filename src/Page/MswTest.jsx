@@ -9,11 +9,6 @@ import {useState, useEffect} from 'react'
 import Router from '#Router'
 import Spinner from '#Components/Spinner'
 
-// TODO Need to hoist this into the top level component, i.e. App or main.js.
-//		And only include it conditionally, based the environment.
-//		Otherwise, it just adds to the app bundle size.
-import {default as MswBrowser} from '/msw/src/Browser'
-
 const ENDPOINT_BASE_URL = 'https://example.com/user'
 
 const getRandomName = () => {
@@ -174,43 +169,18 @@ async function deleteUser(id) {
 }
 
 const MswTest = () => {
-	const [api, setApi] = useState(false)
 	const [refresh, setRefresh] = useState(0)
 	const [users, setUsers] = useState([])
 
 	const refreshList = () => setRefresh(refresh + 1)
 
 	useEffect(() => {
-		if (api) {
-			console.log('api is initialized')
-			return
-		}
-
-		// TODO If the service is not moved to top level,
-		//		check wether it is already started. 
-		MswBrowser.start({
-			// Do not log warnings about missing handlers.
-			onUnhandledRequest: 'bypass',
-		}).then(() => {
-			console.log('Mock Service Worker started.')
-			setApi(true)
-		})
-	}, [])
-
-	useEffect(() => {
-		if (!api) {
-			return
-		}
 		fetchUserList()
 			.then((data) => setUsers(data))
 			.catch((e) => console.log(`failed to fetch user list: ${e}`))
-	}, [api, refresh])
+	}, [refresh])
 
 	const handleNewUser = () => {
-		if (!api) {
-			console.log('API not available yet.')
-			return
-		}
 		postUser(getNewUser())
 			.then((data) => {
 				console.log(`new user created: ${data.message}`)
@@ -220,10 +190,6 @@ const MswTest = () => {
 	}
 
 	const handleDelete = (id) => {
-		if (!api) {
-			console.log('API not available yet.')
-			return
-		}
 		deleteUser(id)
 			.then((data) => {
 				console.log(`user deleted: ${data.message}`)
@@ -233,10 +199,6 @@ const MswTest = () => {
 	}
 
 	const handleUpdate = (id) => {
-		if (!api) {
-			console.log('API not available yet.')
-			return
-		}
 		updateUser(id, getNewUser())
 			.then((data) => {
 				console.log(`user updated: ${data.message}`)
@@ -252,17 +214,11 @@ const MswTest = () => {
 			<div className="p-4 bg-neutral-200 rounded-md">
 				Here we be testing the MSW browser variant.
 				<br />
-				{api ? (
-					<>
-						<span>Mock API is ready for use.</span>
-						<br />
-						<Button disabled={!api} onClick={handleNewUser}>
-							Add User
-						</Button>
-					</>
-				) : (
-					<Spinner />
-				)}
+				<span>Mock API is ready for use.</span>
+				<br />
+				<Button onClick={handleNewUser}>
+					Add User
+				</Button>
 			</div>
 			{users.map((u, k) => (
 				<UserCard

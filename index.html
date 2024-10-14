@@ -12,7 +12,13 @@
   </head>
   <body>
 	<div id="screenSizeDebug"></div>
-	<div id="root"></div>
+	<div id="root">
+		<div class="fixed inset-0 h-screen w-screen flex justify-center items-center">
+			<div class="animate-spin rounded-full w-40 h-40
+				border-[2.5rem] border-gray-700 border-t-transparent
+				bg-gray-300"></div>
+		</div>
+	</div>
 	<!-- script type="module" src="/react-formula-adapter.js"></script -->
 	<script type="module" src="/src/main.jsx"></script>
   </body>
