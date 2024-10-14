@@ -21,10 +21,8 @@ export default () => {
 	}
 
 	useEffect(() => {
-		// fetchMessages()
+		fetchMessages()
 	}, [])
-
-	console.log(messages)
 
 	const messageItems = messages.map((message, idx) => (
 		<div
