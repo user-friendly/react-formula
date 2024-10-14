@@ -1,6 +1,6 @@
 import {http, HttpResponse} from 'msw'
 
-const ENDPOINT_BASE_URL = 'https://api.react-formula.com/learning-api/demos/message-board/messages'
+const ENDPOINT_BASE_URL = `${import.meta.env.VITE_API_BASE_URL}/learning-api/demos/message-board/messages`
 
 const messages = []
 

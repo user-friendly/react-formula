@@ -7,6 +7,8 @@
   "scripts": {
     "dev": "vite",
     "build-dev": "vite build --mode development",
+    "build-qa": "vite build --mode testing",
+    "build-stage": "vite build --mode staging",
     "build": "vite build",
     "lint": "eslint .",
     "lint-force-color": "eslint . --color",
