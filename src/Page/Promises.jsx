@@ -188,7 +188,7 @@ async function doBatchV3(size, work = '') {
 		
 		p.then(r => {
 			if (_.random(2) >= 1) {
-				logger.logSuccess(`Chain 3, queue up subworker of ${r}`)
+				logger.log(`Chain 3, queue up subworker of ${r}`)
 				return doWork(`Subworker of ${r}`)
 					.then((r) => logger.logSuccess(`Chain 3, subworker resolved & complete: ${r}`))
 					.catch((e) => logger.logError(`Chain 3, subwoker failed: ${e}`))
