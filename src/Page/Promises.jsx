@@ -4,10 +4,10 @@ import {useState, useEffect, useSyncExternalStore, Fragment} from 'react'
 
 import Router from '#Router'
 
-const DEFAULT_BATCH_SIZE = 2
+const DEFAULT_BATCH_SIZE = 1
 
 async function sleep(ms) {
-    return await new Promise((s, e) => setTimeout(() => s(), ms))
+    return await new Promise((r) => setTimeout(() => r(), ms))
 }
 
 const Button = (props) => {
@@ -37,10 +37,10 @@ class LogStore {
 	#tid = 0
 	
 	constructor() {
-		this.log('This is an ordinary message.')
+		/*this.log('This is an ordinary message.')
 		this.logSuccess('This is a success message.')
 		this.logError('This is an error message.')
-		this.log('This is an ordinary message. But, it is very, very, very, very, very, very, very, very, very, long.')
+		this.log('This is an ordinary message. But, it is very, very, very, very, very, very, very, very, very, long.')*/
 	}
 	
 	#push(obj) {
@@ -99,31 +99,104 @@ const logger = new LogStore()
 
 let sid = 0
 
-async function sweetPromise() {
+async function sweetPromise(work) {
     const id = sid++
-    logger.log(`Promise (${id}): start async work`)
+    logger.log(`Promise (${id}): Start async work: ${work}.`)
     await sleep(500)//(500 + _.random(0, 500))
 	const rn = _.random(1, 100)
-    if (rn > 70) {
-        throw `Promise (${id}): promise rejected: invalid number '${rn}'`
+    if (rn > 50) {
+        throw `Promise (${id}): Worker (${work}) rejected: error(${rn})`
     }
-    logger.log(`Promise (${id}): done with the work`)
+    logger.log(`Promise (${id}): Done with the work: ${work}.`)
     return `Promise (${id}): result is ${rn}`
 }
 
-function doWork() {
-    return sweetPromise()
+function doWork(work) {
+    return sweetPromise(work)
 }
 
-async function doBatch(size) {
+function getBatch(size) {
 	size = _.toInteger(size)
-	const BATCH_MAX = size > 0 && size <= 128 ? size : DEFAULT_BATCH_SIZE
-	
+	return size > 0 && size <= 128 ? size : DEFAULT_BATCH_SIZE
+}
+
+async function doBatchV1(size, work = '') {
+	const BATCH_MAX = getBatch(size)
 	logger.log(`Lunch a batch of ${BATCH_MAX} worker(s).`)
 	for (let i = 0; i < BATCH_MAX; i++) {
-	    doWork()
+	    doWork(work)
 			.then(r => logger.logSuccess(`A worker has finished: ${r}`))
+			// Equivalent to .then(null, e => {})
 			.catch(e => logger.logError(`A worker has FAILED: ${e}`))
+	}
+}
+
+async function doBatchV2(size, work = '') {
+	const BATCH_MAX = getBatch(size)
+	logger.log(`Lunch a batch of ${BATCH_MAX} worker(s).`)
+	for (let i = 0; i < BATCH_MAX; i++) {
+	    doWork(work)
+			.then(r => {
+				logger.logSuccess(`A worker has finished: ${r}, queue up another worker.`)
+				return doWork(`Subworker of ${work}`)
+			})
+			.then(r => logger.logSuccess(`A subworker has finished: ${r}`))
+			// Equivalent to .then(null, e => {})
+			.catch(e => logger.logError(`A worker has FAILED: ${e}`))
+	}
+}
+
+async function doBatchV3(size, work = '') {
+	let p = null
+	const BATCH_MAX = getBatch(size)
+	logger.log(`Lunch a batch of ${BATCH_MAX} worker(s).`)
+	for (let i = 0; i < BATCH_MAX; i++) {
+	    p = doWork(work)
+		 	.then(r => {
+				logger.logSuccess(`Chain 1, resolved & complete: ${r}`)
+				return r
+			})
+			// Equivalent to .then(null, e => {})
+			.catch(async (e) => {
+				logger.logError(`Chain 1, failed: ${e}`)
+				await sleep(250)
+				if (_.random(1) === 1) {
+					return `Chain 1, restart worker from the failed state: ${e}`
+				} else {
+					throw Error(`Chain 1, throw an error down the chains: ${e}`)
+				}
+			})
+		
+		// Chain 1 processing. Other chains will wait for chain 1's promise fulfillment.
+		// Var `p` is the mutated promise returned by the last .catch() method.
+		// Chain 2 & 3 will execute in an async manner. If you want all chains to be
+		// async, don't store the promise returned by the last .catch() of chain 1.
+		// Refactor to: p = doWork(); p.then(...chain 1...
+		
+		p.then(async r => {
+			logger.log(`Chain 2.1, resolved for: ${r}`)
+			await sleep(250)
+			logger.log(`Chain 2.1, did some work for: ${r}`)
+			return r
+		}).then(r => {
+				logger.log(`Chain 2.2, resolved: ${r}`)
+				return r
+			})
+			.finally(() => logger.log('Chain 2.3, final.'))
+			.then(r => logger.logSuccess(`Chain 2.4, resolved & complete: ${r}`))
+			.catch((e) => {})
+		
+		p.then(r => {
+			if (_.random(2) >= 1) {
+				logger.logSuccess(`Chain 3, queue up subworker of ${r}`)
+				return doWork(`Subworker of ${r}`)
+					.then((r) => logger.logSuccess(`Chain 3, subworker resolved & complete: ${r}`))
+					.catch((e) => logger.logError(`Chain 3, subwoker failed: ${e}`))
+			}
+			logger.logSuccess(`Chain 3, resolved & complete: ${r}`)
+		})
+		
+		p.catch(e => logger.logError(`Chain 4, failed: ${e}`))
 	}
 }
 
@@ -133,9 +206,9 @@ const Promises = () => {
 	
 	const logStore = useSyncExternalStore(_.bind(logger.subscribe, logger), _.bind(logger.getSnapshot, logger))
 	
-	if (refresh > 0) {
-		console.log(`manually refreshed ${refresh} times`)
-	}
+	useEffect(() => {
+		window.scrollTo(0, document.body.scrollHeight)
+	}, [logStore])
 	
 	return <div className="my-6 flex flex-col items-center">
 		<h2 className="mb-6 text-3xl">JavaScript Promise Shenanigans</h2>
@@ -151,9 +224,16 @@ const Promises = () => {
 				type="number" min={1} max={128}
 				name="batchSize" value={batch} onChange={e => setBatch(e.target.value)}
 			/>
-			<Button onClick={() => doBatch(batch)}>Run</Button>
+			<Button onClick={() => doBatchV1(batch, 'vanilla')}>Run v1</Button>
+			<Button onClick={() => doBatchV2(batch, 'apple')}>Run v2</Button>
+			<Button onClick={() => doBatchV3(batch, 'orange')}>Run v3</Button>
 			<Button onClick={() => logger.clear()}>Clear</Button>
-			<Button onClick={() => setRefresh(refresh + 1)}>Reload</Button>
+			<Button onClick={() => {
+				setRefresh(refresh + 1)
+				setBatch(DEFAULT_BATCH_SIZE)
+				logger.clear()
+				sid=0
+			}}>Reload</Button>
 		</div>
 	</div>
 }
@@ -161,14 +241,3 @@ const Promises = () => {
 Router.setRoute('/lesson/misc/promises', <Promises />, 'Misc: JS Promise/Async')
 
 export default Promises
-
-
-
-
-
-
-
-
-
-
-
