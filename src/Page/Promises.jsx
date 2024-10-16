@@ -4,6 +4,8 @@ import {useState, useEffect, useSyncExternalStore, Fragment} from 'react'
 
 import Router from '#Router'
 
+import Loopy from '#Components/Loopy'
+
 const DEFAULT_BATCH_SIZE = 1
 
 async function sleep(ms) {
@@ -97,6 +99,7 @@ class LogStore {
 }
 const logger = new LogStore()
 
+// Serial id, for workers.
 let sid = 0
 
 async function sweetPromise(work) {
@@ -219,21 +222,27 @@ const Promises = () => {
 			{logStore.map((m, k) => <Fragment key={k}>{m}</Fragment>)}
 		</div>
 		
-		<div>
-			<input className="my-2 mx-1 px-2 py-1 w-16 bg-blue-100 text-xl rounded-md"
-				type="number" min={1} max={128}
-				name="batchSize" value={batch} onChange={e => setBatch(e.target.value)}
-			/>
-			<Button onClick={() => doBatchV1(batch, 'vanilla')}>Run v1</Button>
-			<Button onClick={() => doBatchV2(batch, 'apple')}>Run v2</Button>
-			<Button onClick={() => doBatchV3(batch, 'orange')}>Run v3</Button>
-			<Button onClick={() => logger.clear()}>Clear</Button>
-			<Button onClick={() => {
-				setRefresh(refresh + 1)
-				setBatch(DEFAULT_BATCH_SIZE)
-				logger.clear()
-				sid=0
-			}}>Reload</Button>
+		<div className="">
+			<div>
+				<input className="my-2 mx-1 px-2 py-1 w-16 bg-blue-100 text-xl rounded-md"
+					type="number" min={1} max={128}
+					name="batchSize" value={batch} onChange={e => setBatch(e.target.value)}
+				/>
+				<Button onClick={() => doBatchV1(batch, 'vanilla')}>Run v1</Button>
+				<Button onClick={() => doBatchV2(batch, 'apple')}>Run v2</Button>
+				<Button onClick={() => doBatchV3(batch, 'orange')}>Run v3</Button>
+				<Button onClick={() => logger.clear()}>Clear</Button>
+				<Button onClick={() => {
+					setRefresh(refresh + 1)
+					setBatch(DEFAULT_BATCH_SIZE)
+					logger.clear()
+					sid=0
+				}}>Reload</Button>
+			</div>
+			
+			<div>
+				<Button onClick={() => Loopy()}>Loopy</Button>
+			</div>
 		</div>
 	</div>
 }
