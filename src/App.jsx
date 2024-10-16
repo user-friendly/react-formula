@@ -90,7 +90,7 @@ const App = () => {
 						JS Promise
 					</Button>
 					<Button route="/random" onClick={onRouteSelected}>
-						Predictable RNG
+						PseudoRNG
 					</Button>
 				</NavBar>
 			</div>
