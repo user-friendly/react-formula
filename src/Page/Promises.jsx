@@ -4,7 +4,7 @@ import {useState, useEffect, useSyncExternalStore, Fragment} from 'react'
 
 import Router from '#Router'
 
-import Loopy from '#Components/Loopy'
+import {default as Loopy, dumbSleep} from '#Components/Loopy'
 
 const DEFAULT_BATCH_SIZE = 1
 
@@ -222,7 +222,7 @@ const Promises = () => {
 			{logStore.map((m, k) => <Fragment key={k}>{m}</Fragment>)}
 		</div>
 		
-		<div className="">
+		<div className="flex flex-col items-center">
 			<div>
 				<input className="my-2 mx-1 px-2 py-1 w-16 bg-blue-100 text-xl rounded-md"
 					type="number" min={1} max={128}
@@ -241,7 +241,7 @@ const Promises = () => {
 			</div>
 			
 			<div>
-				<Button onClick={() => Loopy()}>Loopy</Button>
+				<Button onClick={() => Loopy({logger: logger})}>Loopy</Button>
 			</div>
 		</div>
 	</div>
