@@ -9,7 +9,7 @@ import Router from '#Router'
 import Collapsable from './Components/Collapsable'
 
 import MessageBoard from './Components/CRUD/MessageBoard'
-//import ModuleLesson from './Components/CRUD/ModuleLesson'
+import DeletingFurni from './Components/CRUD/DeletingFurni'
 //import ModuleLesson from './Components/CRUD/ModuleLesson'
 //import ModuleLesson from './Components/CRUD/ModuleLesson'
 //import ModuleLesson from './Components/CRUD/ModuleLesson'
@@ -19,12 +19,12 @@ import MessageBoard from './Components/CRUD/MessageBoard'
 const CRUD = ({children}) => {
 	let i = 0
 	const lessons = [
-		<Collapsable key={i++} collapse={false} title="Message Board">
+		<Collapsable key={i++} collapse={true} title="Message Board">
 			<MessageBoard />
 		</Collapsable>,
-		/*		<Collapsable key={i++} collapse={true} title='CRUD'>
-			<CRUD /></Collapsable>,
-		<Collapsable key={i++} collapse={true} title='CRUD'>
+				<Collapsable key={i++} collapse={false} title='Deleting Furniture'>
+			<DeletingFurni /></Collapsable>,
+/*		<Collapsable key={i++} collapse={true} title='CRUD'>
 			<CRUD /></Collapsable>,
 		<Collapsable key={i++} collapse={true} title='CRUD'>
 			<CRUD /></Collapsable>,
