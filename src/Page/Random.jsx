@@ -2,6 +2,8 @@
  * Random page view.
  */
 
+import _ from 'lodash'
+
 import {useState, useEffect} from 'react'
 
 import MersenneTwister from 'mersennetwister'
@@ -13,7 +15,7 @@ const Button = (props) => {
 	return <button className="my-2 mx-1 px-2 py-1 bg-blue-500 text-xl text-white rounded-md hover:bg-blue-600 active:bg-blue-700" {...props}>{props.children}</button>
 }
 
-const mt = new MersenneTwister(1)
+let mt = new MersenneTwister(1)
 
 /**
  * Yup, it got a complicated.
@@ -26,9 +28,34 @@ const mt = new MersenneTwister(1)
  */
 
 const Random = () => {
+	const [saved, setSaved] = useState(null)
 	const [seed, setSeed] = useState(1)
 	const [list, setList] = useState(new Map())
 	const [seedInput, setSeedInput] = useState(seed)
+	
+	const saveRngEngine = () => {
+		const state = {
+			seed: seed,
+			list: JSON.stringify(Array.from(list.entries())),
+			mt: mt.mt,
+			mti: mt.mti,
+		}
+		const str = JSON.stringify(state)
+		setSaved(str)
+	}
+	
+	const loadRngEngine = () => {
+		const state = JSON.parse(saved)
+		// The inital seed should not matter, if the internal
+		// state is overwritten.
+		mt = new MersenneTwister(128)
+		mt.mt = state.mt
+		mt.mti = state.mti
+		// Update app states.
+		setSeed(state.seed)
+		setSeedInput(state.seed)
+		setList(new Map(JSON.parse(state.list)))
+	}
 	
 	const getList = (seed) => {
 		if (!list.has(seed)) {
@@ -98,11 +125,16 @@ const Random = () => {
 		return () => {
 			document.body.removeEventListener("keyup", handleKeyPress)
 		}
-	}, [seed, list, seedInput])
+	}, [seed, list, seedInput, saved])
 	
 	return (
 		<div className="m-auto mt-6 max-w-2xl py-2 px-4 rounded-xl bg-neutral-200 flex flex-col items-center">
 			<h2 className="text-4xl">Random Numbers</h2>
+			
+			<div className="m-2">
+				<Button onClick={() => saveRngEngine()}>Save</Button>
+				<Button onClick={() => loadRngEngine()}>Load</Button>
+			</div>
 			
 			<div className="m-2">
 				Use up/down arrow keys to increase or decrease seed.
