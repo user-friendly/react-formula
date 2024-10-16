@@ -1,8 +1,10 @@
+import _ from 'lodash'
+
 import {http, HttpResponse} from 'msw'
 
 const ENDPOINT_BASE_URL = `${import.meta.env.VITE_API_BASE_URL}/learning-api/demos/deleting-furni/furnitures`
 
-const store = [
+let store = [
     {
         "description": "A modern sofa with clean lines and comfortable cushions.",
         "id": 973,
