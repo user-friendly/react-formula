@@ -19,7 +19,7 @@ const MessageBoard = () => {
 	const [user, setUser] = useState('guest')
 	const [text, setText] = useState('')
 
-	const textInputRef = useRef(null)
+	const focusToRef = useRef(null)
 	const messagesRef = useRef(null)
 
 	const fetchMessages = () => {
@@ -70,8 +70,8 @@ const MessageBoard = () => {
 
 	useEffect(() => {
 		messagesRef.current.scrollTop = messagesRef.current.scrollHeight
-		textInputRef.current.scrollIntoView(false)
-		textInputRef.current.focus()
+		focusToRef.current.scrollIntoView(false)
+		focusToRef.current.focus()
 	}, [messages])
 
 	const messageItems = messages.map((message, idx) => (
@@ -85,10 +85,11 @@ const MessageBoard = () => {
 	))
 
 	return (
-		<div className="flex flex-col items-center">
+		<div ref={focusToRef}
+			className="pb-6 flex flex-col items-center">
 			<div
 				ref={messagesRef}
-				className="w-full max-w-xl flex flex-col max-h-[900px] overscroll-contain overflow-y-auto overflow-x-hidden"
+				className="w-full max-w-xl flex flex-col max-h-[900px] overscroll-auto overflow-y-auto overflow-x-hidden"
 			>
 				{messageItems}
 			</div>
@@ -103,7 +104,6 @@ const MessageBoard = () => {
 					className="w-24 p-1 m-2 border border-gray-300 rounded-md"
 				/>
 				<input
-					ref={textInputRef}
 					name="message"
 					value={text}
 					onChange={(e) => setText(e.target.value)}
