@@ -13,8 +13,8 @@ import SelectItem from './SelectItem'
 import NavBar from './NavBar'
 import NotFound from './Page/NotFound'
 
-Router.setRedirect('/home', '/lesson')
-Router.setRedirect('/', '/lesson')
+Router.setRedirect('/home', '/lesson/crud')
+Router.setRedirect('/', '/home')
 
 const App = () => {
 	// TODO Remove debug stmt.
@@ -73,9 +73,6 @@ const App = () => {
 						value={currentRoute.path}
 						onSelect={onLessonSelected}
 					/>
-					<Button route="/lesson/" onClick={onRouteSelected}>
-						Current
-					</Button>
 					<Button route="/about" onClick={onRouteSelected}>
 						About
 					</Button>
