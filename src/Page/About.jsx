@@ -1,19 +1,12 @@
 /**
- * Homepage view.
+ * About view.
  */
 
 import Router from '#Router'
 
-const Home = () => {
-	console.log('Render Home.')
-
+const About = () => {
 	return (
-		<div
-			className="
-		px-8 h-full
-		flex flex-col justify-start items-start gap-y-6
-	"
-		>
+		<div className="px-8 h-full flex flex-col justify-start items-start gap-y-6">
 			<h1 className="self-center text-4xl">About</h1>
 			<p>
 				As a highly skilled freelance software engineer with over a decade of
@@ -50,7 +43,6 @@ const Home = () => {
 	)
 }
 
-// Router.setRoute('/', <Home />, "Home")
-Router.setRoute('/home', <Home />, 'Home')
+Router.setRoute('/about', <About />, 'About')
 
-export default Home
+export default About

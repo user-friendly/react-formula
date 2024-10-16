@@ -13,6 +13,7 @@ import SelectItem from './SelectItem'
 import NavBar from './NavBar'
 import NotFound from './Page/NotFound'
 
+Router.setRedirect('/home', '/lesson')
 Router.setRedirect('/', '/lesson')
 
 const App = () => {
