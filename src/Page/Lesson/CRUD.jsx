@@ -52,6 +52,5 @@ const CRUD = ({children}) => {
 }
 
 Router.setRoute('/lesson/crud', <CRUD />, 'Module 8: CRUD')
-Router.setRoute('/lesson', <CRUD />)
 
 export default CRUD
