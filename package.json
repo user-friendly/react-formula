@@ -34,6 +34,7 @@
     "eslint-plugin-react-refresh": "^0.4.9",
     "globals": "^15.9.0",
     "lodash": "^4.17.21",
+    "mersennetwister": "^0.2.3",
     "msw": "^2.4.10",
     "prettier": "^3.3.3",
     "tailwindcss": "^3.4.10",
