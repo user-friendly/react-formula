@@ -247,6 +247,6 @@ const Promises = () => {
 	</div>
 }
 
-Router.setRoute('/lesson/misc/promises', <Promises />, 'Misc: JS Promise/Async')
+Router.setRoute('/promises', <Promises />, 'JS Promise/Async')
 
 export default Promises

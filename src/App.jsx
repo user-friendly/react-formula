@@ -75,11 +75,22 @@ const App = () => {
 					<Button route="/lesson/" onClick={onRouteSelected}>
 						Current
 					</Button>
+					<Button route="/about" onClick={onRouteSelected}>
+						About
+					</Button>
+				</NavBar>
+				<NavBar>
 					<Button route="/weather" onClick={onRouteSelected}>
 						Weather
 					</Button>
-					<Button route="/about" onClick={onRouteSelected}>
-						About
+					<Button route="/msw-test" onClick={onRouteSelected}>
+						Mock Service Worker
+					</Button>
+					<Button route="/promises" onClick={onRouteSelected}>
+						JS Promise
+					</Button>
+					<Button route="/random" onClick={onRouteSelected}>
+						Predictable RNG
 					</Button>
 				</NavBar>
 			</div>
