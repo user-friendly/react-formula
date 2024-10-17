@@ -22,9 +22,10 @@ const CRUD = ({children}) => {
 		<Collapsable key={i++} collapse={true} title="Message Board">
 			<MessageBoard />
 		</Collapsable>,
-				<Collapsable key={i++} collapse={false} title='Deleting Furniture'>
-			<DeletingFurni /></Collapsable>,
-/*		<Collapsable key={i++} collapse={true} title='CRUD'>
+		<Collapsable key={i++} collapse={false} title="Deleting Furniture">
+			<DeletingFurni />
+		</Collapsable>,
+		/*		<Collapsable key={i++} collapse={true} title='CRUD'>
 			<CRUD /></Collapsable>,
 		<Collapsable key={i++} collapse={true} title='CRUD'>
 			<CRUD /></Collapsable>,

@@ -85,8 +85,7 @@ const MessageBoard = () => {
 	))
 
 	return (
-		<div ref={focusToRef}
-			className="pb-6 flex flex-col items-center">
+		<div ref={focusToRef} className="pb-6 flex flex-col items-center">
 			<div
 				ref={messagesRef}
 				className="w-full max-w-xl flex flex-col max-h-[900px] overscroll-auto overflow-y-auto overflow-x-hidden"
