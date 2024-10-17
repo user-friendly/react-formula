@@ -9,8 +9,8 @@ import Router from '#Router'
 import Collapsable from './Components/Collapsable'
 
 import MessageBoard from './Components/CRUD/MessageBoard'
-import DeletingFurni from './Components/CRUD/DeletingFurni'
-//import ModuleLesson from './Components/CRUD/ModuleLesson'
+import Furniture from './Components/CRUD/Furniture'
+//import Todo from './Components/CRUD/Todo'
 //import ModuleLesson from './Components/CRUD/ModuleLesson'
 //import ModuleLesson from './Components/CRUD/ModuleLesson'
 //import ModuleLesson from './Components/CRUD/ModuleLesson'
@@ -22,21 +22,11 @@ const CRUD = ({children}) => {
 		<Collapsable key={i++} collapse={true} title="Message Board">
 			<MessageBoard />
 		</Collapsable>,
-		<Collapsable key={i++} collapse={false} title="Deleting Furniture">
-			<DeletingFurni />
+		<Collapsable key={i++} collapse={false} title="Furniture">
+			<Furniture />
 		</Collapsable>,
-		/*		<Collapsable key={i++} collapse={true} title='CRUD'>
-			<CRUD /></Collapsable>,
-		<Collapsable key={i++} collapse={true} title='CRUD'>
-			<CRUD /></Collapsable>,
-		<Collapsable key={i++} collapse={true} title='CRUD'>
-			<CRUD /></Collapsable>,
-		<Collapsable key={i++} collapse={true} title='CRUD'>
-			<CRUD /></Collapsable>,
-		<Collapsable key={i++} collapse={true} title='CRUD'>
-			<CRUD /></Collapsable>,
-		<Collapsable key={i++} collapse={true} title='CRUD'>
-			<CRUD /></Collapsable>,
+		/*<Collapsable key={i++} collapse={true} title='Todo List'>
+			<Todo /></Collapsable>,
 		<Collapsable key={i++} collapse={true} title='CRUD'>
 			<CRUD /></Collapsable>,*/
 	]

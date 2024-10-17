@@ -72,6 +72,35 @@ const DeletingFurni = [
 	http.get(`${ENDPOINT_BASE_URL}`, ({cookies}) => {
 		return HttpResponse.json(store)
 	}),
+	http.put(
+		`${ENDPOINT_BASE_URL}/:id`,
+		async ({params, cookies, request}) => {
+			const id = _.toInteger(params.id)
+			const body = await request.json()
+			// Returns a reference, so this record can be directly updated.
+			const record = store.find((r) => r.id === id)
+			
+			console.log(record)
+			
+			let status = 400
+			let resp = {
+				message: `record (${id}) not found`,
+			}
+
+			if (record !== undefined) {
+				console.log(`Update record in mock DB, by id ${id}.`)
+				
+				record.name = body.name
+				record.description = body.description
+				
+				status = 200
+				resp.message = `record (${id}) updated`
+			} else {
+				console.log(`Record not found in mock DB, id ${id}.`)
+			}
+			return HttpResponse.json(resp, {status: status})
+		}
+	),
 	http.delete(
 		`${ENDPOINT_BASE_URL}/:id`,
 		async ({params, cookies, request}) => {
@@ -84,8 +113,8 @@ const DeletingFurni = [
 			}
 
 			/*if (body.comment !== undefined) {
-			console.log(`Deletion comment: ${body.comment}`)
-		}*/
+				console.log(`Deletion comment: ${body.comment}`)
+			}*/
 
 			if (record !== undefined) {
 				console.log(`Delete record from mock DB, by id ${id}.`)
