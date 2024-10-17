@@ -12,7 +12,7 @@ export default {
 		},
 		
 		keyframes: {
-			slideDownKF: {
+			slideDown: {
 				'from': {
 					transform: 'translateY(-100%)',
 				    opacity: 0,
@@ -21,10 +21,22 @@ export default {
 					transform: 'translateY(0)',
 				    opacity: 1,
 				},
+			},
+			fadeUp: {
+				'from': {
+					transform: 'translateY(0)',
+				    opacity: 1,
+				},
+				'to': {
+					transform: 'translateY(-100%)',
+				    opacity: 0,
+					display: 'hidden',
+				},
 			}
 		},
 		animation: {
-			slideDown: 'slideDownKF 0.5s ease-out'
+			slideDown: 'slideDown 0.5s ease-out',
+			fadeUp: 'fadeUp 0.5s ease-out forwards',
 		}
 	},
   },
