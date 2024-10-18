@@ -118,19 +118,19 @@ const TodoItem = ({record, onCreate, onUpdate, onDelete}) => {
 			.catch((e) => console.log(`Failed to delete record (${id}): ${e}`))
 	}
 	
-	return <div className="flex">
+	return <div className="flex w-96 px-3 py-3 my-1 rounded-lg bg-white">
 		<input name="completed" type="checkbox" checked={isChecked} onChange={handleChecked} />
 		
 		{editing ? (
-			<Form onSubmit={handleSubmit}>
-				<input className="w-40 mx-1 px-2 py-1 border border-neutral-200"
+			<Form className="flex-1 flex justify-start items-center" onSubmit={handleSubmit}>
+				<input className="flex-1 mx-2 px-2 py-1 rounded-lg border border-neutral-200 text-emerald-600"
 					name="text" type="text" value={text} onChange={(e) => setText(e.target.value)} />
-				<button className="mx-1 px-2 py-1" type="submit">✔ Save</button>
+				<button className="bg-neutral-100 rounded-lg px-2 py-1" type="submit">✔ Save</button>
 			</Form>
 		) : (
 			<>
-				<div className="w-40 mx-1 px-2 py-1">{text}</div>
-				<button onClick={(e) => setEditing(true)} type="button">✏</button>
+				<div className="flex-1 mx-2 px-2 py-1">{text}</div>
+				<button className="mr-1" onClick={(e) => setEditing(true)} type="button">✏</button>
 				<button onClick={handleDelete} type="button">🗑</button>
 			</>
 		)}
@@ -168,11 +168,17 @@ const Todo = () => {
 		refreshList()
 	}, [])
 	
-	return <div>
-		{list.map((r, k) => 
-			<TodoItem key={r.id} record={r} onDelete={refreshList} />
-		)}
-		<button type="button" onClick={handleAddTodo}>➕ Add Todo</button>
+	return <div className="
+		flex flex-col justify-center items-center
+		h-full bg-gradient-to-br from-rose-600 to-orange-200
+		text-lg text-neutral-500
+	">
+		<div className="p-4 rounded-lg bg-neutral-100 flex flex-col">
+			{list.map((r, k) => 
+				<TodoItem key={r.id} record={r} onDelete={refreshList} />
+			)}
+			<button className="mt-2" type="button" onClick={handleAddTodo}>➕ Add Todo</button>
+		</div>
 	</div>
 }
 
