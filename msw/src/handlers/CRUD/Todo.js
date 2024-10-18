@@ -29,8 +29,10 @@ let store = [
 		"id": 508,
         "complete": false,
         "text": "this is a test"
-    }
+    },
 ]
+
+const updateable = ['text', 'complete']
 
 const Todo = [
 	http.get(`${ENDPOINT_BASE_URL}`, ({cookies}) => {
@@ -41,6 +43,33 @@ const Todo = [
 		const records = store.filter(r => ids.some(id => id === r.id))
 		return HttpResponse.json(records)
 	}),
+	http.post(
+		`${ENDPOINT_BASE_URL}`,
+		async ({params, cookies, request}) => {
+			const body = await request.json()
+			
+			// A bit of validation first.
+			if (body.text === undefined || !_.trim(body.text).length) {
+				return HttpResponse.json(body, {
+					status: 400,
+					message: 'Text field must not be empty.'
+				})
+			}
+			
+			const nextId = _.toInteger(_.maxBy(store, 'id') + 1)
+			const record = {id: nextId}
+			
+			for (const field of _.intersection(updateable, _.keys(body))) {
+				record[field] = body[field]
+			}
+			
+			store.push(record)
+
+			console.log(`Created a new record in mock DB, by id ${record.id}.`)
+			
+			return HttpResponse.json(record, {status: status})
+		}
+	),
 	http.put(
 		`${ENDPOINT_BASE_URL}/:id`,
 		async ({params, cookies, request}) => {
@@ -48,8 +77,6 @@ const Todo = [
 			const body = await request.json()
 			// Returns a reference, so this record can be directly updated.
 			const record = store.find((r) => r.id === id)
-			
-			console.log(record)
 			
 			let status = 400
 			let resp = {
@@ -59,8 +86,9 @@ const Todo = [
 			if (record !== undefined) {
 				console.log(`Update record in mock DB, by id ${id}.`)
 				
-				record.name = body.name
-				record.description = body.description
+				for (const field of _.intersection(updateable, _.keys(body))) {
+					record[field] = body[field]
+				}
 				
 				status = 200
 				resp.message = `record (${id}) updated`
@@ -74,7 +102,7 @@ const Todo = [
 		`${ENDPOINT_BASE_URL}/:id`,
 		async ({params, cookies, request}) => {
 			const {id} = params
-			const body = await request.json()
+			// const body = await request.json()
 			const record = store.find((r) => _.toInteger(r.id) === _.toInteger(id))
 			let status = 400
 			let resp = {
