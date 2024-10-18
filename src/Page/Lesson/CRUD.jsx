@@ -10,7 +10,7 @@ import Collapsable from './Components/Collapsable'
 
 import MessageBoard from './Components/CRUD/MessageBoard'
 import Furniture from './Components/CRUD/Furniture'
-//import Todo from './Components/CRUD/Todo'
+import Todo from './Components/CRUD/Todo'
 //import ModuleLesson from './Components/CRUD/ModuleLesson'
 //import ModuleLesson from './Components/CRUD/ModuleLesson'
 //import ModuleLesson from './Components/CRUD/ModuleLesson'
@@ -22,12 +22,12 @@ const CRUD = ({children}) => {
 		<Collapsable key={i++} collapse={true} title="Message Board">
 			<MessageBoard />
 		</Collapsable>,
-		<Collapsable key={i++} collapse={false} title="Furniture">
+		<Collapsable key={i++} collapse={true} title="Furniture">
 			<Furniture />
 		</Collapsable>,
-		/*<Collapsable key={i++} collapse={true} title='Todo List'>
+		<Collapsable key={i++} collapse={false} title='Todo List'>
 			<Todo /></Collapsable>,
-		<Collapsable key={i++} collapse={true} title='CRUD'>
+		/*<Collapsable key={i++} collapse={true} title='CRUD'>
 			<CRUD /></Collapsable>,*/
 	]
 
