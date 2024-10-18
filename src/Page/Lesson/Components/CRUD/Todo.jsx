@@ -177,7 +177,8 @@ const Todo = () => {
 			{list.map((r, k) => 
 				<TodoItem key={r.id} record={r} onDelete={refreshList} />
 			)}
-			<button className="mt-2" type="button" onClick={handleAddTodo}>➕ Add Todo</button>
+			<button className="mt-2 py-2 font-bold rounded-lg hover:bg-white" type="button" onClick={handleAddTodo}
+				>➕ Add Todo</button>
 		</div>
 	</div>
 }
