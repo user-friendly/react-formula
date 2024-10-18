@@ -56,7 +56,7 @@ const Todo = [
 				})
 			}
 			
-			const nextId = _.toInteger(_.maxBy(store, 'id') + 1)
+			const nextId = _.toInteger(_.maxBy(store, 'id').id + 1)
 			const record = {id: nextId}
 			
 			for (const field of _.intersection(updateable, _.keys(body))) {

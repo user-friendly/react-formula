@@ -124,7 +124,7 @@ const TodoItem = ({record, onCreate, onUpdate, onDelete}) => {
 			.catch((e) => console.log(`Failed to delete record (${id}): ${e}`))
 	}
 	
-	return <div>
+	return <div className="flex">
 		<input name="completed" type="checkbox" checked={isChecked} onChange={handleChecked} />
 		
 		{editing ? (
@@ -160,7 +160,10 @@ const Todo = () => {
 	
 	const refreshList = () => {
 		getRecords()
-			.then((d) => setList(d))
+			.then((d) => {
+				console.log(d)
+				setList(d)
+			})
 			.catch((e) => console.log(`Failed to get all record ${ids.join(', ')}: ${e}`))
 	}
 	
