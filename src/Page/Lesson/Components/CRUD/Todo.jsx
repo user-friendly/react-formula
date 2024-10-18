@@ -25,7 +25,7 @@ const getRecords = (ids = []) => {
 		})
 }
 
-const createRecord = (record) => {
+const createRecord = (record = {}) => {
 	return fetch(`${ENDPOINT_URL}`, {
 			method: 'POST',
 			headers: {
@@ -39,7 +39,7 @@ const createRecord = (record) => {
 			}
 			return r.json()
 		})
-	}
+}
 
 const updateRecord = (id, data) => {
 	return fetch(`${ENDPOINT_URL}/${id}`, {
@@ -76,45 +76,39 @@ const TodoItem = ({record, onCreate, onUpdate, onDelete}) => {
 	const id = record.id
 	const [isChecked, setIsChecked] = useState(record.complete)
 	const [text, setText] = useState(record.text)
-	const [editing, setEditing] = useState(id === false ? true : false)
+	const [editing, setEditing] = useState(record.isNew === true ? true : false)
+	record.isNew = false
 	
 	const handleChecked = (e) => {
+		// Local state update.
 		setIsChecked(e.target.checked)
+		// Partial remote state update.
+		const newData = {complete: e.target.checked}
+		updateRecord(id, newData)
+			.then((r) => {
+				if (onUpdate !== undefined) {
+					onUpdate(id, newData)
+				}
+			})
+			.catch((e) => console.log(`Failed to update record (${id}): ${e}`))
 	}
 	
 	const handleSubmit = (e) => {
-		if (id === false) {
-			// Partial update only.
-			const newRecord = {text: text}
-	
-			createRecord(newRecord)
-				.then((r) => {
-					if (onCreate !== undefined) {
-						onCreate(r.id, r)
-					}
-				})
-				.catch((e) => console.log(`Failed to create record (${id}): ${e}`))
-		}
-		else {
-			// Partial update only.
-			const newData = {text: text}
-			
-			console.log(`update record data (partial): `)
-			console.log(newData)
-			
-			updateRecord(id, newData)
-				.then((r) => {
-					if (onUpdate !== undefined) {
-						onUpdate(id, newData)
-					}
-				})
-				.catch((e) => console.log(`Failed to update record (${id}): ${e}`))
-		}
+		// Partial remote update.
+		const newData = {text: text}
+		updateRecord(id, newData)
+			.then((r) => {
+				if (onUpdate !== undefined) {
+					onUpdate(id, newData)
+				}
+			})
+			.catch((e) => console.log(`Failed to update record (${id}): ${e}`))
 		
 		setEditing(false)
 	}
 	
 	const handleDelete = () => {
+		// Remote delete.
 		deleteRecord(id)
 			.then((r) => {
 				if (onDelete !== undefined) {
@@ -152,37 +146,31 @@ const Todo = () => {
 			complete: false,
 			text: '',
 		}
-		setList([
-			...list,
-			newRecord,
-		])
+		createRecord()
+			.then((r) => {
+				// Indicate new record, manual list refresh.
+				// It should be flipped to false in the item component.
+				r.isNew = true
+				setList([...list, r])
+			})
+			.catch((e) => console.log(`Failed to create record (${id}): ${e}`))
 	}
 	
 	const refreshList = () => {
 		getRecords()
 			.then((d) => {
-				console.log(d)
 				setList(d)
 			})
 			.catch((e) => console.log(`Failed to get all record ${ids.join(', ')}: ${e}`))
 	}
 	
 	useEffect(() => {
-		/*const ids = [541, 505, 506]
-		getRecords(ids)
-			.then((d) => console.log(d))
-			.catch((e) => console.log(`Failed to get record(s) ${ids.join(', ')}: ${e}`))
-		
-		getRecords(508)
-			.then((d) => console.log(d))
-			.catch((e) => console.log(`Failed to get record(s) ${ids.join(', ')}: ${e}`))*/
-		
 		refreshList()
 	}, [])
 	
 	return <div>
 		{list.map((r, k) => 
-			<TodoItem key={k} record={r} onDelete={refreshList} />
+			<TodoItem key={r.id} record={r} onDelete={refreshList} />
 		)}
 		<button type="button" onClick={handleAddTodo}>➕ Add Todo</button>
 	</div>
