@@ -48,19 +48,26 @@ const Todo = [
 		async ({params, cookies, request}) => {
 			const body = await request.json()
 			
-			// A bit of validation first.
+			/*// A bit of validation first.
 			if (body.text === undefined || !_.trim(body.text).length) {
 				return HttpResponse.json(body, {
 					status: 400,
 					message: 'Text field must not be empty.'
 				})
-			}
+			}*/
 			
 			const nextId = _.toInteger(_.maxBy(store, 'id').id + 1)
 			const record = {id: nextId}
 			
 			for (const field of _.intersection(updateable, _.keys(body))) {
 				record[field] = body[field]
+			}
+			
+			if (record.text === undefined) {
+				record.text = ''
+			}
+			if (record.complete === undefined) {
+				record.complete = false
 			}
 			
 			store.push(record)
