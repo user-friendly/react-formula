@@ -17,11 +17,8 @@ Router.setRedirect('/home', '/lesson/crud')
 Router.setRedirect('/', '/home')
 
 const App = () => {
-	// TODO Remove debug stmt.
-	console.log('Redner App component.')
-
 	const [currentRoute, setRoute] = useState(Router.getInitialRoute())
-
+	
 	const lessonSelectValue = '<none>'
 	// Create a list of the lesson view routes.
 	const lessonRoutes = _.filter(
@@ -94,15 +91,7 @@ const App = () => {
 			</div>
 
 			{/* Content */}
-			<div
-				className={`
-		bg-sky-50
-		text-sans
-		${bpStyles}
-		px-6 py-4
-		flex-1
-	`}
-			>
+			<div className={`bg-sky-50 text-sans ${bpStyles} px-6 py-4 flex-1`}>
 				{currentRoute.component}
 			</div>
 
