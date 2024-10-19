@@ -14,6 +14,19 @@ if (import.meta.hot) {
 	)
 }
 
+// Overrides the global console log method, to supress logging on production.
+(() => {
+	const original = {
+		log: console.log
+	}
+	console.log = (...args) => {
+		if (import.meta.env.PROD !== true) {
+			return original.log.call(console, ...args)
+		}
+		return null
+	}
+})()
+
 // FIXME Mocking lesson services, since I aint got the monies
 //		 to get a ☁ VM.
 if (true /*import.meta.env.DEV === true*/) {
