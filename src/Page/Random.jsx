@@ -11,6 +11,10 @@ import MersenneTwister from 'mersennetwister'
 import Router from '#Router'
 import Form from '#Components/Form'
 
+export const PAGE_TITLE = 'Pseudorandom Number Generator'
+
+let mt = new MersenneTwister(1)
+
 const Button = (props) => {
 	return (
 		<button
@@ -23,7 +27,37 @@ const Button = (props) => {
 	)
 }
 
-let mt = new MersenneTwister(1)
+const tableHeaderCellStyle = "p-2 border border-gray-300 bg-violet-100"
+const tableCellStyle = "p-2 border border-gray-300 bg-white"
+
+const NumbersTable = ({list}) => {
+	const sequence = []
+	
+	list.forEach((nums, s) => 
+		nums.forEach((n, k) =>
+			sequence.push(<Sequence key={`${s}.${k}-${n}`} seed={s} serial={k} number={n} />)))
+	
+	return <table className="border-2 border-gray-500">
+		<thead>
+			<tr>
+				<th className={tableHeaderCellStyle}>Seed</th>
+				<th className={tableHeaderCellStyle}>Iteration</th>
+				<th className={tableHeaderCellStyle}>Random Number</th>
+			</tr>
+		</thead>
+		<tbody>
+			{sequence}
+		</tbody>
+	</table>
+}
+
+const Sequence = ({seed, serial, number}) => {
+	return <tr>
+		<td className={tableCellStyle}>{seed}</td>
+		<td className={tableCellStyle}>{serial}</td>
+		<td className={tableCellStyle}>{number}</td>
+	</tr>
+}
 
 /**
  * Yup, it got a complicated.
@@ -76,7 +110,6 @@ const Random = () => {
 	}
 
 	const clearList = () => {
-		console.log('Reset list.')
 		mt.seed(seed)
 		setList(new Map())
 	}
@@ -101,25 +134,12 @@ const Random = () => {
 		setSeed(seedInput)
 	}
 
-	const listNums = []
-	list.forEach((nums, s) => {
-		nums.forEach((n, k) => {
-			listNums.push(
-				<span key={listNums.length}>
-					Seed {s}, i {k}: {n}
-				</span>
-			)
-		})
-	})
-
 	// Has to be executed on each state change, only for
 	// states that are used in the body of the handleKeyPress event
 	// handler. Because all PRNG mutators can be called, depending
 	// on a given key press, all states must be dependant.
 	useEffect(() => {
 		const handleKeyPress = (event) => {
-			// console.log('External key up event handler: ', event)
-
 			const isModified =
 				event.altKey || event.ctrlKey || event.metaKey || event.shiftKey
 
@@ -147,9 +167,9 @@ const Random = () => {
 		}
 	}, [seed, list, seedInput, saved])
 
-	return (
-		<div className="m-auto mt-6 max-w-2xl py-2 px-4 rounded-xl bg-neutral-200 flex flex-col items-center">
-			<h2 className="text-4xl">Random Numbers</h2>
+	return (<>
+		<h2 className="m-4 text-4xl text-center">{PAGE_TITLE}</h2>
+		<div className="m-auto mt-6 max-w-2xl py-6 px-4 rounded-xl bg-neutral-100 flex flex-col items-center">
 
 			<div className="m-2">
 				<Button onClick={() => saveRngEngine()}>Save</Button>
@@ -165,7 +185,10 @@ const Random = () => {
 				<br />G - generate number, using the current seed.
 			</div>
 
-			<div className="m-2 text-xl">Current seed: {seed}</div>
+			<div className="m-2 text-xl flex flex-col items-center">
+				<span>Current seed:</span>
+				<span className="font-bold">{seed}</span>
+			</div>
 
 			<Form
 				onKeyUp={(e) => e.stopPropagation()}
@@ -174,7 +197,7 @@ const Random = () => {
 				onSubmit={generateNumber}
 			>
 				<Button onClick={clearList} type="button">
-					Clear
+					Clear List
 				</Button>
 				<div>
 					<input
@@ -193,11 +216,13 @@ const Random = () => {
 				<Button type="submit">Generate</Button>
 			</Form>
 
-			<div className="flex flex-col">{listNums}</div>
+			<div className="flex flex-col">
+				<NumbersTable list={list} />
+			</div>
 		</div>
-	)
+	</>)
 }
 
-Router.setRoute('/random', <Random />)
+Router.setRoute('/random', <Random />, PAGE_TITLE)
 
 export default Random
