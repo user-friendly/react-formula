@@ -14,7 +14,8 @@ import Form from '#Components/Form'
 const Button = (props) => {
 	return (
 		<button
-			className="my-2 mx-1 px-2 py-1 bg-blue-500 text-xl text-white rounded-md hover:bg-blue-600 active:bg-blue-700"
+			className="my-2 mx-1 px-2 py-1 bg-blue-500 text-xl text-white rounded-md hover:bg-blue-600 active:bg-blue-700
+					   disabled:bg-neutral-400"
 			{...props}
 		>
 			{props.children}
@@ -52,6 +53,9 @@ const Random = () => {
 	}
 
 	const loadRngEngine = () => {
+		if (!saved) {
+			return
+		}
 		const state = JSON.parse(saved)
 		// The inital seed should not matter, if the internal
 		// state is overwritten.
@@ -149,7 +153,7 @@ const Random = () => {
 
 			<div className="m-2">
 				<Button onClick={() => saveRngEngine()}>Save</Button>
-				<Button onClick={() => loadRngEngine()}>Load</Button>
+				<Button disabled={!saved} onClick={() => loadRngEngine()}>Load</Button>
 			</div>
 
 			<div className="m-2">
