@@ -169,6 +169,12 @@ function DrawPoint(ctx, x, y) {
 	ctx.stroke()
 } 
 
+function DrawPointV2d(ctx, v2d) {
+	ctx.beginPath()
+	ctx.arc(v2d.x, v2d.y, 1, 0, RAD_360)
+	ctx.stroke()
+}
+
 // TODO Move to a global (App) math class?
 class Avrg {
 	#total = 0
@@ -185,5 +191,5 @@ class Avrg {
 	}
 }
 
-export {Avrg, DrawPoint}
+export {Avrg, DrawPoint, DrawPointV2d}
 export default RenderEngine

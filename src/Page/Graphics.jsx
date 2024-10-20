@@ -8,50 +8,14 @@ import {useRef, useState, useEffect, useLayoutEffect} from 'react'
 
 import Router from '#Router'
 import RenderEngine from '#Graphics/RenderEngine'
-import {DrawPoint} from '#Graphics/RenderEngine'
+import {DrawPointV2d} from '#Graphics/RenderEngine'
+import Vector2d from '#Graphics/Vector2d'
 
 import MersenneTwister from 'mersennetwister'
 
 export const PAGE_TITLE = 'Graphics Experimentation'
 
 let render = null
-
-class RandomSampleView {
-	#sample = null
-	#transformed = []
-	
-	/**
-	 * Sample values must be in the [0, 1] range.
-	 */
-	constructor(sample) {
-		this.#sample = sample
-	}
-	
-	setRange(a, b) {
-		if (a >= b) {
-			throw new Error('Range error. Beginning of range cannot be greater or equal to end.')
-		}
-		// min, max
-		// sample value (v) is a precentage of the length between min & max
-		// (max - min) * v
-		// to get the final transform, add min
-		// f = min + (max - min) * v
-		const l = b - a
-		this.#transformed = this.#sample.map((v) => a + l * v)
-	}
-	
-	getTransformed() {
-		return [...this.#transformed]
-	}
-}
-
-const mt = new MersenneTwister(128)
-const sample = []
-for (let i = 0; i < 128; i++)
-	sample.push(mt.rnd())
-
-const rsv = new RandomSampleView(sample)
-rsv.setRange(50, 350)
 
 const Graphics = () => {
 	const [pause, setPause] = useState(true)
@@ -64,13 +28,42 @@ const Graphics = () => {
 		render = new RenderEngine(canvasRef.current)
 		render.start()
 		
+		// Draws some random stuff.
 		render.drawExample()
 		
-		/*render.render((ctx, d) => {
-			DrawPoint(ctx, 10, 20)
-			return true
-		})*/
+		const yOffset = 250
+		const xOffset = 50
+		const xScale = 700
 		
+		const getPRNGSample = (size, seed = performance.now(), offset = 0) => {
+			const mt = new MersenneTwister(seed)
+			const sample = []
+			
+			for (let i = 0; i < size + offset; i++) {
+				if (i >= offset) {
+					sample.push(mt.rnd())
+				} else {
+					mt.rnd()
+				}
+			}
+			return sample
+		}
+		const sample = getPRNGSample(128)
+		
+		let vecs = []
+		for (const s of sample)
+			vecs.push(new Vector2d(
+				xOffset + s * xScale,
+				yOffset
+			))
+		
+		render.render((ctx, d) => {
+			for (const v2d of vecs)
+				DrawPointV2d(ctx, v2d)
+			return true
+		})
+		
+		// Screen resize service handler.
 		const resizeObserver = new ResizeObserver((entries) => {
 			const wrapper = entries[0].contentRect
 			if (render) {
