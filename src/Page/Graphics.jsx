@@ -31,10 +31,6 @@ const Graphics = () => {
 		// Draws some random stuff.
 		render.drawExample()
 		
-		const yOffset = 250
-		const xOffset = 50
-		const xScale = 700
-		
 		const getPRNGSample = (size, seed = performance.now(), offset = 0) => {
 			const mt = new MersenneTwister(seed)
 			const sample = []
@@ -49,13 +45,21 @@ const Graphics = () => {
 			return sample
 		}
 		const sample = getPRNGSample(128)
+
+		// Translate vector.
+		const [tX, tY] = [ 50,   250]
+		// Scale vector.
+		const [sX, sY] = [700,   1]
 		
+		let v = null
 		let vecs = []
-		for (const s of sample)
+		for (const s of sample) {
+			v = new Vector2d(s, 0)
 			vecs.push(new Vector2d(
-				xOffset + s * xScale,
-				yOffset
+				tX + sX * v.x,
+				tY + sY * v.y
 			))
+		}
 		
 		render.render((ctx, d) => {
 			for (const v2d of vecs)
