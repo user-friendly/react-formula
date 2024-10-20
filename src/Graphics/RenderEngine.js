@@ -7,6 +7,8 @@ class RenderEngine {
 	
 	#run = false
 	
+	#background = 'rgb(255, 255, 255)'
+	
 	#avrgDelta = null
 	
 	#totalTime = 0
@@ -64,7 +66,7 @@ class RenderEngine {
 		}
 		
 		// Clear screen.
-		this.#context.clearRect(0, 0, this.#canvas.width, this.#canvas.height)
+		this.#clear()
 		// Draw frame.
 		this.#draw()
 		
@@ -74,6 +76,12 @@ class RenderEngine {
 			console.log('average delta: ', this.#avrgDelta.get())
 			console.log(`total frames: ${this.#totalFrames}, total time: ${this.#totalTime}`)
 		}
+	}
+	
+	#clear() {
+		this.#context.fillStyle = this.#background
+		this.#context.fillRect(0, 0, this.#canvas.width, this.#canvas.height)
+		// this.#context.clearRect(0, 0, this.#canvas.width, this.#canvas.height)
 	}
 	
 	#draw() {
@@ -109,6 +117,8 @@ class RenderEngine {
 	onResize(width, height) {
 		// handle resize
 		// console.log(`RenderEngine.onResize(${width}, ${height})`)
+		this.#canvas.width = width
+		this.#canvas.height = height
 	}
 }
 
