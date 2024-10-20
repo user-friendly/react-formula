@@ -8,6 +8,7 @@ import {useRef, useState, useEffect, useLayoutEffect} from 'react'
 
 import Router from '#Router'
 import RenderEngine from '#Graphics/RenderEngine'
+import {DrawPoint} from '#Graphics/RenderEngine'
 
 import MersenneTwister from 'mersennetwister'
 
@@ -15,10 +16,42 @@ export const PAGE_TITLE = 'Graphics Experimentation'
 
 let render = null
 
-/*const mt = new MersenneTwister(128)
+class RandomSampleView {
+	#sample = null
+	#transformed = []
+	
+	/**
+	 * Sample values must be in the [0, 1] range.
+	 */
+	constructor(sample) {
+		this.#sample = sample
+	}
+	
+	setRange(a, b) {
+		if (a >= b) {
+			throw new Error('Range error. Beginning of range cannot be greater or equal to end.')
+		}
+		// min, max
+		// sample value (v) is a precentage of the length between min & max
+		// (max - min) * v
+		// to get the final transform, add min
+		// f = min + (max - min) * v
+		const l = b - a
+		this.#transformed = this.#sample.map((v) => a + l * v)
+	}
+	
+	getTransformed() {
+		return [...this.#transformed]
+	}
+}
+
+const mt = new MersenneTwister(128)
 const sample = []
 for (let i = 0; i < 128; i++)
-	sample.push(mt.rnd())*/
+	sample.push(mt.rnd())
+
+const rsv = new RandomSampleView(sample)
+rsv.setRange(50, 350)
 
 const Graphics = () => {
 	const [pause, setPause] = useState(true)
@@ -32,6 +65,11 @@ const Graphics = () => {
 		render.start()
 		
 		render.drawExample()
+		
+		/*render.render((ctx, d) => {
+			DrawPoint(ctx, 10, 20)
+			return true
+		})*/
 		
 		const resizeObserver = new ResizeObserver((entries) => {
 			const wrapper = entries[0].contentRect

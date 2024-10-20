@@ -3,35 +3,6 @@ import Vector2d from './Vector3d'
 
 const RAD_360 = 2 * Math.PI
 
-/*class RandomSampleView {
-	#sample = null
-	#transformed = []
-	
-	*
-	 * Sample values must be in the [0, 1] range.
-	 
-	constructor(sample) {
-		this.#sample = sample
-	}
-	
-	setRange(a, b) {
-		if (a >= b) {
-			throw new Error('Range error. Beginning of range cannot be greater or equal to end.')
-		}
-		// min, max
-		// sample value (v) is a precentage of the length between min & max
-		// (max - min) * v
-		// to get the final transform, add min
-		// f = min + (max - min) * v
-		const l = b - a
-		this.#transformed = this.#sample.map((v) => a + l * v)
-	}
-	
-	getTransformed() {
-		return [...this.#transformed]
-	}
-}*/
-
 class RenderEngine {
 	#canvas = null
 	#context = null
@@ -116,8 +87,11 @@ class RenderEngine {
 		this.#drawCalls = []
 		
 		let call = null
-		while (call = calls.shift())
-			call(this.#context, this.#delta, this)
+		while (call = calls.shift()) {
+			if (true === call(this.#context, this.#delta, this)) {
+				this.#drawCalls.push(call)
+			}
+		}
 		
 		return this
 	}
@@ -133,16 +107,25 @@ class RenderEngine {
 		return [this.#canvas.width, this.#canvas.height]
 	}
 	
-	render(drawCallback) {
-		this.#drawCalls.push(drawCallback)
+	/**
+	 * A function to call on each frame.
+	 * 
+	 * Callback signature is (ctx, d, rd) => bool:
+	 * - ctx: Rendering context (2d or 3d).
+	 * -   d: Frame delta - time passed since last frame.
+	 * -  rd: RenderEngine instance.
+	 * Return true to queue the callback for the next frame,
+	 * or false remove it.
+	 * 
+	 * Callbacks are called in the order they were queued - FIFO.
+	 */
+	render(callback) {
+		this.#drawCalls.push(callback)
 		return this
 	}
 	
-	drawExample() {
-		// rendering context (2d or 3d),
-		// frame delta (time passed since last frame),
-		// RenderEngine
-		const example = (ctx, d, rd) => {
+	drawExample() { 
+		return this.render((ctx, d, rd) => {
 			ctx.beginPath()
 			ctx.moveTo(50, 140)
 			ctx.lineTo(150, 60)
@@ -157,24 +140,8 @@ class RenderEngine {
 			ctx.arc(oX, oY, 1, 0, RAD_360)
 			ctx.stroke()
 			
-			rd.render(example)
-		}
-		this.render(example)
-		return this
-	}
-	
-	/**
-	 * Draws a single point.
-	 * 
-	 * Should be used for debugging.
-	 * Very expensive. Can be replaced with fillRect().
-	 */
-	#drawPoint(x, y) {
-		this.#context.beginPath()
-		this.#context.arc(x, y, 1, 0, RAD_360)
-		this.#context.stroke()
-		
-		return this
+			return true
+		})
 	}
 	
 	/**
@@ -190,6 +157,19 @@ class RenderEngine {
 	}
 }
 
+/**
+ * Draws a single point.
+ * 
+ * Should be used for debugging.
+ * Very expensive. Can be replaced with fillRect().
+ */
+function DrawPoint(ctx, x, y) {
+	ctx.beginPath()
+	ctx.arc(x, y, 1, 0, RAD_360)
+	ctx.stroke()
+} 
+
+// TODO Move to a global (App) math class?
 class Avrg {
 	#total = 0
 	#count = 0
@@ -205,5 +185,5 @@ class Avrg {
 	}
 }
 
-export {Avrg}
+export {Avrg, DrawPoint}
 export default RenderEngine
