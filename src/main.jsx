@@ -1,5 +1,6 @@
 import {default as MswBrowser} from '/msw/src/Browser'
 
+import StrictMode from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App'
 import ScreenSizeDebug from './ScreenSizeDebug'
@@ -34,7 +35,11 @@ if (true /*import.meta.env.DEV === true*/) {
 		ReactDOM.createRoot(document.getElementById('root')).render(<App />)
 	})
 } else {
-	ReactDOM.createRoot(document.getElementById('root')).render(<App />)
+	ReactDOM.createRoot(document.getElementById('root')).render(
+		<StrictMode>
+			<App />
+		</StrictMode>
+	)
 }
 
 ReactDOM.createRoot(document.getElementById('screenSizeDebug')).render(
