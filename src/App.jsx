@@ -87,6 +87,9 @@ const App = () => {
 					<Button route="/random" onClick={onRouteSelected}>
 						PseudoRNG
 					</Button>
+					<Button route="/graphics" onClick={onRouteSelected}>
+						Graphics
+					</Button>
 				</NavBar>
 			</div>
 
