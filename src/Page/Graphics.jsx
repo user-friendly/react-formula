@@ -7,12 +7,18 @@ import _ from 'lodash'
 import {useRef, useState, useEffect, useLayoutEffect} from 'react'
 
 import Router from '#Router'
-
 import RenderEngine from '#Graphics/RenderEngine'
+
+import MersenneTwister from 'mersennetwister'
 
 export const PAGE_TITLE = 'Graphics Experimentation'
 
 let render = null
+
+/*const mt = new MersenneTwister(128)
+const sample = []
+for (let i = 0; i < 128; i++)
+	sample.push(mt.rnd())*/
 
 const Graphics = () => {
 	const [pause, setPause] = useState(true)
@@ -24,6 +30,9 @@ const Graphics = () => {
 	useLayoutEffect(() => {
 		render = new RenderEngine(canvasRef.current)
 		render.start()
+		
+		render.drawExample()
+		
 		const resizeObserver = new ResizeObserver((entries) => {
 			const wrapper = entries[0].contentRect
 			if (render) {

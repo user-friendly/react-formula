@@ -1,9 +1,42 @@
 
+import Vector2d from './Vector3d'
+
 const RAD_360 = 2 * Math.PI
+
+/*class RandomSampleView {
+	#sample = null
+	#transformed = []
+	
+	*
+	 * Sample values must be in the [0, 1] range.
+	 
+	constructor(sample) {
+		this.#sample = sample
+	}
+	
+	setRange(a, b) {
+		if (a >= b) {
+			throw new Error('Range error. Beginning of range cannot be greater or equal to end.')
+		}
+		// min, max
+		// sample value (v) is a precentage of the length between min & max
+		// (max - min) * v
+		// to get the final transform, add min
+		// f = min + (max - min) * v
+		const l = b - a
+		this.#transformed = this.#sample.map((v) => a + l * v)
+	}
+	
+	getTransformed() {
+		return [...this.#transformed]
+	}
+}*/
 
 class RenderEngine {
 	#canvas = null
 	#context = null
+	
+	#drawCalls = []
 	
 	#run = false
 	
@@ -78,23 +111,56 @@ class RenderEngine {
 		}
 	}
 	
+	#draw() {
+		const calls = this.#drawCalls
+		this.#drawCalls = []
+		
+		let call = null
+		while (call = calls.shift())
+			call(this.#context, this.#delta, this)
+		
+		return this
+	}
+	
 	#clear() {
 		this.#context.fillStyle = this.#background
 		this.#context.fillRect(0, 0, this.#canvas.width, this.#canvas.height)
 		// this.#context.clearRect(0, 0, this.#canvas.width, this.#canvas.height)
+		return this
 	}
 	
-	#draw() {
-		this.#context.beginPath()
-		this.#context.moveTo(50, 140)
-		this.#context.lineTo(150, 60)
-		this.#context.lineTo(250, 140)
-		this.#context.closePath()
-		this.#context.stroke()
-		
-		let oX = this.#canvas.width / 2
-		let oY = this.#canvas.height / 2
-		this.#drawPoint(oX, oY)
+	getViewport() {
+		return [this.#canvas.width, this.#canvas.height]
+	}
+	
+	render(drawCallback) {
+		this.#drawCalls.push(drawCallback)
+		return this
+	}
+	
+	drawExample() {
+		// rendering context (2d or 3d),
+		// frame delta (time passed since last frame),
+		// RenderEngine
+		const example = (ctx, d, rd) => {
+			ctx.beginPath()
+			ctx.moveTo(50, 140)
+			ctx.lineTo(150, 60)
+			ctx.lineTo(250, 140)
+			ctx.closePath()
+			ctx.stroke()
+			
+			const oX = rd.getViewport()[0] / 2
+			const oY = rd.getViewport()[1] / 2
+			
+			ctx.beginPath()
+			ctx.arc(oX, oY, 1, 0, RAD_360)
+			ctx.stroke()
+			
+			rd.render(example)
+		}
+		this.render(example)
+		return this
 	}
 	
 	/**
@@ -107,6 +173,8 @@ class RenderEngine {
 		this.#context.beginPath()
 		this.#context.arc(x, y, 1, 0, RAD_360)
 		this.#context.stroke()
+		
+		return this
 	}
 	
 	/**
