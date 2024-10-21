@@ -10,8 +10,7 @@ import Router from '#Router'
 import RenderEngine from '#Graphics/RenderEngine'
 
 import {DrawPointV2d, DrawVector2d} from '#Graphics/RenderEngine'
-import {Dot2d, Dot3d, Len2d, Len3d} from '#Graphics/Linear'
-import Vector2d from '#Graphics/Vector2d'
+import {Vector2d, Dot2d, Dot3d, Len2d, Len3d} from '#Graphics/Linear'
 
 import MersenneTwister from 'mersennetwister'
 
@@ -21,7 +20,7 @@ let graphics = null
 
 const Graphics = () => {
 	const [pause, setPause] = useState(true)
-	const [fullscreen, setFullscreen] = useState(false)
+	const [fullscreen, setFullscreen] = useState(true)
 	
 	const canvasWrapperRef = useRef(null)
 	const canvasRef = useRef(null)

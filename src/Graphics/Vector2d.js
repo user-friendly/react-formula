@@ -1,6 +1,7 @@
 class Vector2d {
 	x
 	y
+	w = 1
 	
 	constructor (x = 0, y = 0) {
 		if (typeof x === 'number') {
@@ -20,6 +21,7 @@ class Vector2d {
 	#fromV2(v) {
 		this.x = v.x
 		this.y = v.y
+		this.w = v.w
 	}
 	
 	#fromV3(v) {
