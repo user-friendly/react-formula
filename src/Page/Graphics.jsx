@@ -8,14 +8,16 @@ import {useRef, useState, useEffect, useLayoutEffect} from 'react'
 
 import Router from '#Router'
 import RenderEngine from '#Graphics/RenderEngine'
-import {DrawPointV2d} from '#Graphics/RenderEngine'
+
+import {DrawPointV2d, DrawVector2d} from '#Graphics/RenderEngine'
+import {Dot2d, Dot3d, Len2d, Len3d} from '#Graphics/Linear'
 import Vector2d from '#Graphics/Vector2d'
 
 import MersenneTwister from 'mersennetwister'
 
 export const PAGE_TITLE = 'Graphics Experimentation'
 
-let render = null
+let graphics = null
 
 const Graphics = () => {
 	const [pause, setPause] = useState(true)
@@ -25,11 +27,11 @@ const Graphics = () => {
 	const canvasRef = useRef(null)
 	
 	useLayoutEffect(() => {
-		render = new RenderEngine(canvasRef.current)
-		render.start()
+		graphics = new RenderEngine(canvasRef.current)
+		graphics.start()
 		
 		// Draws some random stuff.
-		render.drawExample()
+		graphics.drawExample()
 		
 		const getPRNGSample = (size, seed = performance.now(), offset = 0) => {
 			const mt = new MersenneTwister(seed)
@@ -44,41 +46,60 @@ const Graphics = () => {
 			}
 			return sample
 		}
-		const sample = getPRNGSample(128)
-
+		const maxSeed = 2**32
+		const sampleSize = 128
+		const sampleX = getPRNGSample(sampleSize, Math.random() * maxSeed)
+		const sampleY = getPRNGSample(sampleSize, Math.random() * maxSeed)
+		
 		// Translate vector.
-		const [tX, tY] = [ 50,   250]
+		const [tX, tY] = [ 20, 250]
 		// Scale vector.
-		const [sX, sY] = [700,   1]
+		const [sX, sY] = [600, 150]
 		
 		let v = null
 		let vecs = []
-		for (const s of sample) {
-			v = new Vector2d(s, 0)
-			vecs.push(new Vector2d(
-				tX + sX * v.x,
-				tY + sY * v.y
-			))
+		for (let i = 0; i < sampleSize; i++) {
+			v = new Vector2d(sampleX[i], sampleY[i])
+			
+			// Scale
+			v.x = sX * v.x
+			v.y = sY * v.y
+			
+			// Translate
+			v.x = tX + v.x
+			v.y = tY + v.y
+			
+			vecs.push(v)
 		}
 		
-		render.render((ctx, d) => {
+		graphics.render((ctx, d) => {
 			for (const v2d of vecs)
 				DrawPointV2d(ctx, v2d)
+			return true
+		})
+		
+		const v1 = new Vector2d(128, 128)
+		const v2 = new Vector2d(v1)
+		v2.y = v2.y * 2
+		
+		graphics.render((ctx, d) => {
+			DrawVector2d(ctx, v1)
+			DrawVector2d(ctx, v2)
 			return true
 		})
 		
 		// Screen resize service handler.
 		const resizeObserver = new ResizeObserver((entries) => {
 			const wrapper = entries[0].contentRect
-			if (render) {
-				render.onResize(wrapper.width, wrapper.height)
+			if (graphics) {
+				graphics.onResize(wrapper.width, wrapper.height)
 			}
 		})
 		resizeObserver.observe(canvasWrapperRef.current)
 		return () => {
-			if (render) {
-				render.pause()
-				render = null
+			if (graphics) {
+				graphics.pause()
+				graphics = null
 			}
 			resizeObserver.unobserve(canvasWrapperRef.current)
 		}
@@ -93,8 +114,8 @@ const Graphics = () => {
 		{fullscreen ? <button className={buttonStyle} onClick={() => setFullscreen(false)}>Exit Fullscreen ⬇</button>
 			: <button className={buttonStyle} onClick={() => setFullscreen(true)}>Fullscreen ↕</button>}
 		
-		{pause ? <button className={buttonStyle} onClick={() => {setPause(!pause); render.pause()}}>Pause ⏸</button>
-			: <button className={buttonStyle} onClick={() => {setPause(!pause); render.start()}}>Play ▶</button>}
+		{pause ? <button className={buttonStyle} onClick={() => {setPause(!pause); graphics.pause()}}>Pause ⏸</button>
+			: <button className={buttonStyle} onClick={() => {setPause(!pause); graphics.start()}}>Play ▶</button>}
 	</>
 	
 	return (<div className="h-full flex flex-col items-center">

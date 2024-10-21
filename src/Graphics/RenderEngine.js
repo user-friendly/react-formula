@@ -169,9 +169,19 @@ function DrawPoint(ctx, x, y) {
 	ctx.stroke()
 } 
 
+// Mostly for illustration purposes.
 function DrawPointV2d(ctx, v2d) {
 	ctx.beginPath()
 	ctx.arc(v2d.x, v2d.y, 1, 0, RAD_360)
+	ctx.stroke()
+}
+
+// Mostly for illustration purposes.
+function DrawVector2d(ctx, v2d) {
+	ctx.beginPath()
+	ctx.moveTo(0, 0)
+	ctx.lineTo(v2d.x, v2d.y)
+	ctx.closePath()
 	ctx.stroke()
 }
 
@@ -191,5 +201,5 @@ class Avrg {
 	}
 }
 
-export {Avrg, DrawPoint, DrawPointV2d}
+export {Avrg, DrawPoint, DrawPointV2d, DrawVector2d}
 export default RenderEngine
