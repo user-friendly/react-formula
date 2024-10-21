@@ -2,6 +2,20 @@
  * Linear algebra operations.
  */
 
+import VectorArray from './VectorArray';
+
+class VectorArray2d extends VectorArray {
+	constructor(verts = []) {
+		super(2, verts)
+	}
+}
+
+class VectorArray3d extends VectorArray {
+	constructor(verts = []) {
+		super(3, verts)
+	}
+}
+
 const Dot2d = (a, b) => {
 	return a.x*b.x + a.y*b.y
 } 
@@ -95,6 +109,6 @@ console.log(Matrix3dToString(
 	MatrixMultiply3d(Identity3d(), 128)
 ))*/
 
-export { default as Vector2d } from './Vector2d';
-export { default as Vector3d } from './Vector3d';
+export {VectorArray2d, VectorArray3d}
+
 export {Dot2d, Dot3d, Len2d, Len3d}

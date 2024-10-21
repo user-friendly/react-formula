@@ -10,7 +10,7 @@ import Router from '#Router'
 import RenderEngine from '#Graphics/RenderEngine'
 
 import {DrawPointV2d, DrawVector2d} from '#Graphics/RenderEngine'
-import {Vector2d, Dot2d, Dot3d, Len2d, Len3d} from '#Graphics/Linear'
+import {Dot2d, Dot3d, Len2d, Len3d} from '#Graphics/Linear'
 
 import MersenneTwister from 'mersennetwister'
 
@@ -58,7 +58,7 @@ const Graphics = () => {
 		let v = null
 		let vecs = []
 		for (let i = 0; i < sampleSize; i++) {
-			v = new Vector2d(sampleX[i], sampleY[i])
+			v = {x: sampleX[i], y: sampleY[i]}
 			
 			// Scale
 			v.x = sX * v.x
@@ -77,8 +77,8 @@ const Graphics = () => {
 			return true
 		})
 		
-		const v1 = new Vector2d(128, 128)
-		const v2 = new Vector2d(v1)
+		const v1 = {x: 128, y: 128}
+		const v2 = _.clone(v1)
 		v2.y = v2.y * 2
 		
 		graphics.render((ctx, d) => {

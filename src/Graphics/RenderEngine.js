@@ -1,6 +1,4 @@
 
-import Vector2d from './Vector3d'
-
 const RAD_360 = 2 * Math.PI
 
 class RenderEngine {
@@ -170,17 +168,17 @@ function DrawPoint(ctx, x, y) {
 } 
 
 // Mostly for illustration purposes.
-function DrawPointV2d(ctx, v2d) {
+function DrawPointV2d(ctx, vr) {
 	ctx.beginPath()
-	ctx.arc(v2d.x, v2d.y, 1, 0, RAD_360)
+	ctx.arc(vr.x, vr.y, 1, 0, RAD_360)
 	ctx.stroke()
 }
 
 // Mostly for illustration purposes.
-function DrawVector2d(ctx, v2d) {
+function DrawVector2d(ctx, vr) {
 	ctx.beginPath()
 	ctx.moveTo(0, 0)
-	ctx.lineTo(v2d.x, v2d.y)
+	ctx.lineTo(vr.x, vr.y)
 	ctx.closePath()
 	ctx.stroke()
 }
