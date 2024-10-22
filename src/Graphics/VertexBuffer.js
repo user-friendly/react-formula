@@ -1,12 +1,10 @@
 import _ from 'lodash'
 
-class VectorArray {
-	#dim = 3
+class VertexBuffer {
+	#dim	= null
 	#buffer = null
 	
-	constructor (dimension = 2, verts = []) {
-		// Set dimension, add an extra space for translation?
-		this.#dim = dimension + 1
+	constructor (dimension = 3, verts = []) {
 		// If not an array, assume self type.
 		if (!_.isArray(verts)) {
 			verts = verts.getBuffer()
@@ -22,4 +20,4 @@ class VectorArray {
 	}
 }
 
-export default VectorArray
+export default VertexBuffer

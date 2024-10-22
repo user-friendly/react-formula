@@ -2,17 +2,19 @@
  * Linear algebra operations.
  */
 
-import VectorArray from './VectorArray';
+import VertexBuffer from './VertexBuffer';
 
-class VectorArray2d extends VectorArray {
+class VertexBuffer2d extends VertexBuffer {
 	constructor(verts = []) {
-		super(2, verts)
+		// x, y, w
+		super(3, verts)
 	}
 }
 
-class VectorArray3d extends VectorArray {
+class VertexBuffer3d extends VertexBuffer {
 	constructor(verts = []) {
-		super(3, verts)
+		// x, y, z, w
+		super(4, verts)
 	}
 }
 
@@ -89,7 +91,7 @@ const s1 = MatrixMultiply3d(Identity3d(), [
 	0, 0, 2, 0,
 	0, 0, 0, 1,
 ])
-// This also scales the translations.
+
 const t1 = MatrixMultiply3d(s1, [
 	1, 0, 0, -2,
 	0, 1, 0, 2, 
@@ -97,18 +99,8 @@ const t1 = MatrixMultiply3d(s1, [
 	0, 0, 0, 1,
 ])
 
-// TODO Implement addition & subtraction to represent translations.
-
 console.log(Matrix3dToString(t1))
 
-/*console.log(Matrix2dToString(
-	MatrixMultiply2d(Identity2d(), 12)
-))
-
-console.log(Matrix3dToString(
-	MatrixMultiply3d(Identity3d(), 128)
-))*/
-
-export {VectorArray2d, VectorArray3d}
+export {VertexBuffer2d, VertexBuffer3d}
 
 export {Dot2d, Dot3d, Len2d, Len3d}
