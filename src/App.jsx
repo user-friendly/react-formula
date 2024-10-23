@@ -97,7 +97,11 @@ const App = () => {
 
 			{/* Content */}
 			<div className={`bg-sky-50 text-sans ${bpStyles} px-6 py-4 flex-1`}>
-				<Suspense fallback={<Spinner />}>
+				<Suspense fallback={
+					<div className="w-full h-full flex justify-center items-center">
+						<Spinner dim="w-40 h-40" borderWidth="border-[2.5rem]" borderColor="border-gray-700" />
+					</div>
+				}>
 					{currentRoute.component}
 				</Suspense>
 			</div>
