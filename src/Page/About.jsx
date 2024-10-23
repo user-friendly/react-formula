@@ -1,8 +1,9 @@
 /**
  * About view.
+ * 
+ * %title = About
+ * %route = /about
  */
-
-import Router from '#Router'
 
 const About = () => {
 	return (
@@ -42,7 +43,5 @@ const About = () => {
 		</div>
 	)
 }
-
-Router.setRoute('/about', <About />, 'About')
 
 export default About

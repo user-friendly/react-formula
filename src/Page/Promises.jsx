@@ -1,8 +1,13 @@
+/**
+ * Promises page component.
+ * 
+ * %title = JS Promise/Async
+ * %route = /promises
+ */
+
 import _ from 'lodash'
 
 import {useState, useEffect, useSyncExternalStore, Fragment} from 'react'
-
-import Router from '#Router'
 
 import {default as Loopy, dumbSleep} from '#Components/Loopy'
 
@@ -281,7 +286,5 @@ const Promises = () => {
 		</div>
 	)
 }
-
-Router.setRoute('/promises', <Promises />, 'JS Promise/Async')
 
 export default Promises

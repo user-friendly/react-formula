@@ -1,10 +1,12 @@
 /**
  * [title].
  *
- * Path: /lesson/[title-hyphenated]
+ * These are "source file properties".
+ * Checkout the ImportRoutes build plugin for more info.
+ * 
+ * %title = [Route Title]
+ * %route = [Path, URL Structured]
  */
-
-import Router from '#Router'
 
 const LessonTemplate = () => {
 	return (
@@ -13,9 +15,5 @@ const LessonTemplate = () => {
 		</div>
 	)
 }
-
-// TODO Uncomment these and replace with appropriate paths.
-// Router.setRoute('/lesson/[title-hyphenated]', <LessonTemplate />, '[title]')
-// Router.setRoute('/lesson', <LessonTemplate />)
 
 export default LessonTemplate

@@ -1,12 +1,14 @@
 /**
- * TODO This mini-app needs to be redone.
+ * Weather page component.
+ * 
+ * %title = Weather
+ * %route = /weather
  */
 
 import _ from 'lodash'
 
 import {useState, useEffect} from 'react'
 
-import Router from '#Router'
 import Spinner from '#/Components/Spinner'
 
 const DRAMATIC_DELAY = 1000
@@ -213,7 +215,5 @@ const WeatherForecast = (props) => {
 		</div>
 	)
 }
-
-Router.setRoute('/weather', <WeatherForecast />)
 
 export default WeatherForecast

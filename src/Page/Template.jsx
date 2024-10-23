@@ -2,11 +2,12 @@
  * Template view.
  *
  * Copy/paste this file and modify it.
+ * 
+ * %title = Template Page
+ * %route = /url-path/to/template
  */
 
 /* eslint-disable */
-
-import Router from '#Router'
 
 const Template = () => {
 	return (
@@ -38,9 +39,5 @@ const Template = () => {
 		</div>
 	)
 }
-
-// TODO Uncomment and modify with actual paths.
-// Router.setRoute('/template/', <Template />)
-// Router.setRoute('/template/route-2', <Template />)
 
 export default Template

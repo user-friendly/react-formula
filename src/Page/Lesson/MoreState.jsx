@@ -1,12 +1,9 @@
 /**
  * More State.
  *
- * Path: /lesson/more-state
- *
- * Bundles up a lessons in the More State group.
+ * %title = Module 4: More State
+ * %route = /lesson/more-state
  */
-
-import Router from '#Router'
 
 import Collapsable from './Components/Collapsable'
 import Stack from './Components/MoreState/Stack'
@@ -14,7 +11,6 @@ import Grid from './Components/MoreState/Grid'
 import DarkMode from './Components/MoreState/DarkMode'
 import Modal from './Components/MoreState/Modal'
 import PlayingCard from './Components/MoreState/PlayingCard'
-// import null from './Components/MoreState/null'
 
 const MoreState = () => {
 	const lessons = [
@@ -43,7 +39,5 @@ const MoreState = () => {
 		</div>
 	)
 }
-
-Router.setRoute('/lesson/more-state', <MoreState />, 'Module 4: More State')
 
 export default MoreState

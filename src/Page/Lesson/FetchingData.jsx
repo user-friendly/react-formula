@@ -1,10 +1,9 @@
 /**
  * Module 7: Fetching Data
  *
- * Path: /lesson/fetching-data
+ * %title = Module 7: Fetching Data
+ * %route = /lesson/fetching-data
  */
-
-import Router from '#Router'
 
 import Collapsable from './Components/Collapsable'
 
@@ -14,9 +13,6 @@ import TeammatesProject from './Components/FetchingData/TeammatesProject'
 import StocksProject from './Components/FetchingData/StocksProject'
 import WeatherForecast from './Components/FetchingData/WeatherForecast'
 import StatesProject from './Components/FetchingData/StatesProject'
-//import ModuleLesson from './Components/FetchingData/ModuleLesson'
-//import ModuleLesson from './Components/FetchingData/ModuleLesson'
-//import ModuleLesson from './Components/FetchingData/ModuleLesson'
 
 const FetchingData = ({children}) => {
 	let i = 0
@@ -39,10 +35,6 @@ const FetchingData = ({children}) => {
 		<Collapsable key={i++} collapse={false} title="States Project">
 			<StatesProject />
 		</Collapsable>,
-		/*		<Collapsable key={i++} collapse={true} title='Using Fetch'>
-			<UsingFetch /></Collapsable>,
-		<Collapsable key={i++} collapse={true} title='Using Fetch'>
-			<UsingFetch /></Collapsable>,*/
 	]
 
 	return (
@@ -53,11 +45,5 @@ const FetchingData = ({children}) => {
 		</div>
 	)
 }
-
-Router.setRoute(
-	'/lesson/fetching-data',
-	<FetchingData />,
-	'Module 7: Fetching Data'
-)
 
 export default FetchingData

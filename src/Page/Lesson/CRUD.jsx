@@ -1,20 +1,15 @@
 /**
  * Module 8: CRUD
  *
- * Path: /lesson/crud
+ * %title = Module 8: CRUD
+ * %route = /lesson/crud
  */
-
-import Router from '#Router'
 
 import Collapsable from './Components/Collapsable'
 
 import MessageBoard from './Components/CRUD/MessageBoard'
 import Furniture from './Components/CRUD/Furniture'
 import Todo from './Components/CRUD/Todo'
-//import ModuleLesson from './Components/CRUD/ModuleLesson'
-//import ModuleLesson from './Components/CRUD/ModuleLesson'
-//import ModuleLesson from './Components/CRUD/ModuleLesson'
-//import ModuleLesson from './Components/CRUD/ModuleLesson'
 
 const CRUD = ({children}) => {
 	let i = 0
@@ -27,8 +22,6 @@ const CRUD = ({children}) => {
 		</Collapsable>,
 		<Collapsable key={i++} collapse={false} title='Todo List'>
 			<Todo /></Collapsable>,
-		/*<Collapsable key={i++} collapse={true} title='CRUD'>
-			<CRUD /></Collapsable>,*/
 	]
 
 	return (
@@ -41,7 +34,5 @@ const CRUD = ({children}) => {
 		</div>
 	)
 }
-
-Router.setRoute('/lesson/crud', <CRUD />, 'Module 8: CRUD')
 
 export default CRUD

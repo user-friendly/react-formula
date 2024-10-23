@@ -1,10 +1,9 @@
 /**
  * Modules 1, 2, & 3
  *
- * Path: /lesson/beginner
+ * %title = Modules 1, 2, & 3
+ * %route = /lesson/beginner
  */
-
-import Router from '#Router'
 
 import Collapsable from './Components/Collapsable'
 
@@ -66,8 +65,5 @@ const Beginner = ({children}) => {
 		</div>
 	)
 }
-
-Router.setRoute('/lesson/beginner', <Beginner />, 'Modules 1, 2, & 3')
-// Router.setRoute('/lesson', <Beginner />)
 
 export default Beginner

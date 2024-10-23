@@ -1,14 +1,10 @@
 /**
  * Portfolio view.
+ * 
+ * %route = /portfolio
  */
 
-import Router from '#Router'
-
-// console.log('Execute Portfolio component\'s main JSX file.')
-
 const Portfolio = () => {
-	// console.log('Render Portfolio.')
-
 	return (
 		<div
 			className="

@@ -1,12 +1,14 @@
 /**
  * Graphics page view.
+ * 
+* %title = Graphics Experimentation
+* %route = /graphics
  */
 
 import _ from 'lodash'
 
 import {useRef, useState, useEffect, useLayoutEffect} from 'react'
 
-import Router from '#Router'
 import RenderEngine from '#Graphics/RenderEngine'
 
 import {DrawPointV2d, DrawVector2d} from '#Graphics/RenderEngine'
@@ -132,7 +134,5 @@ const Graphics = () => {
 		</div>
 	</div>)
 }
-
-Router.setRoute('/graphics', <Graphics />, PAGE_TITLE)
 
 export default Graphics

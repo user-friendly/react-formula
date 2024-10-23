@@ -1,5 +1,8 @@
 /**
- * Random page view.
+ * Random page component.
+ * 
+* %title = Pseudorandom Number Generator
+* %route = /random
  */
 
 import _ from 'lodash'
@@ -8,7 +11,6 @@ import {useState, useEffect} from 'react'
 
 import MersenneTwister from 'mersennetwister'
 
-import Router from '#Router'
 import Form from '#Components/Form'
 
 export const PAGE_TITLE = 'Pseudorandom Number Generator'
@@ -222,7 +224,5 @@ const Random = () => {
 		</div>
 	</>)
 }
-
-Router.setRoute('/random', <Random />, PAGE_TITLE)
 
 export default Random

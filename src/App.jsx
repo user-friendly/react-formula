@@ -4,14 +4,16 @@
 
 import _ from 'lodash'
 
-import {useState} from 'react'
+import {useState, Suspense} from 'react'
 
-import Router from './Router'
-import RouterPreloader from 'RouterPreloader'
-import Button from './Button'
-import SelectItem from './SelectItem'
-import NavBar from './NavBar'
-import NotFound from './Page/NotFound'
+import Router from '#Router'
+import RouterPathMap from 'RouterPathMap'
+
+import Spinner from '#Components/Spinner'
+import Button from '#Button'
+import SelectItem from '#SelectItem'
+import NavBar from '#NavBar'
+import NotFound from '#Page/NotFound'
 
 Router.setRedirect('/home', '/lesson/crud')
 Router.setRedirect('/', '/home')
@@ -95,7 +97,9 @@ const App = () => {
 
 			{/* Content */}
 			<div className={`bg-sky-50 text-sans ${bpStyles} px-6 py-4 flex-1`}>
-				{currentRoute.component}
+				<Suspense fallback={<Spinner />}>
+					{currentRoute.component}
+				</Suspense>
 			</div>
 
 			{/* Footer */}

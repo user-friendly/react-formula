@@ -1,12 +1,14 @@
 /**
  * Mock Service Worker test view.
+ * 
+ * %title = Mock Service Worker
+ * %route = /msw-test
  */
 
 import _ from 'lodash'
 
 import {useState, useEffect} from 'react'
 
-import Router from '#Router'
 import Spinner from '#Components/Spinner'
 
 const ENDPOINT_BASE_URL = 'https://example.com/user'
@@ -229,7 +231,5 @@ const MswTest = () => {
 		</div>
 	)
 }
-
-Router.setRoute('/msw-test', <MswTest />, 'Mock Service Worker')
 
 export default MswTest

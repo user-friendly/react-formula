@@ -1,10 +1,9 @@
 /**
  * Inputs and Forms, module 6 lessons.
  *
- * Path: /lesson/inputs-and-forms
+ * %title = Module 6: Inputs and Forms
+ * %route = /lesson/inputs-and-forms
  */
-
-import Router from '#Router'
 
 import Collapsable from './Components/Collapsable'
 
@@ -46,11 +45,5 @@ const InputsForms = ({children}) => {
 		</div>
 	)
 }
-
-Router.setRoute(
-	'/lesson/inputs-and-forms',
-	<InputsForms />,
-	'Module 6: Inputs and Forms'
-)
 
 export default InputsForms

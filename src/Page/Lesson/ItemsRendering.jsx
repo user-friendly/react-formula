@@ -1,10 +1,9 @@
 /**
  * Repeated Item Rendering, module 5 lessons.
  *
- * Path: /lesson/repeated-item-rendering
+* %title = Module 5: Repeated Item Rendering
+* %route = /lesson/repeated-item-rendering
  */
-
-import Router from '#Router'
 
 import Collapsable from './Components/Collapsable'
 
@@ -44,11 +43,5 @@ const ItemsRendering = () => {
 		</div>
 	)
 }
-
-Router.setRoute(
-	'/lesson/repeated-item-rendering',
-	<ItemsRendering />,
-	'Module 5: Repeated Item Rendering'
-)
 
 export default ItemsRendering
