@@ -13,7 +13,7 @@ import ImportRoutes from './plugins/src/ImportRoutes.js'
 export default defineConfig({
   plugins: [
 	ImportRoutes(),
-	react()
+	react(),
   ],
   server: {
 	port: 3000
@@ -37,9 +37,11 @@ export default defineConfig({
 	// These filters are passed to @rollup/pluginutils/createFilter().
 	includeRoute: /src\/Page\/.*\.jsx$/,
 	excludeRoute: [
-		'/node_modules/',
+		'**/src/Page/Template.jsx',
+		'**/src/Page/Lesson/LessonTemplate.jsx',
+		'**/node_modules/**',
 		// Ignore page components.
-		'**/Components/**'
+		'**/Components/**',
 	],
 	
 	/* TODO Not used, in favor of virtual/dynamic imports.
