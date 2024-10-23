@@ -79,6 +79,7 @@ const ImportRoutes = () => {
   let filter = false
 
   let importsSrc = []
+  let componetsSrc = []
   
   const regenerateImportsSrc = () => {
 	logger.info('Regenerate route imports.', {timestamp: true})
@@ -96,6 +97,7 @@ const ImportRoutes = () => {
 	}
 	
 	importsSrc = []
+	componetsSrc = []
 	
 	// TODO This seems a bit hacky.
 	let sid = 1000
@@ -111,9 +113,8 @@ const ImportRoutes = () => {
 		props.title = props.title !== undefined ? props.title : 'Unknown'
 		
 		importName = `Route${sid++}`
-		const lazy = `lazy(() => import('${path}'))`
-		importsSrc.push(`const ${importName} = ${lazy};`)
-		importsSrc.push(`Router.setRoute('${props.route}', <${importName} />, '${props.title}')`)
+		importsSrc.push(`const ${importName} = lazy(() => import('${path}'))`)
+		componetsSrc.push(`<Route path="${props.route}" element={<${importName} />} />`)
 
 		logger.info(`Add route '${props.route}' for component '${path}'.`, {timestamp: true})
 	})
@@ -123,15 +124,24 @@ const ImportRoutes = () => {
   const getSource = () => {
 	return `
 //
-// Dynamically generated route path map.
+// Dynamically generated routes.
 //
 
 import {default as React, lazy} from 'react'
-import Router from '#Router'
 
-${importsSrc.join("\n")};
+import {Routes, Route} from 'react-router-dom'
 
-export default function ${virtualImportName}() {}`
+${importsSrc.join("\n")}
+
+export default function ${virtualImportName} ({index, notfound}) {
+	return <Routes>
+		${componetsSrc.join("\n")}
+		
+		<Route path="/" element={index} />
+		<Route path="/home" element={index} />
+		<Route path="*" element={notfound} />
+	</Routes>
+}`
   }
   
   return {

@@ -4,10 +4,16 @@
 
 import _ from 'lodash'
 
-import {useState, Suspense} from 'react'
+import {lazy, useState, Suspense} from 'react'
 
 import Router from '#Router'
 import RouterPathMap from 'RouterPathMap'
+
+import {
+	BrowserRouter, Routes, Route, Link,
+	useLocation, useParams,
+	redirect
+} from 'react-router-dom'
 
 import Spinner from '#Components/Spinner'
 import Button from '#Button'
@@ -15,8 +21,10 @@ import SelectItem from '#SelectItem'
 import NavBar from '#NavBar'
 import NotFound from '#Page/NotFound'
 
-Router.setRedirect('/home', '/lesson/crud')
-Router.setRedirect('/', '/home')
+import Sitemap from '#Page/Sitemap'
+import Contact from '#Page/Contact'
+
+const linkStyle="select-none cursor-pointer px-2.5 py-0.5 rounded-xl bg-sky-400 transition-bg"
 
 const App = () => {
 	const [currentRoute, setRoute] = useState(Router.getInitialRoute())
@@ -58,40 +66,52 @@ const App = () => {
 
 	const bpStyles = false ? 'md:max-w-screen-md md:mx-auto' : ''
 
-	return (
+	const RouteInfo = () => {
+		const loc = useLocation()
+		const par = useParams()
+		return <div>
+			<div>Location: {JSON.stringify(loc, null, 2)}</div>
+			<div>Params: {JSON.stringify(par, null, 2)}</div>
+		</div>
+	}
+	
+	// Aka, home page.
+	const Index = lazy(() => import('#Page/Lesson/CRUD'))
+	
+	return (<BrowserRouter>
 		<div className="h-dvh flex flex-col justify-between">
 			{/* Header */}
 			<div className="bg-indigo-100">
 				<NavBar>
-					<Button route="/home" onClick={onRouteSelected}>
+					<Link className={linkStyle} to="/home">
 						Home
-					</Button>
+					</Link>
 					<SelectItem
 						name="routes"
 						items={lessonRoutes}
 						value={currentRoute.path}
 						onSelect={onLessonSelected}
 					/>
-					<Button route="/about" onClick={onRouteSelected}>
+					<Link className={linkStyle} to="/about">
 						About
-					</Button>
+					</Link>
 				</NavBar>
 				<NavBar>
-					<Button route="/weather" onClick={onRouteSelected}>
+					<Link className={linkStyle} to="/weather">
 						Weather
-					</Button>
-					<Button route="/msw-test" onClick={onRouteSelected}>
+					</Link>
+					<Link className={linkStyle} to="/msw-test">
 						Mock Service Worker
-					</Button>
-					<Button route="/promises" onClick={onRouteSelected}>
+					</Link>
+					<Link className={linkStyle} to="/promises">
 						JS Promise
-					</Button>
-					<Button route="/random" onClick={onRouteSelected}>
+					</Link>
+					<Link className={linkStyle} to="/random">
 						PseudoRNG
-					</Button>
-					<Button route="/graphics" onClick={onRouteSelected}>
+					</Link>
+					<Link className={linkStyle} to="/graphics">
 						Graphics
-					</Button>
+					</Link>
 				</NavBar>
 			</div>
 
@@ -102,15 +122,15 @@ const App = () => {
 						<Spinner dim="w-40 h-40" borderWidth="border-[2.5rem]" borderColor="border-gray-700" />
 					</div>
 				}>
-					{currentRoute.component}
+					<RouterPathMap index={<Index />} notfound={<NotFound />} />
 				</Suspense>
 			</div>
 
 			{/* Footer */}
 			<div className="bg-indigo-100">
 				<NavBar>
-					<Button todo="/sitemap">Site Map</Button>
-					<Button todo="/contact">Contact</Button>
+					<Link className={linkStyle} to="/sitemap">Sitemap</Link>
+					<Link className={linkStyle} to="/contact">Contact</Link>
 				</NavBar>
 
 				<NavBar>
@@ -119,7 +139,7 @@ const App = () => {
 				</NavBar>
 			</div>
 		</div>
-	)
+	</BrowserRouter>)
 }
 
 export default App

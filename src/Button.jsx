@@ -3,15 +3,7 @@
  */
 
 const styleDefault = `
-	select-none
-	cursor-pointer
-	
-	px-2.5
-	
-	rounded-xl
-	bg-sky-400
-	
-	transition-bg
+	select-none cursor-pointer px-2.5 rounded-xl bg-sky-400 transition-bg
 `
 
 const Button = ({
