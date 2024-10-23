@@ -41,6 +41,4 @@ const Portfolio = () => {
 	)
 }
 
-Router.setRoute('/portfolio', <Portfolio />)
-
 export default Portfolio

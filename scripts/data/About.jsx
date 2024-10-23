@@ -59,6 +59,4 @@ const About = () => {
 	)
 }
 
-Router.setRoute('/about', <About />, 'About')
-
 export default About
