@@ -3,7 +3,7 @@ import {useState, useRef} from 'react'
 const Example3 = () => {
 	const [isPlaying, setIsPlaying] = useState(false)
 	const videoRef = useRef(null)
-	
+
 	return (
 		<div className="h-screen bg-emerald-100">
 			<h2 className="p-8 text-3xl font-bold text-green-700">Example 3</h2>
