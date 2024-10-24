@@ -4,21 +4,10 @@
 
 import _ from 'lodash'
 
-const style = `
-	select-none
-	cursor-pointer
-	
-	px-2.5
-	
-	rounded-xl
-	bg-sky-400
-	
-	transition-bg
-`
-
 const SelectItem = ({name, items = [], value, defaultValue, onSelect}) => {
-	console.log('Render SelectItem component.')
-	console.log(`Select dropdown value: ${value}`)
+	if (value !== '<none>') {
+		console.log(`Select dropdown value: ${value}`)
+	}
 
 	const itemsRendered = _.sortBy(items, ['key']).map((i) => {
 		const labelPrefix = value === i.value && value !== '<none>' ? '*' : ''
@@ -39,7 +28,7 @@ const SelectItem = ({name, items = [], value, defaultValue, onSelect}) => {
 				name={name}
 				value={value}
 				defaultValue={defaultValue}
-				className={style}
+				className='select-none cursor-pointer px-2.5 rounded-xl bg-sky-400 transition-bg'
 				onChange={(e) => {
 					onSelect(e, e.target.value)
 				}}

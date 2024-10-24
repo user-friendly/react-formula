@@ -4,10 +4,14 @@
 
 import _ from 'lodash'
 
-import {useState, Suspense} from 'react'
+import {lazy, useState, Suspense} from 'react'
 
-import Router from '#Router'
-import RouterPathMap from 'RouterPathMap'
+import {default as RouteMap, RouterPathMap} from '#RouteMap'
+
+import {
+	BrowserRouter, Routes, Route, Link,
+	useLocation, useNavigate
+} from 'react-router-dom'
 
 import Spinner from '#Components/Spinner'
 import Button from '#Button'
@@ -15,18 +19,16 @@ import SelectItem from '#SelectItem'
 import NavBar from '#NavBar'
 import NotFound from '#Page/NotFound'
 
-Router.setRedirect('/home', '/lesson/crud')
-Router.setRedirect('/', '/home')
+// Aka, homepage. Needs to be updated each time a new lesson is worked on.
+import Index from '#Page/Lesson/CRUD'
+
+const linkStyle="select-none cursor-pointer px-2.5 py-0.5 rounded-xl bg-sky-400 transition-bg"
 
 const App = () => {
-	const [currentRoute, setRoute] = useState(Router.getInitialRoute())
-	
 	const lessonSelectValue = '<none>'
 	// Create a list of the lesson view routes.
 	const lessonRoutes = _.filter(
-		_.toPairs(Router.getRoutes()).map((v, k) => {
-			const r = v[1]
-
+		RouterPathMap.map((r, k) => {
 			// Skip non-lesssons.
 			if (!_.startsWith(r.path, '/lesson/')) return null
 
@@ -40,77 +42,72 @@ const App = () => {
 		value: lessonSelectValue,
 		label: '-- Select Lesson --',
 	})
-
-	// Respond to route changes.
-	const onRouteSelected = (event, path) => {
-		console.log(`New path selected: ${path}`)
-		if (_.isString(path) && !_.isEmpty(path)) {
-			setRoute(Router.getRoute(path))
-		}
+	const RouteSelect = () => {
+		const navigate = useNavigate()
+		const location = useLocation()
+		let current = lessonRoutes.find(r => r.value === location.pathname)
+		current = current ? current.value : lessonSelectValue
+		
+		return <><SelectItem
+			name="routes"
+			items={lessonRoutes}
+			value={current}
+			onSelect={(e, path) => {
+				if (path !== lessonSelectValue) {
+					navigate(path)
+				}
+			}}
+		/></>
 	}
-
-	const onLessonSelected = (event, path) => {
-		console.log(`New lesson selected: ${path}`)
-		if (path !== lessonSelectValue) {
-			onRouteSelected(event, path)
-		}
-	}
-
-	const bpStyles = false ? 'md:max-w-screen-md md:mx-auto' : ''
-
-	return (
+	
+	return (<BrowserRouter>
 		<div className="h-dvh flex flex-col justify-between">
 			{/* Header */}
 			<div className="bg-indigo-100">
 				<NavBar>
-					<Button route="/home" onClick={onRouteSelected}>
+					<Link className={linkStyle} to="/home">
 						Home
-					</Button>
-					<SelectItem
-						name="routes"
-						items={lessonRoutes}
-						value={currentRoute.path}
-						onSelect={onLessonSelected}
-					/>
-					<Button route="/about" onClick={onRouteSelected}>
+					</Link>
+					<RouteSelect />
+					<Link className={linkStyle} to="/about">
 						About
-					</Button>
+					</Link>
 				</NavBar>
 				<NavBar>
-					<Button route="/weather" onClick={onRouteSelected}>
+					<Link className={linkStyle} to="/weather">
 						Weather
-					</Button>
-					<Button route="/msw-test" onClick={onRouteSelected}>
+					</Link>
+					<Link className={linkStyle} to="/msw-test">
 						Mock Service Worker
-					</Button>
-					<Button route="/promises" onClick={onRouteSelected}>
+					</Link>
+					<Link className={linkStyle} to="/promises">
 						JS Promise
-					</Button>
-					<Button route="/random" onClick={onRouteSelected}>
+					</Link>
+					<Link className={linkStyle} to="/random">
 						PseudoRNG
-					</Button>
-					<Button route="/graphics" onClick={onRouteSelected}>
+					</Link>
+					<Link className={linkStyle} to="/graphics">
 						Graphics
-					</Button>
+					</Link>
 				</NavBar>
 			</div>
 
 			{/* Content */}
-			<div className={`bg-sky-50 text-sans ${bpStyles} px-6 py-4 flex-1`}>
+			<div className={`bg-sky-50 text-sans px-6 py-4 flex-1`}>
 				<Suspense fallback={
 					<div className="w-full h-full flex justify-center items-center">
 						<Spinner dim="w-40 h-40" borderWidth="border-[2.5rem]" borderColor="border-gray-700" />
 					</div>
 				}>
-					{currentRoute.component}
+					<RouteMap index={<Index />} notfound={<NotFound />} />
 				</Suspense>
 			</div>
 
 			{/* Footer */}
 			<div className="bg-indigo-100">
 				<NavBar>
-					<Button todo="/sitemap">Site Map</Button>
-					<Button todo="/contact">Contact</Button>
+					<Link className={linkStyle} to="/sitemap">Sitemap</Link>
+					<Link className={linkStyle} to="/contact">Contact</Link>
 				</NavBar>
 
 				<NavBar>
@@ -119,7 +116,7 @@ const App = () => {
 				</NavBar>
 			</div>
 		</div>
-	)
+	</BrowserRouter>)
 }
 
 export default App

@@ -1,11 +1,16 @@
 /**
  * Import Routes plugin.
+ * 
+ * Altough you don't need React Router, it works with it
+ * and the RouteMap component.
+ * 
+ * TODO Document.
  */
 
 import fs from 'fs'
 import { default as fsPath } from 'node:path'
 import { opendirSync, readdirSync } from 'node:fs'
-import { normalizePath, createLogger, transformWithEsbuild } from 'vite'
+import { normalizePath, createLogger/*, transformWithEsbuild*/ } from 'vite'
 import { createFilter} from '@rollup/pluginutils'
 
 // FIXME Prefix with: rollup-plugin-
@@ -77,45 +82,38 @@ const ImportRoutes = () => {
   
   let filterRoute = false
   let filter = false
-
-  let importsSrc = []
+  
+  let map = []
   
   const regenerateImportsSrc = () => {
 	logger.info('Regenerate route imports.', {timestamp: true})
 	
 	let imports = readdirSync(baseDir, {recursive: true}).map(f => {return fsPath.join(baseDir, f)})
-	//console.log('imports 1st pass: ', imports)
 	// Just wanted to practice an algo. Also, filtering can be done inside this
 	// function to avoid going down massive subdirs (usually /node_module/).
 	//imports = ListFilesRec(baseDir)
 	imports = imports.filter(f => {return filterRoute(f)})
-	//console.log('imports 2nd pass: ', imports)
 	
 	if (!imports.length) {
 		return
 	}
 	
-	importsSrc = []
-	
-	// TODO This seems a bit hacky.
-	let sid = 1000
-	let importName = ''
 	let props = {}
-	imports.forEach(path => {
-		props = extractSourceProperties(fs.readFileSync(path, 'utf-8'))
+	imports.forEach(srcPath => {
+		props = extractSourceProperties(fs.readFileSync(srcPath, 'utf-8'))
 		
 		// No routing without a route.
 		if (props.route === undefined) {
 			return;
 		}
 		props.title = props.title !== undefined ? props.title : 'Unknown'
-		
-		importName = `Route${sid++}`
-		const lazy = `lazy(() => import('${path}'))`
-		importsSrc.push(`const ${importName} = ${lazy};`)
-		importsSrc.push(`Router.setRoute('${props.route}', <${importName} />, '${props.title}')`)
+		map.push({
+			title: props.title,
+			path: props.route,
+			srcPath: srcPath,
+		})
 
-		logger.info(`Add route '${props.route}' for component '${path}'.`, {timestamp: true})
+		logger.info(`Add route '${props.route}' for component '${srcPath}'.`, {timestamp: true})
 	})
   }
   
@@ -123,17 +121,12 @@ const ImportRoutes = () => {
   const getSource = () => {
 	return `
 //
-// Dynamically generated route path map.
+// Routes map.
 //
-
-import {default as React, lazy} from 'react'
-import Router from '#Router'
-
-${importsSrc.join("\n")};
-
-export default function ${virtualImportName}() {}`
+export default ${JSON.stringify(map)}
+`
   }
-  
+
   return {
     name: 'import-routes',
 	enforce: 'pre',
@@ -176,10 +169,11 @@ export default function ${virtualImportName}() {}`
 	async load(id) {
 		if (id === virtualImportNameID) {
 			logger.info(`Expand router imports in '${id}`, {timestamp: true})
-			return await transformWithEsbuild(getSource(), id, {
+			return getSource()
+			/*return await transformWithEsbuild(getSource(), id, {
 				loader: 'jsx',
 				jsx: 'automatic',
-			})
+			})*/
 		}
 	},
   }
