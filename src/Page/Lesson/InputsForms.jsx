@@ -3,6 +3,7 @@
  *
  * %title = Module 6: Inputs and Forms
  * %route = /lesson/inputs-and-forms
+ * %isLazy = true
  */
 
 import Collapsable from './Components/Collapsable'

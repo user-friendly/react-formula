@@ -19,9 +19,6 @@ import SelectItem from '#SelectItem'
 import NavBar from '#NavBar'
 import NotFound from '#Page/NotFound'
 
-// Aka, homepage. Needs to be updated each time a new lesson is worked on.
-import Index from '#Page/Lesson/CRUD'
-
 const linkStyle="select-none cursor-pointer px-2.5 py-0.5 rounded-xl bg-sky-400 transition-bg"
 
 const App = () => {
@@ -99,7 +96,7 @@ const App = () => {
 						<Spinner dim="w-40 h-40" borderWidth="border-[2.5rem]" borderColor="border-gray-700" />
 					</div>
 				}>
-					<RouteMap index={<Index />} notfound={<NotFound />} />
+					<RouteMap notfound={<NotFound />} />
 				</Suspense>
 			</div>
 

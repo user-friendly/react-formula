@@ -10,7 +10,7 @@
 import fs from 'fs'
 import { default as fsPath } from 'node:path'
 import { opendirSync, readdirSync } from 'node:fs'
-import { normalizePath, createLogger/*, transformWithEsbuild*/ } from 'vite'
+import { normalizePath, createLogger, transformWithEsbuild } from 'vite'
 import { createFilter} from '@rollup/pluginutils'
 
 // FIXME Prefix with: rollup-plugin-
@@ -47,6 +47,7 @@ const ListFilesRec = (baseDir) => {
 const regCommentBlock = /\/\/.*?$|\/\*[\s\S]*?\*\//gm
 const regSourceProperty = /\%([a-zA-Z_$][\w$]+)\s*=\s*([^;\n]+)/g
 
+// TODO I have the feeling this concept is kinda dumb.
 /**
   * Grab properties in comment blocks.
   * 
@@ -62,6 +63,8 @@ const regSourceProperty = /\%([a-zA-Z_$][\w$]+)\s*=\s*([^;\n]+)/g
   * 
   * %title = About
   * %route = /about
+  * %isLazy = yes
+  * %isHome = yes
   * %weight = 2
   */
 function extractSourceProperties(source) {
@@ -75,6 +78,14 @@ function extractSourceProperties(source) {
 	return {}
 }
 
+/**
+ * Convert a on/off source property to boolean.
+ */
+function getBool(str = '') {
+	str = str.toLowerCase()
+	return (str === 'true' || str === 'yes' || str === '1') ? true : false
+}
+
 const ImportRoutes = () => {
   let config = {}
   
@@ -83,6 +94,7 @@ const ImportRoutes = () => {
   let filterRoute = false
   let filter = false
   
+  let components = []
   let map = []
   
   const regenerateImportsSrc = () => {
@@ -98,6 +110,9 @@ const ImportRoutes = () => {
 		return
 	}
 	
+	// MAGIC!!!
+	let sid = 1000
+	let componentName = ''
 	let props = {}
 	imports.forEach(srcPath => {
 		props = extractSourceProperties(fs.readFileSync(srcPath, 'utf-8'))
@@ -107,11 +122,35 @@ const ImportRoutes = () => {
 			return;
 		}
 		props.title = props.title !== undefined ? props.title : 'Unknown'
-		map.push({
-			title: props.title,
-			path: props.route,
-			srcPath: srcPath,
-		})
+		props.isLazy = getBool(props.isLazy)
+		props.isHome = getBool(props.isHome)
+		
+		componentName = `Route${sid++}`
+		
+		if (props.isLazy) {
+			components.push(`const ${componentName} = lazy(() => import('${srcPath}'))`)
+		} else {
+			components.push(`import ${componentName} from '${srcPath}'`)
+		}
+		
+		if (props.isHome) {
+			map.push(`{
+				title: '${props.title}',
+				path: '/home',
+				component: ${componentName}
+			}`)
+			map.push(`{
+				title: '${props.title}',
+				path: '/',
+				component: ${componentName}
+			}`)
+		}
+		
+		map.push(`{
+			title: '${props.title}',
+			path: '${props.route}',
+			component: ${componentName}
+		}`)
 
 		logger.info(`Add route '${props.route}' for component '${srcPath}'.`, {timestamp: true})
 	})
@@ -123,7 +162,12 @@ const ImportRoutes = () => {
 //
 // Routes map.
 //
-export default ${JSON.stringify(map)}
+
+import {lazy} from 'react'
+
+${components.join("\n")}
+
+export default [${map.join(",\n")}]
 `
   }
 
@@ -169,11 +213,10 @@ export default ${JSON.stringify(map)}
 	async load(id) {
 		if (id === virtualImportNameID) {
 			logger.info(`Expand router imports in '${id}`, {timestamp: true})
-			return getSource()
-			/*return await transformWithEsbuild(getSource(), id, {
+			return await transformWithEsbuild(getSource(), id, {
 				loader: 'jsx',
 				jsx: 'automatic',
-			})*/
+			})
 		}
 	},
   }

@@ -3,6 +3,7 @@
  *
  * %title = Modules 1, 2, & 3
  * %route = /lesson/beginner
+ * %isLazy = true
  */
 
 import Collapsable from './Components/Collapsable'

@@ -3,6 +3,7 @@
  *
  * %title = Module 7: Fetching Data
  * %route = /lesson/fetching-data
+ * %isLazy = true
  */
 
 import Collapsable from './Components/Collapsable'

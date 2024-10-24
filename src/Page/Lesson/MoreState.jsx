@@ -3,6 +3,7 @@
  *
  * %title = Module 4: More State
  * %route = /lesson/more-state
+ * %isLazy = true
  */
 
 import Collapsable from './Components/Collapsable'

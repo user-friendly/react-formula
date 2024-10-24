@@ -1,8 +1,9 @@
 /**
  * Graphics page view.
  * 
-* %title = Graphics Experimentation
-* %route = /graphics
+ * %title = Graphics Experimentation
+ * %route = /graphics
+ * %isLazy = true
  */
 
 import _ from 'lodash'

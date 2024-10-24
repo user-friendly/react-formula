@@ -1,8 +1,9 @@
 /**
  * Repeated Item Rendering, module 5 lessons.
  *
-* %title = Module 5: Repeated Item Rendering
-* %route = /lesson/repeated-item-rendering
+ * %title = Module 5: Repeated Item Rendering
+ * %route = /lesson/repeated-item-rendering
+ * %isLazy = true
  */
 
 import Collapsable from './Components/Collapsable'
