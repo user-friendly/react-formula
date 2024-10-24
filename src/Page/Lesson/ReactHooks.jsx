@@ -2,7 +2,7 @@
  * Module 10: Other React Hooks
  *
  * %title = Module 10: Other React Hooks
- * %route = /lesson/react-hooks
+ * %route = /lesson/react-hooks/*
  * %isLazy = false
  * %isHome = true
  */
@@ -11,7 +11,7 @@ import Collapsable from './Components/Collapsable'
 
 import Refs from './Components/ReactHooks/Refs'
 import Contexts from './Components/ReactHooks/Contexts'
-//import Component from './Components/ReactHooks/Component'
+import ThemeContext from './Components/ReactHooks/ThemeContext'
 //import Component from './Components/ReactHooks/Component'
 //import Component from './Components/ReactHooks/Component'
 
@@ -21,13 +21,13 @@ const ReactHooks = ({children}) => {
 		<Collapsable key={i++} collapse={true} title="Refs">
 			<Refs />
 		</Collapsable>,
-		<Collapsable key={i++} collapse={false} title="Intro to React Context">
+		<Collapsable key={i++} collapse={true} title="Intro to React Context">
 			<Contexts />
 		</Collapsable>,
-		/*<Collapsable key={i++} collapse={true} title="ReactHooks">
-			<ReactHooks />
+		<Collapsable key={i++} collapse={false} title="Theme Context">
+			<ThemeContext />
 		</Collapsable>,
-		<Collapsable key={i++} collapse={true} title="ReactHooks">
+		/*<Collapsable key={i++} collapse={true} title="ReactHooks">
 			<ReactHooks />
 		</Collapsable>,
 		<Collapsable key={i++} collapse={true} title="ReactHooks">
