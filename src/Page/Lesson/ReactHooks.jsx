@@ -10,7 +10,7 @@
 import Collapsable from './Components/Collapsable'
 
 import Refs from './Components/ReactHooks/Refs'
-//import Component from './Components/ReactHooks/Component'
+import Contexts from './Components/ReactHooks/Contexts'
 //import Component from './Components/ReactHooks/Component'
 //import Component from './Components/ReactHooks/Component'
 //import Component from './Components/ReactHooks/Component'
@@ -18,13 +18,13 @@ import Refs from './Components/ReactHooks/Refs'
 const ReactHooks = ({children}) => {
 	let i = 0
 	const lessons = [
-		<Collapsable key={i++} collapse={false} title="Refs">
+		<Collapsable key={i++} collapse={true} title="Refs">
 			<Refs />
 		</Collapsable>,
-		/*<Collapsable key={i++} collapse={true} title="ReactHooks">
-			<ReactHooks />
+		<Collapsable key={i++} collapse={false} title="Intro to React Context">
+			<Contexts />
 		</Collapsable>,
-		<Collapsable key={i++} collapse={true} title="ReactHooks">
+		/*<Collapsable key={i++} collapse={true} title="ReactHooks">
 			<ReactHooks />
 		</Collapsable>,
 		<Collapsable key={i++} collapse={true} title="ReactHooks">
