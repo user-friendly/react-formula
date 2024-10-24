@@ -10,7 +10,7 @@ import {default as RouteMap, RouterPathMap} from '#RouteMap'
 
 import {
 	BrowserRouter, Routes, Route, Link,
-	useLocation, useParams, useNavigate
+	useLocation, useNavigate
 } from 'react-router-dom'
 
 import Spinner from '#Components/Spinner'
@@ -42,23 +42,16 @@ const App = () => {
 		value: lessonSelectValue,
 		label: '-- Select Lesson --',
 	})
-
-	lessonRoutes.push({
-		key: 1,
-		value: '/home',
-		label: 'Home',
-	})
-
-	const bpStyles = false ? 'md:max-w-screen-md md:mx-auto' : ''
-	
 	const RouteSelect = () => {
 		const navigate = useNavigate()
 		const location = useLocation()
+		let current = lessonRoutes.find(r => r.value === location.pathname)
+		current = current ? current.value : lessonSelectValue
 		
 		return <><SelectItem
 			name="routes"
 			items={lessonRoutes}
-			value={location.pathname}
+			value={current}
 			onSelect={(e, path) => {
 				if (path !== lessonSelectValue) {
 					navigate(path)
@@ -100,7 +93,7 @@ const App = () => {
 			</div>
 
 			{/* Content */}
-			<div className={`bg-sky-50 text-sans ${bpStyles} px-6 py-4 flex-1`}>
+			<div className={`bg-sky-50 text-sans px-6 py-4 flex-1`}>
 				<Suspense fallback={
 					<div className="w-full h-full flex justify-center items-center">
 						<Spinner dim="w-40 h-40" borderWidth="border-[2.5rem]" borderColor="border-gray-700" />

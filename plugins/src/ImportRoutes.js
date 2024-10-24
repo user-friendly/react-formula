@@ -1,5 +1,10 @@
 /**
  * Import Routes plugin.
+ * 
+ * Altough you don't need React Router, it works with it
+ * and the RouteMap component.
+ * 
+ * TODO Document.
  */
 
 import fs from 'fs'
@@ -84,20 +89,15 @@ const ImportRoutes = () => {
 	logger.info('Regenerate route imports.', {timestamp: true})
 	
 	let imports = readdirSync(baseDir, {recursive: true}).map(f => {return fsPath.join(baseDir, f)})
-	//console.log('imports 1st pass: ', imports)
 	// Just wanted to practice an algo. Also, filtering can be done inside this
 	// function to avoid going down massive subdirs (usually /node_module/).
 	//imports = ListFilesRec(baseDir)
 	imports = imports.filter(f => {return filterRoute(f)})
-	//console.log('imports 2nd pass: ', imports)
 	
 	if (!imports.length) {
 		return
 	}
 	
-	// TODO This seems a bit hacky.
-	let sid = 1000
-	let importName = ''
 	let props = {}
 	imports.forEach(srcPath => {
 		props = extractSourceProperties(fs.readFileSync(srcPath, 'utf-8'))
@@ -107,7 +107,6 @@ const ImportRoutes = () => {
 			return;
 		}
 		props.title = props.title !== undefined ? props.title : 'Unknown'
-		
 		map.push({
 			title: props.title,
 			path: props.route,
@@ -124,12 +123,10 @@ const ImportRoutes = () => {
 //
 // Routes map.
 //
-
 export default ${JSON.stringify(map)}
-
 `
   }
-  
+
   return {
     name: 'import-routes',
 	enforce: 'pre',
@@ -168,15 +165,6 @@ export default ${JSON.stringify(map)}
 			return virtualImportNameID
 		}
 	},
-	
-/*	transform(src, id) {
-		if (fileRegex.test(id)) {
-			return {
-				code: compileFileToJS(src),
-				map: null, // provide source map if available
-			}
-		}
-	},*/
 	
 	async load(id) {
 		if (id === virtualImportNameID) {
