@@ -6,13 +6,11 @@ import _ from 'lodash'
 
 import {lazy, useState, Suspense} from 'react'
 
-import Router from '#Router'
-import RouterPathMap from 'RouterPathMap'
+import {default as RouteMap, RouterPathMap} from '#RouteMap'
 
 import {
 	BrowserRouter, Routes, Route, Link,
-	useLocation, useParams,
-	redirect
+	useLocation, useParams, useNavigate
 } from 'react-router-dom'
 
 import Spinner from '#Components/Spinner'
@@ -21,20 +19,16 @@ import SelectItem from '#SelectItem'
 import NavBar from '#NavBar'
 import NotFound from '#Page/NotFound'
 
-import Sitemap from '#Page/Sitemap'
-import Contact from '#Page/Contact'
+// Aka, homepage. Needs to be updated each time a new lesson is worked on.
+import Index from '#Page/Lesson/CRUD'
 
 const linkStyle="select-none cursor-pointer px-2.5 py-0.5 rounded-xl bg-sky-400 transition-bg"
 
 const App = () => {
-	const [currentRoute, setRoute] = useState(Router.getInitialRoute())
-	
 	const lessonSelectValue = '<none>'
 	// Create a list of the lesson view routes.
 	const lessonRoutes = _.filter(
-		_.toPairs(Router.getRoutes()).map((v, k) => {
-			const r = v[1]
-
+		RouterPathMap.map((r, k) => {
 			// Skip non-lesssons.
 			if (!_.startsWith(r.path, '/lesson/')) return null
 
@@ -49,34 +43,29 @@ const App = () => {
 		label: '-- Select Lesson --',
 	})
 
-	// Respond to route changes.
-	const onRouteSelected = (event, path) => {
-		console.log(`New path selected: ${path}`)
-		if (_.isString(path) && !_.isEmpty(path)) {
-			setRoute(Router.getRoute(path))
-		}
-	}
-
-	const onLessonSelected = (event, path) => {
-		console.log(`New lesson selected: ${path}`)
-		if (path !== lessonSelectValue) {
-			onRouteSelected(event, path)
-		}
-	}
+	lessonRoutes.push({
+		key: 1,
+		value: '/home',
+		label: 'Home',
+	})
 
 	const bpStyles = false ? 'md:max-w-screen-md md:mx-auto' : ''
-
-	const RouteInfo = () => {
-		const loc = useLocation()
-		const par = useParams()
-		return <div>
-			<div>Location: {JSON.stringify(loc, null, 2)}</div>
-			<div>Params: {JSON.stringify(par, null, 2)}</div>
-		</div>
-	}
 	
-	// Aka, home page.
-	const Index = lazy(() => import('#Page/Lesson/CRUD'))
+	const RouteSelect = () => {
+		const navigate = useNavigate()
+		const location = useLocation()
+		
+		return <><SelectItem
+			name="routes"
+			items={lessonRoutes}
+			value={location.pathname}
+			onSelect={(e, path) => {
+				if (path !== lessonSelectValue) {
+					navigate(path)
+				}
+			}}
+		/></>
+	}
 	
 	return (<BrowserRouter>
 		<div className="h-dvh flex flex-col justify-between">
@@ -86,12 +75,7 @@ const App = () => {
 					<Link className={linkStyle} to="/home">
 						Home
 					</Link>
-					<SelectItem
-						name="routes"
-						items={lessonRoutes}
-						value={currentRoute.path}
-						onSelect={onLessonSelected}
-					/>
+					<RouteSelect />
 					<Link className={linkStyle} to="/about">
 						About
 					</Link>
@@ -122,7 +106,7 @@ const App = () => {
 						<Spinner dim="w-40 h-40" borderWidth="border-[2.5rem]" borderColor="border-gray-700" />
 					</div>
 				}>
-					<RouterPathMap index={<Index />} notfound={<NotFound />} />
+					<RouteMap index={<Index />} notfound={<NotFound />} />
 				</Suspense>
 			</div>
 

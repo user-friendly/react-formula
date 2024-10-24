@@ -17,7 +17,6 @@ const style = `
 `
 
 const SelectItem = ({name, items = [], value, defaultValue, onSelect}) => {
-	console.log('Render SelectItem component.')
 	console.log(`Select dropdown value: ${value}`)
 
 	const itemsRendered = _.sortBy(items, ['key']).map((i) => {

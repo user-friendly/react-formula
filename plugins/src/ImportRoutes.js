@@ -5,7 +5,7 @@
 import fs from 'fs'
 import { default as fsPath } from 'node:path'
 import { opendirSync, readdirSync } from 'node:fs'
-import { normalizePath, createLogger, transformWithEsbuild } from 'vite'
+import { normalizePath, createLogger/*, transformWithEsbuild*/ } from 'vite'
 import { createFilter} from '@rollup/pluginutils'
 
 // FIXME Prefix with: rollup-plugin-
@@ -77,9 +77,8 @@ const ImportRoutes = () => {
   
   let filterRoute = false
   let filter = false
-
-  let importsSrc = []
-  let componetsSrc = []
+  
+  let map = []
   
   const regenerateImportsSrc = () => {
 	logger.info('Regenerate route imports.', {timestamp: true})
@@ -96,15 +95,12 @@ const ImportRoutes = () => {
 		return
 	}
 	
-	importsSrc = []
-	componetsSrc = []
-	
 	// TODO This seems a bit hacky.
 	let sid = 1000
 	let importName = ''
 	let props = {}
-	imports.forEach(path => {
-		props = extractSourceProperties(fs.readFileSync(path, 'utf-8'))
+	imports.forEach(srcPath => {
+		props = extractSourceProperties(fs.readFileSync(srcPath, 'utf-8'))
 		
 		// No routing without a route.
 		if (props.route === undefined) {
@@ -112,11 +108,13 @@ const ImportRoutes = () => {
 		}
 		props.title = props.title !== undefined ? props.title : 'Unknown'
 		
-		importName = `Route${sid++}`
-		importsSrc.push(`const ${importName} = lazy(() => import('${path}'))`)
-		componetsSrc.push(`<Route path="${props.route}" element={<${importName} />} />`)
+		map.push({
+			title: props.title,
+			path: props.route,
+			srcPath: srcPath,
+		})
 
-		logger.info(`Add route '${props.route}' for component '${path}'.`, {timestamp: true})
+		logger.info(`Add route '${props.route}' for component '${srcPath}'.`, {timestamp: true})
 	})
   }
   
@@ -124,24 +122,12 @@ const ImportRoutes = () => {
   const getSource = () => {
 	return `
 //
-// Dynamically generated routes.
+// Routes map.
 //
 
-import {default as React, lazy} from 'react'
+export default ${JSON.stringify(map)}
 
-import {Routes, Route} from 'react-router-dom'
-
-${importsSrc.join("\n")}
-
-export default function ${virtualImportName} ({index, notfound}) {
-	return <Routes>
-		${componetsSrc.join("\n")}
-		
-		<Route path="/" element={index} />
-		<Route path="/home" element={index} />
-		<Route path="*" element={notfound} />
-	</Routes>
-}`
+`
   }
   
   return {
@@ -183,13 +169,23 @@ export default function ${virtualImportName} ({index, notfound}) {
 		}
 	},
 	
+/*	transform(src, id) {
+		if (fileRegex.test(id)) {
+			return {
+				code: compileFileToJS(src),
+				map: null, // provide source map if available
+			}
+		}
+	},*/
+	
 	async load(id) {
 		if (id === virtualImportNameID) {
 			logger.info(`Expand router imports in '${id}`, {timestamp: true})
-			return await transformWithEsbuild(getSource(), id, {
+			return getSource()
+			/*return await transformWithEsbuild(getSource(), id, {
 				loader: 'jsx',
 				jsx: 'automatic',
-			})
+			})*/
 		}
 	},
   }
