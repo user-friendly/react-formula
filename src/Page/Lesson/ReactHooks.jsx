@@ -21,7 +21,7 @@ const ReactHooks = ({children}) => {
 		<Collapsable key={i++} collapse={false} title="Refs">
 			<Refs />
 		</Collapsable>,
-/*		<Collapsable key={i++} collapse={true} title="ReactHooks">
+		/*<Collapsable key={i++} collapse={true} title="ReactHooks">
 			<ReactHooks />
 		</Collapsable>,
 		<Collapsable key={i++} collapse={true} title="ReactHooks">
@@ -37,9 +37,7 @@ const ReactHooks = ({children}) => {
 
 	return (
 		<div className="h-full flex flex-col justify-start items-strech">
-			<h1 className="my-4 text-5xl self-center">
-				Other React Hooks
-			</h1>
+			<h1 className="my-4 text-5xl self-center">Other React Hooks</h1>
 
 			{lessons}
 		</div>
