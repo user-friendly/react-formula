@@ -3,8 +3,7 @@
  *
  * %title = Module 8: CRUD
  * %route = /lesson/crud
- * %isLazy = false
- * %isHome = true
+ * %isLazy = true
  */
 
 import Collapsable from './Components/Collapsable'
