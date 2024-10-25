@@ -4,7 +4,7 @@
 
 import _ from 'lodash'
 
-import {useState, useEffect} from 'react'
+import {useState, useEffect, useCallback} from 'react'
 
 import Form from '#Components/Form'
 
@@ -156,17 +156,17 @@ const Todo = () => {
 			.catch((e) => console.log(`Failed to create record (${id}): ${e}`))
 	}
 	
-	const refreshList = () => {
+	const refreshList = useCallback(() => {
 		getRecords()
 			.then((d) => {
 				setList(d)
 			})
 			.catch((e) => console.log(`Failed to get all record ${ids.join(', ')}: ${e}`))
-	}
+	}, [])
 	
 	useEffect(() => {
 		refreshList()
-	}, [])
+	}, [refreshList])
 	
 	return <div className="
 		flex flex-col justify-center items-center
