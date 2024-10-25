@@ -10,17 +10,25 @@
 import Collapsable from './Components/Collapsable'
 
 import Breakpoints from './Components/Responsive/Breakpoints'
-//import Responsive from './Components/Responsive/Responsive'
+
+import {Link} from 'react-router-dom'
+
+const linkStyle=`text-xl select-none cursor-pointer
+	px-2.5 py-0.5 rounded-xl bg-sky-400 transition-bg hover:bg-sky-500 hover:text-white`
 
 const Responsive = ({children}) => {
 	let i = 0
 	const lessons = [
-		<Collapsable key={i++} collapse={false} title="Breakpoints">
+		<Collapsable key={i++} collapse={true} title="Breakpoints">
 			<Breakpoints />
 		</Collapsable>,
-		/*<Collapsable key={i++} collapse={true} title="Responsive">
-			<Responsive />
-		</Collapsable>,*/
+		<Collapsable key={i++} collapse={false} title="Responsive">
+			<div className="my-4 flex justify-center">
+				<Link className={linkStyle} to="/standalone/mobile">
+					To "Mobile Responsive Design" Site
+				</Link>
+			</div>
+		</Collapsable>,
 	]
 
 	return (

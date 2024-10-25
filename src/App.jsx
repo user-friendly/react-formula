@@ -13,7 +13,6 @@ import {
 	useLocation, useNavigate
 } from 'react-router-dom'
 
-import Spinner from '#Components/Spinner'
 import Button from '#Button'
 import SelectItem from '#SelectItem'
 import NavBar from '#NavBar'
@@ -57,7 +56,7 @@ const App = () => {
 		/></>
 	}
 	
-	return (<BrowserRouter>
+	return (
 		<div className="h-dvh flex flex-col justify-between">
 			{/* Header */}
 			<div className="bg-indigo-100">
@@ -91,13 +90,7 @@ const App = () => {
 
 			{/* Content */}
 			<div className={`bg-sky-50 text-sans px-6 py-4 flex-1`}>
-				<Suspense fallback={
-					<div className="w-full h-full flex justify-center items-center">
-						<Spinner dim="w-40 h-40" borderWidth="border-[2.5rem]" borderColor="border-gray-700" />
-					</div>
-				}>
-					<RouteMap notfound={<NotFound />} />
-				</Suspense>
+				<RouteMap notfound={<NotFound />} />
 			</div>
 
 			{/* Footer */}
@@ -113,7 +106,7 @@ const App = () => {
 				</NavBar>
 			</div>
 		</div>
-	</BrowserRouter>)
+	)
 }
 
 export default App
