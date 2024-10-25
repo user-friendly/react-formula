@@ -1,4 +1,7 @@
-import clsx from "clsx";
+import {useContext} from 'react'
+import clsx from "clsx"
+
+import ThemeContext from "../../ThemeContext"
 
 const BAR_STYLE = {
   cyan: "bg-cyan-400",
@@ -7,8 +10,9 @@ const BAR_STYLE = {
 };
 
 const BreedItem = (props) => {
-  const { breed, themeColor } = props;
-
+  const { breed } = props
+  const [themeColor, setThemeColor] = useContext(ThemeContext)
+  
   return (
     <div className="flex my-6 border border-gray-300 rounded-lg overflow-clip">
       <div className="relative">
@@ -31,4 +35,4 @@ const BreedItem = (props) => {
   );
 };
 
-export default BreedItem;
+export default BreedItem

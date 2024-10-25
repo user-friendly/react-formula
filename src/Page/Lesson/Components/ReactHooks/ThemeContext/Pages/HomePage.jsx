@@ -1,6 +1,8 @@
-import { Link } from "react-router-dom";
-import clsx from "clsx";
-import NavBar from "../Shared/NavBar";
+import {useContext} from 'react'
+import {Link} from "react-router-dom"
+import clsx from "clsx"
+import NavBar from "../Shared/NavBar"
+import ThemeContext from "../ThemeContext"
 
 const BUTTON_STYLE = {
   cyan: "bg-cyan-200 text-cyan-800 hover:bg-cyan-300",
@@ -9,10 +11,11 @@ const BUTTON_STYLE = {
 };
 
 const HomePage = (props) => {
-  const { themeColor, setThemeColor } = props;
+	const [themeColor, setThemeColor] = useContext(ThemeContext)
+  
   return (
     <>
-      <NavBar themeColor={themeColor} setThemeColor={setThemeColor} />
+      <NavBar />
       <div className="flex justify-center font-pt-sans">
         <div className="flex flex-col items-center w-full max-w-4xl mt-24">
           <img
@@ -31,7 +34,7 @@ const HomePage = (props) => {
                 "text-2xl rounded-full px-20 py-3",
                 BUTTON_STYLE[themeColor]
               )}
-              to="/breeds"
+              to="/lesson/react-hooks/breeds"
             >
               begin
             </Link>
@@ -42,4 +45,4 @@ const HomePage = (props) => {
   );
 };
 
-export default HomePage;
+export default HomePage

@@ -1,8 +1,10 @@
-import { useState, useEffect } from "react";
-import clsx from "clsx";
-import NavBar from "../../Shared/NavBar";
-import * as BreedService from "../../Services/Breed";
-import BreedItem from "./BreedItem";
+import {useState, useEffect, useContext} from "react"
+import clsx from "clsx"
+import NavBar from "../../Shared/NavBar"
+import * as BreedService from "../../Services/Breed"
+import BreedItem from "./BreedItem"
+
+import ThemeContext from "../../ThemeContext"
 
 const SPINNER_STYLE = {
   cyan: "text-cyan-500",
@@ -11,7 +13,7 @@ const SPINNER_STYLE = {
 };
 
 const BreedsPage = (props) => {
-  const { themeColor, setThemeColor } = props;
+  const [themeColor, setThemeColor] = useContext(ThemeContext)
   const [breeds, setBreeds] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -26,7 +28,7 @@ const BreedsPage = (props) => {
 
   return (
     <>
-      <NavBar themeColor={themeColor} setThemeColor={setThemeColor} />
+      <NavBar />
       <div className="flex justify-center font-pt-sans">
         <div className="flex flex-col items-center w-full max-w-4xl px-2 my-24">
           {isLoading ? (
@@ -37,7 +39,7 @@ const BreedsPage = (props) => {
               )}
             ></i>
           ) : (
-            breeds.map((breed, idx) => <BreedItem key={idx} breed={breed} themeColor={themeColor} />)
+            breeds.map((breed, idx) => <BreedItem key={idx} breed={breed} />)
           )}
         </div>
       </div>
@@ -45,4 +47,4 @@ const BreedsPage = (props) => {
   );
 };
 
-export default BreedsPage;
+export default BreedsPage

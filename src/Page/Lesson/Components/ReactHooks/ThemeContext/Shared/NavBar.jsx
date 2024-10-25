@@ -1,5 +1,8 @@
-import { Link } from "react-router-dom";
-import clsx from "clsx";
+import {useContext} from 'react'
+import {Link} from "react-router-dom"
+import clsx from "clsx"
+
+import ThemeContext from "../ThemeContext"
 
 const DOT_COLOR = {
   cyan: "bg-cyan-400",
@@ -8,7 +11,7 @@ const DOT_COLOR = {
 };
 
 const NavBar = (props) => {
-  const { themeColor, setThemeColor } = props;
+  const [themeColor, setThemeColor] = useContext(ThemeContext)
 
   return (
     <nav className="flex justify-center px-2 shadow-lg">
@@ -50,4 +53,4 @@ const NavBar = (props) => {
   );
 };
 
-export default NavBar;
+export default NavBar
