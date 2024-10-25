@@ -8,7 +8,8 @@ export default {
     extend: {
 		fontFamily: {
 			// Font is directly linked in the index.html document.
-			noto: ['Noto Color Emoji', 'sans-serif']
+			noto: ['Noto Color Emoji', 'sans-serif'],
+			tiny5: ['Tiny5', 'sans-serif']
 		},
 		
 		keyframes: {
