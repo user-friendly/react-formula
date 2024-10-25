@@ -64,7 +64,12 @@ const App = () => {
 					<Link className={linkStyle} to="/home">
 						Home
 					</Link>
+					<Link className={linkStyle} to="/standalone/capstone">
+						Capstone Project
+					</Link>
+					
 					<RouteSelect />
+					
 					<Link className={linkStyle} to="/about">
 						About
 					</Link>
