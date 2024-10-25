@@ -9,7 +9,9 @@ export default {
 		fontFamily: {
 			// Font is directly linked in the index.html document.
 			noto: ['Noto Color Emoji', 'sans-serif'],
-			tiny5: ['Tiny5', 'sans-serif']
+			tiny5: ['Tiny5', 'sans-serif'],
+			ubuntu: ['Ubuntu', 'sans-serif'],
+			roboto: ['Roboto', 'sans-serif'],
 		},
 		
 		keyframes: {
