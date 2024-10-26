@@ -36,6 +36,7 @@ if (import.meta.hot) {
 const standaloneApps = [
 	{path: '/standalone/mobile', Component: lazy(() => import('#Standalone/MobileResponsiveDesign/App'))},
 	{path: '/standalone/capstone', Component: lazy(() => import('#Standalone/Capstone/App'))},
+	{path: '/standalone/graphics', Component: lazy(() => import('#Standalone/Graphics'))},
 ]
 
 const AppWrapper = () => {

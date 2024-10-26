@@ -118,7 +118,13 @@ class RenderEngine {
 	 * Callbacks are called in the order they were queued - FIFO.
 	 */
 	render(callback) {
-		this.#drawCalls.push(callback)
+		if (typeof callback === 'object' && typeof callback.render !== undefined
+			&& typeof callback.render === 'function'
+		) {
+			this.#drawCalls.push(callback.render.bind(callback))
+		} else if (typeof callback === 'function') {
+			this.#drawCalls.push(callback)
+		}
 		return this
 	}
 	

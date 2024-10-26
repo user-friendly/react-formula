@@ -87,7 +87,7 @@ const App = () => {
 					<Link className={linkStyle} to="/random">
 						PseudoRNG
 					</Link>
-					<Link className={linkStyle} to="/graphics">
+					<Link className={linkStyle} to="/standalone/graphics">
 						Graphics
 					</Link>
 				</NavBar>

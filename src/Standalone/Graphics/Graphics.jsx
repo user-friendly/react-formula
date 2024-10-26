@@ -1,23 +1,20 @@
 /**
  * Graphics page view.
- * 
- * %title = Graphics Experimentation
- * %route = /graphics
- * %isLazy = true
  */
 
 import _ from 'lodash'
 
 import {useRef, useState, useEffect, useLayoutEffect} from 'react'
+import {Link, useNavigate} from 'react-router-dom'
 
-import RenderEngine from '#Graphics/RenderEngine'
+import RenderEngine from './Lib/RenderEngine'
 
-import {DrawPointV2d, DrawVector2d} from '#Graphics/RenderEngine'
-import {Dot2d, Dot3d, Len2d, Len3d} from '#Graphics/Linear'
+import {DrawPointV2d, DrawVector2d} from './Lib/RenderEngine'
+import {Dot2d, Dot3d, Len2d, Len3d} from './Lib/Linear'
 
 import MersenneTwister from 'mersennetwister'
 
-export const PAGE_TITLE = 'Graphics Experimentation'
+export const PAGE_TITLE = 'Graphics'
 
 let graphics = null
 
@@ -90,6 +87,39 @@ const Graphics = () => {
 			return true
 		})
 		
+		class TextBox {
+			timeout = 0
+			// Delay between [x, y] recalc, in ms.
+			delay = 3000
+			text = 'Hello, 2D Canvas!'
+			x = 0; y = 0; z = 0; w = 0
+			
+			constructor() {
+				this.timeout = this.delay
+			}
+			
+			advance(delta) {
+				if (this.timeout >= this.delay) {
+					this.timeout = 0
+					this.x = Math.random() * (canvasRef.current.width - 150)
+					this.y = Math.random() * (canvasRef.current.height - 100)
+				} else {
+					this.timeout += delta
+				}
+			}
+			
+			render(ctx, d) {
+				this.advance(d)
+				ctx.font = '40px Tiny5'
+				ctx.fillStyle = 'black'
+				// Too expensive?
+				// tw = ctx.measureText(sampleText).width,height
+				ctx.fillText(this.text, this.x, this.y)
+				return true
+			}
+		}
+		graphics.render(new TextBox())
+		
 		// Screen resize service handler.
 		const resizeObserver = new ResizeObserver((entries) => {
 			const wrapper = entries[0].contentRect
@@ -113,6 +143,8 @@ const Graphics = () => {
 		: 'flex-1 self-stretch border-2 border-gray-700' ;
 	
 	let ControlPanel = <>
+		<Link className={buttonStyle} to="/home">Back Home</Link>
+		
 		{fullscreen ? <button className={buttonStyle} onClick={() => setFullscreen(false)}>Exit Fullscreen ⬇</button>
 			: <button className={buttonStyle} onClick={() => setFullscreen(true)}>Fullscreen ↕</button>}
 		
