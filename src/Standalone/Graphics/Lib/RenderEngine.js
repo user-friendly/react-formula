@@ -10,15 +10,37 @@ class RenderEngine {
 	#drawCalls
 	#run
 	#stop
+	
 	#background
-	#avrgDelta
-	#totalTime
-	#totalFrames
-	#debug
-	#reportInterval
-	#reportLast
+	
+	// Most recent frame's delta (time between current frame and previous frame).
 	#delta
-	#last
+	// Most recent frame's timestamp.
+	#lastTs
+	
+	// Reporting vars.
+	#debug = true
+	// Utility: average calc object.
+	#avrgDelta
+	// The average of the frame deltas.
+	#avrgDeltaLast
+	// Accumulated total deltas. This is the time between renders and
+	// should include busy CPU time (i.e. drawing work). Needs testing.
+	#totalTime
+	// Accumulated frames.
+	#totalFrames
+	#reportInterval
+	#reportTime
+	
+	/**
+	 * The totals, frames & time, are the gathared
+	 * over the interval (in ms)/
+	 */
+	#fpsFrames
+	#fpsTime
+	#fpsInterval
+	// Just the last FPS value calculated.
+	#fpsLast
 	
 	constructor(canvas = null) {
 		this.#canvas = canvas
@@ -34,19 +56,22 @@ class RenderEngine {
 		this.#stop = false
 			
 		this.#background = 'rgb(255, 255, 255)'
-		
+
+		this.#delta = 0
+		this.#lastTs = 0
+
 		this.#avrgDelta = null
-		
 		this.#totalTime = 0
 		this.#totalFrames = 0
-		
-		this.#debug = true
+		this.#avrgDeltaLast = 0
 		// In milliseconds.
-		this.#reportInterval = 5000
-		this.#reportLast = 0
+		this.#reportInterval = 60000
+		this.#reportTime = 0
 		
-		this.#delta = 0
-		this.#last = 0
+		this.#fpsFrames = 0
+		this.#fpsTime = 0
+		this.#fpsInterval = 5000
+		this.#fpsLast = 0
 	}
 	
 	start() {
@@ -55,9 +80,13 @@ class RenderEngine {
 		this.#run = true
 		
 		this.#avrgDelta = new Average()
-		this.#reportLast = 0
+		this.#reportTime = 0
 		
-		this.#last = performance.now()
+		this.#lastTs = performance.now()
+		
+		if (this.#debug) {
+			this.render(this.drawFps.bind(this))
+		}
 		
 		requestAnimationFrame(this.frame.bind(this))
 		return this
@@ -76,8 +105,8 @@ class RenderEngine {
 	}
 	
 	frame(ts) {
-		this.#delta = ts - this.#last
-		this.#last = ts
+		this.#delta = ts - this.#lastTs
+		this.#lastTs = ts
 		
 		if (this.#debug) {
 			this.#reportFrame()
@@ -188,22 +217,46 @@ class RenderEngine {
 		this.#totalFrames += 1
 		this.#avrgDelta.step(this.#delta)
 		
-		if (this.#reportLast > this.#reportInterval) {
-			this.#reportFps()
-			
-			this.#reportLast = 0
+		this.#reportFps()
+		
+		if (this.#reportTime > this.#reportInterval) {
+			// Save average delta.
+			this.#avrgDeltaLast = parseInt(this.#avrgDelta.get())
+			this.#reportTime = 0
 			this.#avrgDelta = new Average()
+			
+			console.log(`Average delta: ${this.#avrgDeltaLast} ms`)
 		} else {
-			this.#reportLast += this.#delta
+			this.#reportTime += this.#delta
 		}
 	}
 	
+	/**
+	 * Called on each frame.
+	 */
 	#reportFps() {
-		console.log(`Average delta: ${parseInt(this.#avrgDelta.get())}ms`)
+		if (this.#fpsTime > this.#fpsInterval) {
+			this.#fpsLast = parseInt((this.#fpsFrames / this.#fpsTime) * 1000)
+			this.#fpsFrames = 0
+			this.#fpsTime = 0
+			
+			console.log('FPS:', this.#fpsLast)
+		}
+		else {
+			this.#fpsFrames += 1
+			this.#fpsTime += this.#delta
+		}
 	}
+	drawFps(ctx, d, rd) {
+		ctx.font = '30px Tiny5'
+		ctx.fillStyle = 'black'
+		ctx.fillText(`FPS: ${this.#fpsLast}`, this.#canvas.width - 125, this.#canvas.height - 15)
+		return true
+	}
+	
 	#reportStats() {
 		this.#reportFps()
-		
+		console.log(`Average delta: ${this.#avrgDeltaLast} ms`)
 		console.log(`Total, frames: ${this.#totalFrames}, render time: ${FormatTotalTime(this.#totalTime)}`)
 	}
 }
