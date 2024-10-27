@@ -130,7 +130,7 @@ const Graphics = () => {
 		resizeObserver.observe(canvasWrapperRef.current)
 		return () => {
 			if (graphics) {
-				graphics.pause()
+				graphics.stop()
 				graphics = null
 			}
 			resizeObserver.unobserve(canvasWrapperRef.current)

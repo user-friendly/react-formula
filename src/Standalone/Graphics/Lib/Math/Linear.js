@@ -19,10 +19,18 @@ class VertexBuffer3d extends VertexBuffer {
 }
 
 const Dot2d = (a, b) => {
+	if (a.length !== b.lenght) {
+		throw "array lenghts are not compatible"
+	}
+	
 	return a.x*b.x + a.y*b.y
 } 
 
 const Dot3d = (a, b) => {
+	if (a.length !== b.lenght) {
+		throw "array lenghts are not compatible"
+	}
+	
 	return a.x*b.x + a.y*b.y + a.z*b.z
 }
 
@@ -101,37 +109,6 @@ const Matrix2dToString = (mat) => {
 const Matrix3dToString = (mat) => {
 	return MatrixToString(mat, 4)
 }
-
-const s1 = MatrixMultiply3d(Identity3d(), [
-	2, 0, 0, 0,
-	0, 20, 0, 0, 
-	0, 0, 2, 0,
-	0, 0, 0, 1,
-])
-
-const t1 = MatrixMultiply3d(s1, [
-	1, 0, 0, -2,
-	0, 1, 0, 2, 
-	0, 0, 1, 3.5,
-	0, 0, 0, 1,
-])
-
-console.log(Matrix3dToString(t1))
-
-const s2 = MatrixMultiply2d(Identity2d(), [
-	2, 0, 0,
-	0, 2, 0, 
-	0, 0, 1,
-])
-
-const t2 = MatrixMultiply2d(s2, [
-	1, 0, -2,
-	0, 1, 2, 
-	0, 0, 1,
-])
-
-
-console.log(Matrix2dToString(t2))
 
 export {VertexBuffer2d, VertexBuffer3d}
 
