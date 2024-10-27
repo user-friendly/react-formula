@@ -150,6 +150,8 @@ const Graphics = () => {
 		
 		{pause ? <button className={buttonStyle} onClick={() => {setPause(!pause); graphics.pause()}}>Pause ⏸</button>
 			: <button className={buttonStyle} onClick={() => {setPause(!pause); graphics.start()}}>Play ▶</button>}
+		
+		<button className={buttonStyle} onClick={() => {graphics.stop()}}>Stop ⏹</button>
 	</>
 	
 	return (<div className="h-full flex flex-col items-center">

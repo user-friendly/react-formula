@@ -2,30 +2,48 @@
 const RAD_360 = 2 * Math.PI
 
 class RenderEngine {
-	#canvas = null
-	#context = null
+	#canvas
+	#context
 	
-	#drawCalls = []
-	
-	#run = false
-	
-	#background = 'rgb(255, 255, 255)'
-	
-	#avrgDelta = null
-	
-	#totalTime = 0
-	#totalFrames = 0
-	
-	#debug = true
-	#reportInterval = 30000
-	#reportLast = 0
-	
-	#delta = 0
-	#last = 0
+	#drawCalls
+	#run
+	#stop
+	#background
+	#avrgDelta
+	#totalTime
+	#totalFrames
+	#debug
+	#reportInterval
+	#reportLast
+	#delta
+	#last
 	
 	constructor(canvas = null) {
 		this.#canvas = canvas
 		this.#context = this.#canvas.getContext('2d')
+		this.#init()
+	}
+	
+	// Initializer, also can act as a reset.
+	#init() {
+		this.#drawCalls = []
+		
+		this.#run = false
+		this.#stop = false
+			
+		this.#background = 'rgb(255, 255, 255)'
+		
+		this.#avrgDelta = null
+		
+		this.#totalTime = 0
+		this.#totalFrames = 0
+		
+		this.#debug = true
+		this.#reportInterval = 30000
+		this.#reportLast = 0
+		
+		this.#delta = 0
+		this.#last = 0
 	}
 	
 	start() {
@@ -44,8 +62,13 @@ class RenderEngine {
 	
 	pause() {
 		console.log('Pause render engine.')
-		
 		this.#run = false
+		return this
+	}
+	
+	stop() {
+		console.log('Stop render engine.')
+		this.#stop = true
 		return this
 	}
 	
@@ -72,12 +95,18 @@ class RenderEngine {
 		// Draw frame.
 		this.#draw()
 		
-		if (this.#run) {
+		if (this.#run && false === this.#stop) {
 			requestAnimationFrame(this.frame.bind(this))
-		} else if (this.#debug) {
-			console.log('average delta: ', this.#avrgDelta.get())
-			console.log(`total frames: ${this.#totalFrames}, total time: ${this.#totalTime}`)
+		} else {
+			if (this.#debug) {
+				console.log('average delta: ', this.#avrgDelta.get())
+				console.log(`total frames: ${this.#totalFrames}, total time: ${this.#totalTime}`)
+			}
+			if (false !== this.#stop) {
+				this.#init()
+			}
 		}
+		
 	}
 	
 	#draw() {
