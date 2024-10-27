@@ -10,7 +10,7 @@ import {Link, useNavigate} from 'react-router-dom'
 import RenderEngine from './Lib/RenderEngine'
 
 import {DrawPointV2d, DrawVector2d} from './Lib/RenderEngine'
-import {Dot2d, Dot3d, Len2d, Len3d} from './Lib/Linear'
+import {Dot2d, Dot3d, Len2d, Len3d} from './Lib/Math/Linear'
 
 import MersenneTwister from 'mersennetwister'
 

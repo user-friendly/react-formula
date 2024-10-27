@@ -72,22 +72,39 @@ const MatrixMultiply3d = (A, B) => {
 	]	
 }
 
-const Matrix2dToString = (m) => {
-	console.log('|', m[0], m[1], m[2], '|')
-	console.log('|', m[3], m[4], m[5], '|')
-	console.log('|', m[6], m[7], m[8], '|')
+/**
+ * Debug matrix.
+ * 
+ * mat is an array of numbers.
+ * n is columns.
+ * Rows are automatically deduced.
+ */
+const MatrixToString = (mat, n = 3) => {
+	let maxPad = 0
+	const str = mat.map((num) => {
+		num = num.toFixed(2)
+		if (num.length > maxPad) {
+			maxPad = num.length
+		}
+		return num
+	})
+	let line = []; const lines = []
+	while ((line = str.splice(0, n).map((num) => num.padStart(maxPad, ' '))).length) {
+		lines.push(`| ${line.join(' ')} |`)
+	}
+	return lines.join("\n")
 }
 
-const Matrix3dToString = (m) => {
-	console.log('|', m[0], m[1], m[2], m[3], '|')
-	console.log('|', m[4], m[5], m[6], m[7], '|')
-	console.log('|', m[8], m[9], m[10], m[11], '|')
-	console.log('|', m[12], m[13], m[14], m[15], '|')
+const Matrix2dToString = (mat) => {
+	return MatrixToString(mat, 3)
+}
+const Matrix3dToString = (mat) => {
+	return MatrixToString(mat, 4)
 }
 
 const s1 = MatrixMultiply3d(Identity3d(), [
 	2, 0, 0, 0,
-	0, 2, 0, 0, 
+	0, 20, 0, 0, 
 	0, 0, 2, 0,
 	0, 0, 0, 1,
 ])
@@ -100,6 +117,21 @@ const t1 = MatrixMultiply3d(s1, [
 ])
 
 console.log(Matrix3dToString(t1))
+
+const s2 = MatrixMultiply2d(Identity2d(), [
+	2, 0, 0,
+	0, 2, 0, 
+	0, 0, 1,
+])
+
+const t2 = MatrixMultiply2d(s2, [
+	1, 0, -2,
+	0, 1, 2, 
+	0, 0, 1,
+])
+
+
+console.log(Matrix2dToString(t2))
 
 export {VertexBuffer2d, VertexBuffer3d}
 
