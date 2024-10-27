@@ -21,7 +21,7 @@ const menuStyle = `
 const closeButton = `md:hidden self-end mt-8 mr-4 p-3 rounded-full bg-violet-500`
 
 const NavBar = (props) => {
-	const [showMobile, setShowMobile] = useState(true)
+	const [showMobile, setShowMobile] = useState(false)
 	
 	return <div className="mb-8 flex justify-center shadow-lg bg-violet-50"> 
 		<div className="w-full max-w-6xl py-4 px-4 flex justify-center items-center
