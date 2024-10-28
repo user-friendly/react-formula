@@ -1,5 +1,6 @@
 
 import {FormatTotalTime, Average} from './Utilities'
+import UiTextBox from './UiTextBox'
 
 const RAD_360 = 2 * Math.PI
 
@@ -85,7 +86,7 @@ class RenderEngine {
 		this.#lastTs = performance.now()
 		
 		if (this.#debug) {
-			this.render(this.drawFps.bind(this))
+			this.showFpsDebug()
 		}
 		
 		requestAnimationFrame(this.frame.bind(this))
@@ -207,6 +208,10 @@ class RenderEngine {
 		// console.log(`RenderEngine.onResize(${width}, ${height})`)
 		this.#canvas.width = width
 		this.#canvas.height = height
+		
+		if (this.#debug) {
+			this.showFpsDebug()
+		}
 	}
 	
 	/**
@@ -247,11 +252,17 @@ class RenderEngine {
 			this.#fpsTime += this.#delta
 		}
 	}
-	drawFps(ctx, d, rd) {
-		ctx.font = '30px Tiny5'
-		ctx.fillStyle = 'black'
-		ctx.fillText(`FPS: ${this.#fpsLast}`, this.#canvas.width - 125, this.#canvas.height - 15)
-		return true
+	
+	showFpsDebug(ctx, d, rd) {
+		this.hideFpsDebug()
+		const getFpsDebug = () => `FPS: ${this.#fpsLast}`
+		this.fpsDebugTextBox = UiTextBox(getFpsDebug.bind(this), this.#canvas.width - 125, this.#canvas.height - 15)
+		this.render(this.fpsDebugTextBox)
+	}
+	hideFpsDebug() {
+		if (this.fpsDebugTextBox !== undefined) {
+			this.fpsDebugTextBox.remove()
+		}
 	}
 	
 	#reportStats() {
