@@ -1,4 +1,5 @@
 
+import {MatrixMultiply2d, Matrix2dToString} from './Math/Linear'
 import {FormatTotalTime, Average} from './Utilities'
 import UiTextBox from './UiTextBox'
 
@@ -151,7 +152,19 @@ class RenderEngine {
 		return this
 	}
 	
-	getViewport() {
+	getTransformMat() {
+		return [
+			1,  0, 0,
+			0, -1, this.#canvas.height,
+			0,  0, 1,
+		]
+	}
+	
+	getViewportSize() {
+		return [this.#canvas.width, this.#canvas.height]
+	}
+	
+	getCanvasSize() {
 		return [this.#canvas.width, this.#canvas.height]
 	}
 	
@@ -187,8 +200,8 @@ class RenderEngine {
 			ctx.closePath()
 			ctx.stroke()
 			
-			const oX = rd.getViewport()[0] / 2
-			const oY = rd.getViewport()[1] / 2
+			const oX = rd.getCanvasSize()[0] / 2
+			const oY = rd.getCanvasSize()[1] / 2
 			
 			ctx.beginPath()
 			ctx.arc(oX, oY, 1, 0, RAD_360)
@@ -213,6 +226,10 @@ class RenderEngine {
 			this.showFpsDebug()
 		}
 	}
+	
+	///////////////////////////
+	//     DEBUG Methods     //
+	///////////////////////////
 	
 	/**
 	 * Call on each frame.
@@ -255,8 +272,13 @@ class RenderEngine {
 	
 	showFpsDebug(ctx, d, rd) {
 		this.hideFpsDebug()
-		const getFpsDebug = () => `FPS: ${this.#fpsLast}`
-		this.fpsDebugTextBox = UiTextBox(getFpsDebug.bind(this), this.#canvas.width - 125, this.#canvas.height - 15)
+		const getFpsDebugText = () => `FPS: ${this.#fpsLast}`
+		
+		const viewportVert = [this.#canvas.width - 125, 15, 1]
+		const canvasVert = MatrixMultiply2d(this.getTransformMat(), viewportVert)
+		
+		this.fpsDebugTextBox = UiTextBox(getFpsDebugText.bind(this), canvasVert[0], canvasVert[1])
+			// this.#canvas.width - 125, this.#canvas.height - 15)
 		this.render(this.fpsDebugTextBox)
 	}
 	hideFpsDebug() {
