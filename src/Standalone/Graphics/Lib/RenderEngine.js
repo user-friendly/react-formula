@@ -156,7 +156,7 @@ class RenderEngine {
 		
 		let call = null
 		while (call = calls.shift()) {
-			if (true === call(this.#context, this.#delta, this)) {
+			if (true === call(this.#delta, this)) {
 				this.#drawCalls.push(call)
 			}
 		}
@@ -212,9 +212,8 @@ class RenderEngine {
 	 * A function to call on each frame.
 	 * 
 	 * Callback signature is (ctx, d, rd) => bool:
-	 * - ctx: Rendering context (2d or 3d).
-	 * -   d: Frame delta - time passed since last frame.
-	 * -  rd: RenderEngine instance.
+	 * - delta:    Frame delta - time passed since last frame.
+	 * - renderer: RenderEngine instance.
 	 * Return true to queue the callback for the next frame,
 	 * or false remove it.
 	 * 
@@ -257,6 +256,40 @@ class RenderEngine {
 		this.#context.font = font
 		this.#context.fillStyle = fill
 		this.#context.fillText(text, x, y)
+	}
+
+	/**
+	 * Draws a single point.
+	 * 
+	 * Should be used for debugging.
+	 * Very expensive. Can be replaced with fillRect().
+	 */
+	drawPoints(mesh) {
+		const verts = mesh.getVerts()
+		MatrixMultiply2dVerts(this.#finalMat, verts)
+		
+		const vCount = verts.length / 3
+		for (let offset = 0; offset < vCount; offset++) {
+			this.#context.beginPath()
+			this.#context.arc(verts[0 + 3*offset], verts[1 + 3*offset], 1, 0, RAD_360)
+			this.#context.stroke()
+		}
+	}
+
+	// Mostly for debug purposes.
+	drawVector(verts) {
+		const tVerts = Array.from(verts)
+		MatrixMultiply2dVerts(this.#finalMat, tVerts)
+		const origin = MatrixMultiply2d(this.#finalMat, [0, 0, 1])
+		
+		const vCount = tVerts.length / 3
+		for (let offset = 0; offset < vCount; offset++) {
+			this.#context.beginPath()
+			this.#context.moveTo(origin[0], origin[1])
+			this.#context.lineTo(tVerts[0 + 3*offset], tVerts[1 + 3*offset])
+			this.#context.closePath()
+			this.#context.stroke()
+		}
 	}
 	
 	/**
@@ -352,11 +385,17 @@ class DrawExample extends Renderable {
 	constructor () {
 		super()
 		
-		this.#mesh = new Mesh([
+		const verts = [
 			25,   25, 1,
 			125,  25, 1,
 			75,  125, 1,
-		])
+		]
+		MatrixMultiply2dVerts([
+			1, 0, 200,
+			0, 1, 100,
+			0, 0,   1,
+		], verts)
+		this.#mesh = new Mesh(verts)
 	}
 	
 	frame(delta, renderer) {
@@ -364,33 +403,4 @@ class DrawExample extends Renderable {
 	}
 }
 
-/**
- * Draws a single point.
- * 
- * Should be used for debugging.
- * Very expensive. Can be replaced with fillRect().
- */
-function DrawPoint(ctx, x, y) {
-	ctx.beginPath()
-	ctx.arc(x, y, 1, 0, RAD_360)
-	ctx.stroke()
-} 
-
-// Mostly for illustration purposes.
-function DrawPointV2d(ctx, vr) {
-	ctx.beginPath()
-	ctx.arc(vr.x, vr.y, 1, 0, RAD_360)
-	ctx.stroke()
-}
-
-// Mostly for illustration purposes.
-function DrawVector2d(ctx, vr) {
-	ctx.beginPath()
-	ctx.moveTo(0, 0)
-	ctx.lineTo(vr.x, vr.y)
-	ctx.closePath()
-	ctx.stroke()
-}
-
-export {DrawPoint, DrawPointV2d, DrawVector2d}
 export default RenderEngine

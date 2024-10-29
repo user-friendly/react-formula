@@ -5,6 +5,7 @@ class UiTextBoxImpl extends Renderable {
 	#text
 	#x
 	#y
+	#z
 	#fontStyle = '30px Tiny5'
 	#fillStyle = 'black'
 	
@@ -20,6 +21,11 @@ class UiTextBoxImpl extends Renderable {
 	
 	frame(delta, renderer) {
 		renderer.drawUiText(this.#text(), this.#x, this.#y, this.#fontStyle, this.#fillStyle)
+	}
+	
+	setPosition(x, y, z) {
+		[this.#x, this.#y, this.#z] = [x, y, z]
+		return this 
 	}
 }
 

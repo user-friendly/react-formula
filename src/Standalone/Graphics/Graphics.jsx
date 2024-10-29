@@ -9,8 +9,9 @@ import {Link, useNavigate} from 'react-router-dom'
 
 import RenderEngine from './Lib/RenderEngine'
 
-import {DrawPointV2d, DrawVector2d} from './Lib/RenderEngine'
 import {Dot2d, Dot3d, Len2d, Len3d} from './Lib/Math/Linear'
+import Mesh from './Lib/Mesh'
+import UiTextBox from './Lib/UiTextBox'
 
 import MersenneTwister from 'mersennetwister'
 
@@ -67,58 +68,39 @@ const Graphics = () => {
 			// Translate
 			v.x = tX + v.x
 			v.y = tY + v.y
-			
-			vecs.push(v)
+			vecs.push(v.x, v.y, 1)
 		}
-		
-		graphics.render((ctx, d) => {
-			for (const v2d of vecs)
-				DrawPointV2d(ctx, v2d)
+		const noiseMesh = new Mesh(vecs)
+		graphics.render((d, rd) => {
+			rd.drawPoints(noiseMesh)
 			return true
 		})
 		
-		const v1 = {x: 128, y: 128}
-		const v2 = _.clone(v1)
-		v2.y = v2.y * 2
-		
-		graphics.render((ctx, d) => {
-			DrawVector2d(ctx, v1)
-			DrawVector2d(ctx, v2)
+		graphics.render((d, rd) => {
+			// Accepts a vector buffer.
+			rd.drawVector([
+				128, 128, 1,
+				128, 256, 1,
+			])
 			return true
 		})
 		
-		class TextBox {
-			timeout = 0
-			// Delay between [x, y] recalc, in ms.
-			delay = 3000
-			text = 'Hello, 2D Canvas!'
-			x = 0; y = 0; z = 0; w = 0
-			
-			constructor() {
-				this.timeout = this.delay
-			}
-			
-			advance(delta) {
-				if (this.timeout >= this.delay) {
-					this.timeout = 0
-					this.x = Math.random() * (canvasRef.current.width - 150)
-					this.y = Math.random() * (canvasRef.current.height - 100)
-				} else {
-					this.timeout += delta
-				}
-			}
-			
-			render(ctx, d) {
-				this.advance(d)
-				ctx.font = '40px Tiny5'
-				ctx.fillStyle = 'black'
-				// Too expensive?
-				// tw = ctx.measureText(sampleText).width,height
-				ctx.fillText(this.text, this.x, this.y)
-				return true
-			}
-		}
-		graphics.render(new TextBox())
+		let timer = 0
+		const delay = 3000
+		const textBox = UiTextBox('Hello, 2D Canvas!', 0, 0)
+		graphics.render(textBox)
+		graphics.render(((textBox, delta, renderer) => {
+			if (timer >= delay) {
+				timer = 0
+				textBox.setPosition(
+					Math.random() * (canvasRef.current.width - 150),
+					Math.random() * (canvasRef.current.height - 100)
+				)
+			} else {
+				timer += delta
+			} 
+			return true
+		}).bind(null, textBox))
 		
 		// Screen resize service handler.
 		const resizeObserver = new ResizeObserver((entries) => {

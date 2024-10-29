@@ -5,7 +5,7 @@ class Renderable {
 		throw "TODO Override!"
 	}
 	// context, delta, renderer
-	render(ctx, d, rd) {
+	render(d, rd) {
 		this.frame(d, rd)
 		return !this.#remove
 	}
