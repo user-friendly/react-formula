@@ -172,9 +172,7 @@ class RenderEngine {
 	}
 	
 	#recalcFinalMat() {
-		this.#finalMat = MatrixMultiply2d(
-			Identity2d(), MatrixMultiply2d(this.#cameraMat, this.#canvasMat),
-		)
+		this.#finalMat = MatrixMultiply2d(this.#canvasMat, this.#cameraMat)
 	}
 	
 	moveCameraTo(vert) {
@@ -185,8 +183,8 @@ class RenderEngine {
 	
 	translateCameraBy(vert) {
 		this.#cameraMat = MatrixMultiply2d(this.#cameraMat, [
-			1, 0, vert[0],
-			0, 1, vert[1],
+			1, 0, -vert[0],
+			0, 1, -vert[1],
 			0, 0, vert[2],
 		])
 		this.#recalcFinalMat()
@@ -245,8 +243,11 @@ class RenderEngine {
 		for (let offset = 1; offset < vCount; offset++) {
 			this.#context.lineTo(verts[0 + 3*offset], verts[1 + 3*offset])
 		}
-		
 		this.#context.closePath()
+		
+		this.#context.fillStyle = "blue"
+		this.#context.fill()
+		this.#context.strokeStyle = "black"
 		this.#context.stroke()
 	}
 	

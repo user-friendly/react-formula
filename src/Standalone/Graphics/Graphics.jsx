@@ -33,6 +33,22 @@ const Graphics = () => {
 		// Draws some random stuff.
 		graphics.drawExample()
 		
+		let dir = 1
+		let cTimer = 0
+		const cDelay = 2000
+		graphics.render((delta, renderer) => {
+			if (cTimer >= cDelay) {
+				cTimer = 0
+				// renderer.moveCameraTo([0, 0, 1])
+				dir *= -1
+			}
+			else {
+				cTimer += delta
+				renderer.translateCameraBy([-4 * dir, -4 * dir, 1])
+			}
+			return true
+		})
+		
 		const getPRNGSample = (size, seed = performance.now(), offset = 0) => {
 			const mt = new MersenneTwister(seed)
 			const sample = []
