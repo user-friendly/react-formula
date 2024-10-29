@@ -61,7 +61,7 @@ const App = () => {
 			{/* Header */}
 			<div className="bg-indigo-100">
 				<NavBar>
-					<Link className={linkStyle} to="/home">
+					<Link className={linkStyle} to="/">
 						Home
 					</Link>
 					<Link className={linkStyle} to="/standalone/capstone">

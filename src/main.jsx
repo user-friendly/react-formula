@@ -34,8 +34,11 @@ if (import.meta.hot) {
 })()
 
 const standaloneApps = [
-	{path: '/standalone/mobile', Component: lazy(() => import('#Standalone/MobileResponsiveDesign/App'))},
+	// There's an index component in the main app too, set by RouterMap.
+	{path: '/', Component: lazy(() => import('#Standalone/Capstone/App'))},
+	
 	{path: '/standalone/capstone', Component: lazy(() => import('#Standalone/Capstone/App'))},
+	{path: '/standalone/mobile', Component: lazy(() => import('#Standalone/MobileResponsiveDesign/App'))},
 	{path: '/standalone/graphics', Component: lazy(() => import('#Standalone/Graphics'))},
 ]
 
