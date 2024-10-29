@@ -12,7 +12,9 @@ export default {
 			tiny5: ['Tiny5', 'sans-serif'],
 			ubuntu: ['Ubuntu', 'sans-serif'],
 			roboto: ['Roboto', 'sans-serif'],
-			playfair: ['Playfair Display', 'sans-serif']
+			// Capstone fonts.
+			playfair: ['Playfair Display', 'sans-serif'],
+			lato: ['Lato', 'sans-serif'],
 		},
 		
 		keyframes: {
