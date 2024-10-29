@@ -1,6 +1,8 @@
 
-import {MatrixMultiply2d, Matrix2dToString} from './Math/Linear'
+import {MatrixMultiply2d, MatrixMultiply2dVerts, Matrix2dToString, Identity2d} from './Math/Linear'
 import {FormatTotalTime, Average} from './Utilities'
+import Renderable from './Renderable'
+import Mesh from './Mesh'
 import UiTextBox from './UiTextBox'
 
 const RAD_360 = 2 * Math.PI
@@ -44,6 +46,13 @@ class RenderEngine {
 	// Just the last FPS value calculated.
 	#fpsLast
 	
+	// Transform scene coordinates to  
+	#cameraMat
+	// Transform viewport coordinates to canvas coords.
+	#canvasMat
+	// Final transformation matrix.
+	#finalMat
+	
 	constructor(canvas = null) {
 		this.#canvas = canvas
 		this.#context = this.#canvas.getContext('2d')
@@ -74,6 +83,16 @@ class RenderEngine {
 		this.#fpsTime = 0
 		this.#fpsInterval = 5000
 		this.#fpsLast = 0
+		
+		this.#cameraMat = Identity2d()
+		
+		this.#canvasMat = [
+			1,  0, 0,
+			0, -1, this.#canvas.height,
+			0,  0, 1,
+		]
+		
+		this.#recalcFinalMat()
 	}
 	
 	start() {
@@ -152,12 +171,33 @@ class RenderEngine {
 		return this
 	}
 	
-	getTransformMat() {
-		return [
-			1,  0, 0,
-			0, -1, this.#canvas.height,
-			0,  0, 1,
-		]
+	#recalcFinalMat() {
+		this.#finalMat = MatrixMultiply2d(
+			Identity2d(), MatrixMultiply2d(this.#cameraMat, this.#canvasMat),
+		)
+	}
+	
+	moveCameraTo(vert) {
+		this.#cameraMat[2] = vert[0]
+		this.#cameraMat[5] = vert[1]
+		this.#recalcFinalMat()
+	}
+	
+	translateCameraBy(vert) {
+		this.#cameraMat = MatrixMultiply2d(this.#cameraMat, [
+			1, 0, vert[0],
+			0, 1, vert[1],
+			0, 0, vert[2],
+		])
+		this.#recalcFinalMat()
+	}
+		
+	getCameraMat() {
+		return this.#cameraMat
+	}
+	
+	getCanvasMat() {
+		return this.#canvasMat
 	}
 	
 	getViewportSize() {
@@ -192,23 +232,31 @@ class RenderEngine {
 	}
 	
 	drawExample() { 
-		return this.render((ctx, d, rd) => {
-			ctx.beginPath()
-			ctx.moveTo(50, 140)
-			ctx.lineTo(150, 60)
-			ctx.lineTo(250, 140)
-			ctx.closePath()
-			ctx.stroke()
-			
-			const oX = rd.getCanvasSize()[0] / 2
-			const oY = rd.getCanvasSize()[1] / 2
-			
-			ctx.beginPath()
-			ctx.arc(oX, oY, 1, 0, RAD_360)
-			ctx.stroke()
-			
-			return true
-		})
+		this.render(new DrawExample())
+	}
+	
+	drawMesh(mesh) {
+		const verts = mesh.getVerts()
+		MatrixMultiply2dVerts(this.#finalMat, verts)
+		
+		this.#context.beginPath()
+		this.#context.moveTo(verts[0], verts[1])
+		
+		const vCount = verts.length / 3
+		for (let offset = 0; offset < vCount; offset++) {
+			this.#context.lineTo(verts[0 + 3*offset], verts[1 + 3*offset])
+		}
+		
+		this.#context.closePath()
+		this.#context.stroke()
+	}
+	
+	drawUiText(text, x, y, font, fill) {
+		[x, y] =  MatrixMultiply2d(this.#canvasMat, [x, y, 1])
+		// TODO Could be beneficial to bundle up texts with similar fonts/fills.
+		this.#context.font = font
+		this.#context.fillStyle = fill
+		this.#context.fillText(text, x, y)
 	}
 	
 	/**
@@ -221,6 +269,14 @@ class RenderEngine {
 		// console.log(`RenderEngine.onResize(${width}, ${height})`)
 		this.#canvas.width = width
 		this.#canvas.height = height
+		
+		// Update canvas matrix.
+		this.#canvasMat = [
+			1,  0, 0,
+			0, -1, this.#canvas.height,
+			0,  0, 1,
+		]
+		this.#recalcFinalMat()
 		
 		if (this.#debug) {
 			this.showFpsDebug()
@@ -272,12 +328,8 @@ class RenderEngine {
 	
 	showFpsDebug(ctx, d, rd) {
 		this.hideFpsDebug()
-		const getFpsDebugText = () => `FPS: ${this.#fpsLast}`
 		
-		const viewportVert = [this.#canvas.width - 125, 15, 1]
-		const canvasVert = MatrixMultiply2d(this.getTransformMat(), viewportVert)
-		
-		this.fpsDebugTextBox = UiTextBox(getFpsDebugText.bind(this), canvasVert[0], canvasVert[1])
+		this.fpsDebugTextBox = UiTextBox((() => `FPS: ${this.#fpsLast}`).bind(this), this.#canvas.width - 125, 15)
 			// this.#canvas.width - 125, this.#canvas.height - 15)
 		this.render(this.fpsDebugTextBox)
 	}
@@ -291,6 +343,24 @@ class RenderEngine {
 		this.#reportFps()
 		console.log(`Average delta: ${this.#avrgDeltaLast} ms`)
 		console.log(`Total, frames: ${this.#totalFrames}, render time: ${FormatTotalTime(this.#totalTime)}`)
+	}
+}
+
+class DrawExample extends Renderable {
+	#mesh
+	
+	constructor () {
+		super()
+		
+		this.#mesh = new Mesh([
+			25,   25, 1,
+			125,  25, 1,
+			75,  125, 1,
+		])
+	}
+	
+	frame(delta, renderer) {
+		renderer.drawMesh(this.#mesh)
 	}
 }
 

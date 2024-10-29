@@ -1,6 +1,7 @@
 
-class UiTextBoxImpl {
-	#isDisplayed
+import Renderable from './Renderable'
+
+class UiTextBoxImpl extends Renderable {
 	#text
 	#x
 	#y
@@ -8,7 +9,8 @@ class UiTextBoxImpl {
 	#fillStyle = 'black'
 	
 	constructor (text, x, y, font, fill) {
-		this.#isDisplayed = true
+		super()
+		
 		this.#text = typeof text === 'function' ? text : () => text
 		this.#x = x
 		this.#y = y
@@ -16,16 +18,8 @@ class UiTextBoxImpl {
 		this.#fillStyle = fill !== undefined ? fill : this.#fillStyle
 	}
 	
-	// context, delta, renderer
-	render(ctx, d, rd) {
-		// TODO Could be beneficial to bundle up texts with similar fonts/fills.
-		ctx.font = this.#fontStyle
-		ctx.fillStyle = this.#fillStyle
-		ctx.fillText(this.#text(), this.#x, this.#y)
-		return this.#isDisplayed
-	}
-	remove() {
-		this.#isDisplayed = false
+	frame(delta, renderer) {
+		renderer.drawUiText(this.#text(), this.#x, this.#y, this.#fontStyle, this.#fillStyle)
 	}
 }
 

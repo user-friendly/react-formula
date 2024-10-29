@@ -20,4 +20,19 @@ class VertexBuffer {
 	}
 }
 
+class VertexBuffer2d extends VertexBuffer {
+	constructor(verts = []) {
+		// x, y, w
+		super(3, verts)
+	}
+}
+
+class VertexBuffer3d extends VertexBuffer {
+	constructor(verts = []) {
+		// x, y, z, w
+		super(4, verts)
+	}
+}
+
+export {VertexBuffer2d, VertexBuffer3d}
 export default VertexBuffer

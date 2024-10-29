@@ -2,22 +2,6 @@
  * Linear algebra operations.
  */
 
-import VertexBuffer from './VertexBuffer';
-
-class VertexBuffer2d extends VertexBuffer {
-	constructor(verts = []) {
-		// x, y, w
-		super(3, verts)
-	}
-}
-
-class VertexBuffer3d extends VertexBuffer {
-	constructor(verts = []) {
-		// x, y, z, w
-		super(4, verts)
-	}
-}
-
 const Dot2d = (a, b) => {
 	if (a.length !== b.lenght) {
 		throw "array lenghts are not compatible"
@@ -58,7 +42,7 @@ const Identity3d = () => [
 /**
  * Multiply a matrix with a scalar, vector or another matrix (of the same size).
  * A - a square matrix, 3x3
- * B - can be one of: scalar value, a 2d vector ([x, y, w]), square (3x3) matrix, 
+ * B - can be one of: scalar value, a 2d verts ([x, y, w]), square (3x3) matrix
  */
 const MatrixMultiply2d = (A, B) => {
 	if (typeof B === 'number') {
@@ -78,6 +62,28 @@ const MatrixMultiply2d = (A, B) => {
 		]
 	}
 	throw "Invalid array length."
+}
+
+/**
+ * Multiply an array of 2d vertices by a matrix, in place.
+ */
+const MatrixMultiply2dVerts = (A, verts) => {
+	if (verts.length % 3 == 0) {
+		let [vx, vy, vw, index] = [0, 0, 0, 0]
+		const vCount = verts.length / 3
+		for (let offset = 0; offset < vCount; offset++) {
+			index = 3*offset; // Semicolon needed here? Why?
+			[vx, vy, vw] = [verts[0 + index], verts[1 + index], verts[2 + index]]
+			// Calc dot x
+			verts[0 + index] = A[0]*vx + A[1]*vy + A[2]*vw
+			// Calc dot y
+			verts[1 + index] = A[3]*vx + A[4]*vy + A[5]*vw
+			// Calc dot w
+			verts[3 + index] = A[6]*vx + A[7]*vy + A[8]*vw
+		}
+	} else {
+		throw "Invalid array length."
+	}
 }
 
 const MatrixMultiply3d = (A, B) => {
@@ -126,5 +132,4 @@ const Matrix3dToString = (mat) => {
 
 export {Matrix2dToString, Matrix3dToString}
 
-export {VertexBuffer2d, VertexBuffer3d}
-export {Dot2d, Dot3d, Len2d, Len3d, MatrixMultiply2d, MatrixMultiply3d}
+export {Dot2d, Dot3d, Len2d, Len3d, MatrixMultiply2d, MatrixMultiply2dVerts, MatrixMultiply3d, Identity2d, Identity3d}
