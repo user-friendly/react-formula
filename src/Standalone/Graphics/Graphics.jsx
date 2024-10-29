@@ -118,6 +118,36 @@ const Graphics = () => {
 			return true
 		}).bind(null, textBox))
 		
+		
+		const smallStep = 4
+		const bigStep = 20
+		const handleKeyPress = (event) => {
+			const isModified =
+				event.altKey || event.ctrlKey || event.metaKey
+
+			if (!isModified) {
+				if (event.code === 'ArrowLeft') {
+					graphics.translateCameraBy([1 * (event.shiftKey ? bigStep : smallStep), 0, 1])
+				}
+				
+				if (event.code === 'ArrowRight') {
+					graphics.translateCameraBy([-1 * (event.shiftKey ? bigStep : smallStep), 0, 1])
+				}
+				
+				if (event.code === 'ArrowUp') {
+					graphics.translateCameraBy([0, -1 * (event.shiftKey ? bigStep : smallStep), 1])
+				}
+				
+				if (event.code === 'ArrowDown') {
+					graphics.translateCameraBy([0, 1 * (event.shiftKey ? bigStep : smallStep), 1])
+				}
+				
+				if (event.code === 'Enter') {
+					console.log('enter pressed')
+				}
+			}
+		}
+		
 		// Screen resize service handler.
 		const resizeObserver = new ResizeObserver((entries) => {
 			const wrapper = entries[0].contentRect
@@ -126,15 +156,19 @@ const Graphics = () => {
 			}
 		})
 		resizeObserver.observe(canvasWrapperRef.current)
+		document.body.addEventListener('keydown', handleKeyPress)
 		return () => {
 			if (graphics) {
 				graphics.stop()
 				graphics = null
 			}
 			resizeObserver.unobserve(canvasWrapperRef.current)
+			document.body.removeEventListener('keydown', handleKeyPress)
 		}
 	}, [])
-
+	
+	
+	
 	const buttonStyle = "my-2 mx-1 px-2 py-1 bg-blue-500 text-xl text-white rounded-md hover:bg-blue-600 active:bg-blue-700 disabled:bg-neutral-400"
 	
 	const canvasWrapperStyle = fullscreen ? 'fixed inset-0 w-screen h-screen'
