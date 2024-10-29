@@ -243,7 +243,7 @@ class RenderEngine {
 		this.#context.moveTo(verts[0], verts[1])
 		
 		const vCount = verts.length / 3
-		for (let offset = 0; offset < vCount; offset++) {
+		for (let offset = 1; offset < vCount; offset++) {
 			this.#context.lineTo(verts[0 + 3*offset], verts[1 + 3*offset])
 		}
 		

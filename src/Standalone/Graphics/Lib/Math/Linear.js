@@ -79,7 +79,7 @@ const MatrixMultiply2dVerts = (A, verts) => {
 			// Calc dot y
 			verts[1 + index] = A[3]*vx + A[4]*vy + A[5]*vw
 			// Calc dot w
-			verts[3 + index] = A[6]*vx + A[7]*vy + A[8]*vw
+			verts[2 + index] = A[6]*vx + A[7]*vy + A[8]*vw
 		}
 	} else {
 		throw "Invalid array length."
