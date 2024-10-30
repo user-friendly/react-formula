@@ -5,7 +5,7 @@
 import _ from 'lodash'
 
 import {useRef, useState, useEffect, useLayoutEffect} from 'react'
-import {Link, useNavigate} from 'react-router-dom'
+import {BrowserRouter, Link, useNavigate} from 'react-router-dom'
 
 import RenderEngine from './Lib/RenderEngine'
 
@@ -186,20 +186,22 @@ const Graphics = () => {
 		<button className={buttonStyle} onClick={() => {graphics.stop()}}>Stop ⏹</button>
 	</>
 	
-	return (<div className="h-full flex flex-col items-center">
-		<h2 className="m-4 text-4xl text-center">{PAGE_TITLE}</h2>
-		<div className="mb-4 text-3xl">
-			{ControlPanel}
+	return (<BrowserRouter>
+		<div className="h-full flex flex-col items-center">
+			<h2 className="m-4 text-4xl text-center">{PAGE_TITLE}</h2>
+			<div className="mb-4 text-3xl">
+				{ControlPanel}
+			</div>
+			<div ref={canvasWrapperRef} className={canvasWrapperStyle}>
+				<canvas ref={canvasRef} className={fullscreen ? " absolute inset-0" : null} />
+				{fullscreen ?
+					<div className="absolute top-1 right-1">
+						{ControlPanel}
+					</div>
+				: null}
+			</div>
 		</div>
-		<div ref={canvasWrapperRef} className={canvasWrapperStyle}>
-			<canvas ref={canvasRef} className={fullscreen ? " absolute inset-0" : null} />
-			{fullscreen ?
-				<div className="absolute top-1 right-1">
-					{ControlPanel}
-				</div>
-			: null}
-		</div>
-	</div>)
+	</BrowserRouter>)
 }
 
 export default Graphics

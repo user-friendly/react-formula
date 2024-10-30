@@ -8,12 +8,11 @@ const RoutesMap = () => {
 	const loc = useLocation()
 	
 	return <>
-
-	{loc.pathname === '/' ? <StyleGuide /> : <NotFound /> }
+	{/*loc.pathname === '/' ? <Navigate to="/standalone/capstone/style-guide" /> : null*/}
 	<Routes>
-		<Route path="./style-guide" element={<StyleGuide />} />
-		<Route path="./" element={<NotFound />} />
-		<Route path="./*" element={<NotFound />} />
+		<Route path="style-guide" element={<StyleGuide />} />
+		<Route path="/" element={<StyleGuide />} />
+		<Route path="*" element={<NotFound />} />
 	</Routes></>
 }
 

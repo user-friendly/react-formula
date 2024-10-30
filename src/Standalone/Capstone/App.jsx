@@ -1,5 +1,5 @@
 
-import {Link, Routes, Route} from 'react-router-dom'
+import {BrowserRouter, Link, Routes, Route} from 'react-router-dom'
 
 import RoutesMap from '#cap/RoutesMap'
 import NavBar from '#cap/NavBar'
@@ -13,24 +13,26 @@ const globalIconStyle = `
 `
 
 const App = () => {
-	return <div className={`
-		min-h-screen flex flex-col items-center
-		${globalFontStyle}
-	`}>
-		{/* Header */}
-		<div>
-			<h1 className="my-6 text-5xl">Capstone Project</h1>
-			<NavBar />
+	return <BrowserRouter>
+		<div className={`
+			min-h-screen flex flex-col items-center
+			${globalFontStyle}
+		`}>
+			{/* Header */}
+			<div>
+				<h1 className="my-6 text-5xl">Capstone Project</h1>
+				<NavBar />
+			</div>
+			
+			{/* Page Wrapper */}
+			<div>
+				<RoutesMap />
+			</div>
+			
+			{/* Footer */}
+			<div>[Footer goes here]</div>
 		</div>
-		
-		{/* Page Wrapper */}
-		<div>
-			<RoutesMap />
-		</div>
-		
-		{/* Footer */}
-		<div>[Footer goes here]</div>
-	</div>
+	</BrowserRouter>
 }
 
 export default App

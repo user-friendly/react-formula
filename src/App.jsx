@@ -4,7 +4,7 @@
 
 import _ from 'lodash'
 
-import {lazy, useState, Suspense} from 'react'
+import {lazy, useState, useEffect, Suspense} from 'react'
 
 import {default as RouteMap, RouterPathMap} from '#RouteMap'
 
@@ -18,9 +18,13 @@ import SelectItem from '#SelectItem'
 import NavBar from '#NavBar'
 import NotFound from '#Page/NotFound'
 
+import NotFoundProxy from '#NotFoundProxy'
+
 const linkStyle="select-none cursor-pointer px-2.5 py-0.5 rounded-xl bg-sky-400 transition-bg"
 
 const App = () => {
+	console.log('Render main app.')
+	
 	const lessonSelectValue = '<none>'
 	// Create a list of the lesson view routes.
 	const lessonRoutes = _.filter(
@@ -56,7 +60,7 @@ const App = () => {
 		/></>
 	}
 	
-	return (
+	return (<BrowserRouter>
 		<div className="h-dvh flex flex-col justify-between">
 			{/* Header */}
 			<div className="bg-indigo-100">
@@ -95,7 +99,7 @@ const App = () => {
 
 			{/* Content */}
 			<div className={`bg-sky-50 text-sans px-6 py-4 flex-1`}>
-				<RouteMap notfound={<NotFound />} />
+				<RouteMap notfound={<NotFoundProxy fallback={<NotFound />} />} />
 			</div>
 
 			{/* Footer */}
@@ -111,7 +115,7 @@ const App = () => {
 				</NavBar>
 			</div>
 		</div>
-	)
+	</BrowserRouter>)
 }
 
 export default App

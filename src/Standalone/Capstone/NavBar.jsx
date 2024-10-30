@@ -13,7 +13,8 @@ const NavBar = () => {
 		<Icon name="menu" />
 		<div className="my-3 flex justify-center">
 			<Link className={linkStyle} to="/home">Main App</Link>
-			<Link className={linkStyle} to="/standalone/capstone">Rica's Plants</Link>
+			<Link className={linkStyle} to="/">Rica's Plants</Link>
+			<Link className={linkStyle} to="/standalone/capstone/style-guide">Style Guide</Link>
 		</div>
 	</div>
 }
