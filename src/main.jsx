@@ -3,7 +3,7 @@ import {default as MswBrowser} from '/msw/src/Browser'
 import {StrictMode, Suspense, useEffect, useState, lazy} from 'react'
 import ReactDOM from 'react-dom/client'
 
-import {BrowserRouter, Routes, Route} from 'react-router-dom'
+import {Routes, Route} from 'react-router-dom'
 
 import {default as MainApp} from './App'
 
@@ -35,13 +35,6 @@ if (import.meta.hot) {
 	}
 })()
 
-const getPathname = () => {
-	if (window !== undefined && window.location !== undefined) {
-		return window.location.pathname
-	}
-	throw 'Could not get pathname.'
-}
-
 // I guess this is the meta for an app?
 const standaloneApps = [
 	// TODO Redesign these paths. They're basically a way to switch to an app. Perhaps using paths is pointless?
@@ -55,42 +48,52 @@ const standaloneApps = [
 	{id: 'graphics', path: '/standalone/graphics', Component: lazy(() => import('#Standalone/Graphics'))},
 ]
 
-const createContextValue = (appId = 'main', onNotFound) => {
-	if (onNotFound === undefined) {
-		onNotFound = (path, appId) => {
-			console.log(`App {${appId}} reports path {${path}} was not found.`)
-		}			
+const getPathname = () => {
+	if (window !== undefined && window.location !== undefined) {
+		return window.location.pathname
 	}
+	throw 'Could not get pathname.'
+}
+
+const createContextValue = (appId = 'default') => {
 	return {
 		appId: appId,
-		onNotFound: onNotFound
+		switchApp: (appId) => {
+			console.log(`App switch requested to {${appId}}.`)
+			if (undefined === standaloneApps.find(app => app.id === appId)) {
+				console.log(`Cannot switch to a non-existing app {${appId}}.`)
+				return
+			}
+			console.log(`App switch requested to {${appId}}.`)
+		}
 	}
 }
 
 const AppWrapper = () => {
+	const [currentApp, setCurrentApp] = useState('default')
+	const contextValue = createContextValue(currentApp)
+	let App = standaloneApps.find(app => currentApp === app.id)
+	
 	console.debug('Render AppWrapper.')
 	
-	const [currentApp, setCurrentApp] = useState('default')
-	// Set MainApp as default app.
-	let App = standaloneApps.find(app => app.id === 'default').Component
-	
-	// Detect app switches based on current pathname. The current pathname should
-	// contain the path (which is basepath) of the app.
-	const requestedApp = standaloneApps.find(app => {
-		// Skip current app - basepath will alwasy match.
-		// Skip default app - basepath should always match all paths.
-		if (app.id === currentApp || app.id === 'default') {
-			return false
-		}
-		return getPathname().startsWith(app.path)
-	})
-	if (requestedApp !== undefined) {
-		setCurrentApp(requestedApp.id)
+	console.log(`Current app is {${currentApp}}.`)
+	if (App === undefined) {
+		App = MainApp
 	}
-	// Get app component, finally.
-	App = standaloneApps.find(app => app.id === currentApp).Component
-
-	const contextValue = createContextValue(currentApp)
+		
+	contextValue.switchApp = (appId) => {
+		console.log(`App switch requested to {${appId}}.`)
+		if (undefined === standaloneApps.find(app => app.id === appId)) {
+			console.log(`Cannot switch to a non-existing app {${appId}}.`)
+			return
+		}
+		// Handle web platform specifics.
+		if (window !== undefined && window.history !== undefined) {
+			// Set browser routing to root.
+			window.history.pushState({previousApp: currentApp}, null, '/')
+		}
+		setCurrentApp(appId)
+	}
 	
 	return <StrictMode>
 		<Suspense fallback={
@@ -99,34 +102,11 @@ const AppWrapper = () => {
 			</div>
 		}>
 			<AppWrapperContext.Provider value={contextValue}>
-				<App />
+				<App.Component />
 			</AppWrapperContext.Provider>
 		</Suspense>
 	</StrictMode>
-	
-	return <StrictMode>
-		<BrowserRouter>
-			<Suspense fallback={
-				<div className="fixed inset-0 w-secreen h-screen flex justify-center items-center">
-					<Spinner dim="w-40 h-40" borderWidth="border-[2.5rem]" borderColor="border-gray-700" />
-				</div>
-			}>
-				<Routes>
-					{standaloneApps.map((app, k) => <Route path={app.path} Component={app.Component} key={k} />)}
-					<Route path="*" element={<MainApp />} />
-				</Routes>
-			</Suspense>
-		</BrowserRouter>
-	</StrictMode>
 }
-
-const onPathChange = () => {
-    console.log('Path changed to:', window.location.pathname);
-}
-
-// Listen for popstate events
-window.addEventListener('popstate', onPathChange)
-window.addEventListener('pushstate', onPathChange)
 
 // FIXME Mocking lesson services, since I aint got the monies
 //		 to get a ☁ VM.

@@ -1,6 +1,8 @@
 
 import {Link} from 'react-router-dom'
 
+import AppSwitcher from '#AppSwitcher'
+
 import Icon from '#cap/Icon'
 
 const linkStyle = `
@@ -12,9 +14,9 @@ const NavBar = () => {
 	return <div>
 		<Icon name="menu" />
 		<div className="my-3 flex justify-center">
-			<Link className={linkStyle} to="/home">Main App</Link>
+			<AppSwitcher className={linkStyle} appid="default">Main App</AppSwitcher>
 			<Link className={linkStyle} to="/">Rica's Plants</Link>
-			<Link className={linkStyle} to="/standalone/capstone/style-guide">Style Guide</Link>
+			<Link className={linkStyle} to="/style-guide">Style Guide</Link>
 		</div>
 	</div>
 }

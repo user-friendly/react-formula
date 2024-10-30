@@ -7,6 +7,8 @@ import _ from 'lodash'
 import {useRef, useState, useEffect, useLayoutEffect} from 'react'
 import {BrowserRouter, Link, useNavigate} from 'react-router-dom'
 
+import AppSwitcher from '#AppSwitcher'
+
 import RenderEngine from './Lib/RenderEngine'
 
 import {Dot2d, Dot3d, Len2d, Len3d} from './Lib/Math/Linear'
@@ -167,15 +169,13 @@ const Graphics = () => {
 		}
 	}, [])
 	
-	
-	
 	const buttonStyle = "my-2 mx-1 px-2 py-1 bg-blue-500 text-xl text-white rounded-md hover:bg-blue-600 active:bg-blue-700 disabled:bg-neutral-400"
 	
 	const canvasWrapperStyle = fullscreen ? 'fixed inset-0 w-screen h-screen'
 		: 'flex-1 self-stretch border-2 border-gray-700' ;
 	
 	let ControlPanel = <>
-		<Link className={buttonStyle} to="/home">Back Home</Link>
+		<AppSwitcher className={buttonStyle} appid="default">Main App</AppSwitcher>
 		
 		{fullscreen ? <button className={buttonStyle} onClick={() => setFullscreen(false)}>Exit Fullscreen ⬇</button>
 			: <button className={buttonStyle} onClick={() => setFullscreen(true)}>Fullscreen ↕</button>}

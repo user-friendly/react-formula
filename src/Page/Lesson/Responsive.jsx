@@ -7,6 +7,8 @@
  * %isHome = true
  */
 
+import AppSwitcher from '#AppSwitcher'
+
 import Collapsable from './Components/Collapsable'
 
 import Breakpoints from './Components/Responsive/Breakpoints'
@@ -24,9 +26,9 @@ const Responsive = ({children}) => {
 		</Collapsable>,
 		<Collapsable key={i++} collapse={false} title="Responsive">
 			<div className="my-4 flex justify-center">
-				<Link className={linkStyle} to="/standalone/mobile">
+				<AppSwitcher className={linkStyle} appid="mobile">
 					To "Mobile Responsive Design" Site
-				</Link>
+				</AppSwitcher>
 			</div>
 		</Collapsable>,
 	]

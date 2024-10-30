@@ -1,6 +1,7 @@
 
 import {useState} from 'react'
 import {Link} from 'react-router-dom'
+import AppSwitcher from '#AppSwitcher'
 import clsx from 'clsx'
 
 const linkStyle = `
@@ -39,7 +40,7 @@ const NavBar = (props) => {
 				)}>
 					<button className={closeButton} onClick={() => setShowMobile(false)} type="button"
 						>❌</button>
-					<Link className={linkStyle} to="/">Home</Link>
+					<AppSwitcher className={linkStyle} appid="default">Main App</AppSwitcher>
 					<Link className={linkStyle} to="/about">About</Link>
 					<Link className={linkStyle} to="/contact">Contact</Link>
 					<Link className={clsx(linkStyle, "hover:no-underline ")}
