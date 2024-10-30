@@ -24,7 +24,7 @@ export default defineConfig({
 	rollupOptions: {
 		output: {
 			manualChunks: {
-				services: ['lodash', 'msw', 'clsx'],
+				services: ['lodash', 'msw', 'clsx', 'tailwind-merge'],
 			}
 		}
 	}
