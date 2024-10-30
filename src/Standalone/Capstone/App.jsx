@@ -1,4 +1,8 @@
-import {Link} from 'react-router-dom'
+
+import {Link, Routes, Route} from 'react-router-dom'
+
+import RoutesMap from '#cap/RoutesMap'
+import NavBar from '#cap/NavBar'
 
 const globalFontStyle = "text-green-600"
 
@@ -13,22 +17,19 @@ const App = () => {
 		min-h-screen flex flex-col items-center
 		${globalFontStyle}
 	`}>
-		<Link className="text-sky-400 hover:underline" to="/home">Back To Main App</Link>
-		<h1 className="my-4 text-5xl">Capstone Project</h1>
-		<div className="my-4 text-xl font-playfair">
-			Font Playfair Display test. This here is some random text to test the given font.
-		</div>
-		<div className="my-4 text-xl font-lato">
-			Font Lato test. This here is some random text to test the given font. 
-		</div>
+		{/* Header */}
 		<div>
-			<h2 className="my-4 text-4xl">Icons</h2>
-			<div className="flex items-center gap-4">
-				<span className={`${globalIconStyle}`}>menu</span>
-				<span className={`${globalIconStyle} text-4xl`}>home</span>
-				<span className={`${globalIconStyle}`}>close</span>
-			</div>
+			<h1 className="my-6 text-5xl">Capstone Project</h1>
+			<NavBar />
 		</div>
+		
+		{/* Page Wrapper */}
+		<div>
+			<RoutesMap />
+		</div>
+		
+		{/* Footer */}
+		<div>[Footer goes here]</div>
 	</div>
 }
 
