@@ -40,7 +40,7 @@ const NavBar = (props) => {
 				)}>
 					<button className={closeButton} onClick={() => setShowMobile(false)} type="button"
 						>❌</button>
-					<AppSwitcher className={linkStyle} appid="default">Main App</AppSwitcher>
+					<AppSwitcher className={linkStyle + ' text-left'} appid="default">Main App</AppSwitcher>
 					<Link className={linkStyle} to="/about">About</Link>
 					<Link className={linkStyle} to="/contact">Contact</Link>
 					<Link className={clsx(linkStyle, "hover:no-underline ")}
