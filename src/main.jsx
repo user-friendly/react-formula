@@ -35,7 +35,31 @@ if (import.meta.hot) {
 		}
 		return null
 	}
-})()
+})();
+
+// Redirect app on init.
+(() => {
+	if (window === undefined || document === undefined) {
+		return
+	}
+	
+	const getDefaultRoute = () => {
+		if (document === undefined || !document.referrer.length) {
+			return false
+		}
+		const refUrl = new URL(document.referrer)
+		if (refUrl.origin === window.location.origin && refUrl.pathname !== window.location.pathname) {
+			// NOTE You can also use URL.search to get query params.
+			return refUrl.pathname
+		}
+		return false
+	}
+	
+	const initRoute = getDefaultRoute()
+	if (initRoute) {
+		window.history.pushState({initialRoute: true}, null, initRoute)
+	}
+})();
 
 // I guess this is the meta for an app?
 const standaloneApps = [

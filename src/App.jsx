@@ -57,7 +57,6 @@ const App = () => {
 	}
 	
 	return (<BrowserRouter>
-		{`<!-- referrer: ${document.referrer} -->`}
 		<div className="h-dvh flex flex-col justify-between">
 			{/* Header */}
 			<div className="bg-indigo-100">
