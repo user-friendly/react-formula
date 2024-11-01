@@ -1,3 +1,5 @@
+import _ from 'lodash'
+
 import {default as MswBrowser} from '/msw/src/Browser'
 
 import {StrictMode, Suspense, useEffect, useState, lazy} from 'react'
@@ -69,8 +71,53 @@ const createContextValue = (appId = 'default') => {
 	}
 }
 
+const getSessionAppId = () => {
+	// Currently, the only supported platform is web.
+	if (document === undefined) {
+		return false
+	}
+	
+	if (document.cookie === undefined || !document.cookie.trim().length) {
+		return false
+	}
+	
+	const cookies = _.fromPairs(document.cookie.split(';').map((c) => c.split('=')))
+	
+	// TODO Cookie security? Can code be injected into cookie values?
+	
+	return cookies.currentApp !== undefined ? cookies.currentApp : false
+}
+
+const setSessionAppId = (appId) => {
+	// Currently, the only supported platform is web.
+	if (document === undefined) {
+		return false
+	}
+	
+	const domain = window.location.host.split('.').splice(-2).join('.')
+	const path = '/'
+	const expires = (new Date(Date.now() + 30 * 86400000)).toUTCString()
+	document.cookie = `currentApp=${appId}; Domain=${domain}; Path=${path}; Expires=${expires};`
+	
+	return true
+}
+
+const getDefaultCurrentApp = () => {
+	// Currently, the only supported platform is web.
+	if (document === undefined) {
+		return 'default'
+	}
+	
+	const stateDefault = getSessionAppId()
+	if (!stateDefault) {
+		setSessionAppId('default')
+		return 'default'
+	}
+	return stateDefault
+}
+
 const AppWrapper = () => {
-	const [currentApp, setCurrentApp] = useState('default')
+	const [currentApp, setCurrentApp] = useState(getDefaultCurrentApp())
 	const contextValue = createContextValue(currentApp)
 	let App = standaloneApps.find(app => currentApp === app.id)
 	
@@ -80,7 +127,7 @@ const AppWrapper = () => {
 	if (App === undefined) {
 		App = MainApp
 	}
-		
+	
 	contextValue.switchApp = (appId) => {
 		console.log(`App switch requested to {${appId}}.`)
 		if (undefined === standaloneApps.find(app => app.id === appId)) {
@@ -92,6 +139,9 @@ const AppWrapper = () => {
 			// Set browser routing to root.
 			window.history.pushState({previousApp: currentApp}, null, '/')
 		}
+		// Remember choice, using platform specific storage.
+		// For web, this will be cookies.
+		setSessionAppId(appId)
 		setCurrentApp(appId)
 	}
 	
