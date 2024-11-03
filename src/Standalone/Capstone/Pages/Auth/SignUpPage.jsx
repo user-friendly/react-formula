@@ -22,7 +22,8 @@ const SignUpPage = ({className}) => {
 				type: 'password',
 			},
 			{
-				label: 'Create an Account',
+				name: 'submit_button',
+				value: 'Create an Account',
 				type: 'submit',
 			},
 		]} />

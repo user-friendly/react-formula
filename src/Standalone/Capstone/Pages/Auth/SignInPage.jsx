@@ -5,21 +5,22 @@ const SignInPage = ({className}) => {
 	return <div className={className}>
 		<Form fields={[
 			{
+				name: 'username',
 				label: 'username',
 				//placeholder: 'Username or email',
-				name: 'username',
 				value: 'JohnDoe123',
 				type: 'text',
 			},
 			{
+				name: 'password',
 				label: 'password',
 				//placeholder: 'Password',
-				name: 'password',
 				value: 'password123456',
 				type: 'password',
 			},
 			{
-				label: 'Sign In',
+				name: 'submit_button',
+				value: 'Sign In',
 				type: 'submit',
 			},
 		]} />

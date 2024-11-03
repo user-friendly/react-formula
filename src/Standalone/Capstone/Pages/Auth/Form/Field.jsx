@@ -1,5 +1,5 @@
 
-import {useEffect, useCallback, useId} from 'react'
+import {useId} from 'react'
 
 // Text input style.
 
@@ -14,38 +14,13 @@ const labelStyles = {
 	button: 'hidden',
 }
 
-const Field = ({name, value, type = "text", label, placeholder = "", onChange, instant = false}) => {
+const Field = ({name, value, type = "text", label, placeholder = "", onChange}) => {
 	//console.log(`Render field ${type}@${name}.`)
 	
 	const elemId = useId()
 	
 	const inputClass = styles[type] !== undefined ? styles[type] : styles['text']
 	const labelClass = labelStyles[type] !== undefined ? labelStyles[type] : labelStyles['text']
-	
-	if (type === 'button' || type === 'submit') {
-		if (value === undefined && label !== undefined) {
-			value = label
-			label = undefined
-		}
-	}
-	
-	if ((type === 'text' || type === 'password') && onChange !== undefined && !instant) {
-		let tid = null
-		
-		useEffect(() => {
-			return () => {
-				//console.log(`Clear timeout for field ${type}@${name}.`)
-				clearTimeout(tid)
-			}
-		}, [])
-		
-		const originalOnChange = onChange
-		onChange = (e) => {
-			//console.log(`Clear timeout for field ${type}@${name}.`)
-			clearTimeout(tid)
-			tid = setTimeout(() => originalOnChange(e), 500)
-		}
-	}
 	
 	return <div className="my-3 flex flex-col">
 		{label && <label className={labelClass} htmlFor={elemId}>{label}</label>}
