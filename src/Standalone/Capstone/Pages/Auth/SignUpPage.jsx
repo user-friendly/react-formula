@@ -1,9 +1,9 @@
 
-import AuthForm from './AuthForm'
+import Form from './Form'
 
 const SignUpPage = ({className}) => {
 	return <div className={className}>
-		<AuthForm fields={[
+		<Form fields={[
 			{
 				label: 'username',
 				//placeholder: 'Username or email',
