@@ -1,5 +1,5 @@
 
-import Form from './Form'
+import Form from '#cap/Form'
 
 const SignUpPage = ({className}) => {
 	return <div className={className}>

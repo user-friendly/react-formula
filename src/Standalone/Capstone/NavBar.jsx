@@ -12,10 +12,10 @@ const linkStyle = `
 
 const NavBar = () => {
 	return <div>
-		<Icon name="menu" />
 		<div className="my-3 flex justify-center">
 			<AppSwitcher className={linkStyle} appid="default">Main App</AppSwitcher>
 			<Link className={linkStyle} to="/">Rica's Plants</Link>
+			<Link className={linkStyle} to="/sing-in">Sign In</Link>
 			<Link className={linkStyle} to="/style-guide">Style Guide</Link>
 		</div>
 	</div>

@@ -1,7 +1,10 @@
 
-import Form from './Form'
+import {Link} from 'react-router-dom'
+
+import Form from '#cap/Form'
 
 const SignInPage = ({className}) => {
+	
 	return <div className={className}>
 		<Form fields={[
 			{
@@ -24,6 +27,8 @@ const SignInPage = ({className}) => {
 				type: 'submit',
 			},
 		]} />
+		
+		<Link to="/sing-up">Create an Account</Link>
 	</div>
 }
 
