@@ -1,16 +1,18 @@
 
 import AuthForm from './AuthForm'
 
-const SignInPage = () => {
-	return <div>
+const SignInPage = ({className}) => {
+	return <div className={className}>
 		<AuthForm fields={[
 			{
-				placeholder: 'Username or email',
+				label: 'username',
+				//placeholder: 'Username or email',
 				name: 'username',
 				type: 'text',
 			},
 			{
-				placeholder: 'Password',
+				label: 'password',
+				//placeholder: 'Password',
 				name: 'password',
 				type: 'password',
 			},

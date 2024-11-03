@@ -5,7 +5,10 @@ import {useCallback, useId} from 'react'
 
 import Field from './Field'
 
-const defaultFormStyle = 'border-2 rounded-lg border-red-600'
+const defaultFormStyle = `
+	m-4 pt-2 pb-4 px-8 bg-white border rounded-lg border-slate-300
+	flex flex-col 
+`
 
 const AuthForm = (ogProps) => {
 	const formId = useId()
@@ -26,7 +29,7 @@ const AuthForm = (ogProps) => {
 	})
 	
 	return <form {...props}>
-		{ogProps.fields.map((fieldProps, k) => <div key={k}><Field {...fieldProps} /></div>)}
+		{ogProps.fields.map((fieldProps, k) => <Field key={k} {...fieldProps} />)}
 	</form>
 }
 
