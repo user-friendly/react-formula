@@ -39,8 +39,6 @@ const Form = (ogProps) => {
 	const formId = useId()
 	const [values, setValues] = useState(() => getFieldValues(ogProps.fields))
 	
-	console.log(`Render form {${formId}}:`, values)
-	
 	// Using formId as an example dependency.
 	const handleSubmit = useCallback((e) => {
 		e.preventDefault()
@@ -57,46 +55,9 @@ const Form = (ogProps) => {
 		onSubmit: handleSubmit,
 	})
 	
-    /*if ((type === 'text' || type === 'password') && onChange !== undefined && !instant) {
-		let tid = null
-		
-		useEffect(() => {
-			return () => {
-				//console.log(`Clear timeout for field ${type}@${name}.`)
-				clearTimeout(tid)
-			}
-		}, [])
-		
-		const originalOnChange = onChange
-		onChange = (e) => {
-			//console.log(`Clear timeout for field ${type}@${name}.`)
-			clearTimeout(tid)
-			tid = setTimeout(() => originalOnChange(e), 500)
-		}
-	}*/
-	
-	let tid = null
-	
-	useEffect(() => {
-		return () => {
-			console.log(`Clear form (${formId}) timeout.`)
-			clearTimeout(tid)
-		}
-	}, [])
-	
-	const onInputChange = (name, value) => {
-		setValues(setFieldValue(values, name, value))
-		return
-		clearTimeout(tid)
-		tid = setTimeout(() => {
-			console.log(`Update value for '${name}'.`)
-			setValues(setFieldValue(values, name, value))
-		}, 1000)
-	}
-	
 	return <form {...props}>
 		{ogProps.fields.map((fieldProps, k) => <Field key={k}
-			onChange={(e) => onInputChange(fieldProps.name, e.target.value)}
+			onChange={(e) => setValues(setFieldValue(values, fieldProps.name, e.target.value))}
 			{...fieldProps}
 			value={values[fieldProps.name]}
 		/>)}
