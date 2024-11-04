@@ -1,8 +1,11 @@
 
-import Form from '#cap/Form'
+import {Link} from 'react-router-dom'
 
-const SignUpPage = ({className}) => {
-	return <div className={className}>
+import Form from '#cap/Form'
+import FormContainer from '#cap/Pages/Auth/FormContainer'
+
+const SignUpPage = () => {
+	return <FormContainer>
 		<Form fields={[
 			{
 				label: 'username',
@@ -27,7 +30,11 @@ const SignUpPage = ({className}) => {
 				type: 'submit',
 			},
 		]} />
-	</div>
+
+		<Link to="/sing-in" className="text-sm text-green-700 underline hover:text-green-500">
+			Log into Account
+		</Link>
+	</FormContainer>
 }
 
 export default SignUpPage

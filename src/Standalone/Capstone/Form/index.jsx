@@ -7,7 +7,7 @@ import Field from './Field'
 
 const defaultFormStyle = `
 	m-4 pt-2 pb-4 px-8 bg-white border rounded-lg border-slate-300 font-lato font-medium
-	flex flex-col 
+	min-w-80 flex flex-col 
 `
 
 const validateFields = (fields) => {
