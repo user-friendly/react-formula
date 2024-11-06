@@ -10,8 +10,8 @@ const iconStyle = `
 	hover:bg-green-200 text-green-700
 `
 
-const Test = () => {
-	return <div>
+const StyleGuide = () => {
+	return <div className="p-6 max-w-lg m-auto">
 		<h1 className="my-4 text-5xl">Heading</h1>
 		
 		<div className="my-4 text-xl font-playfair">
@@ -30,13 +30,7 @@ const Test = () => {
 				<Icon name="close" className="bg-violet-100 text-violet-700 hover:bg-violet-200" />
 			</div>
 		</div>
-		
-		<div className="flex flex-col items-center">
-			<SignUpPage className="min-w-96 md:min-w-lg" />
-		</div>
-
-		<SignInPage className="max-w-96 md:max-w-lg" />
 	</div>
 }
 
-export default Test
+export default StyleGuide
