@@ -4,6 +4,7 @@ import {Link} from 'react-router-dom'
 
 import Form from '#cap/Form'
 import FormContainer from '#cap/Pages/Auth/FormContainer'
+import ApiFetch from '#cap/Services/ApiFetch'
 
 const SignUpPage = () => {
 	

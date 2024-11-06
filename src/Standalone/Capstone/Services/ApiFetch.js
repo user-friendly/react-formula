@@ -20,8 +20,13 @@ const ApiFetch = async (method, path, body = null) => {
 		options.body = JSON.stringify(body);
 	}
 	
-	const response = await fetch(ENDPOINT_URL + path, options)
-	const data = await response.json()
+	let data = false
+	try {
+		const response = await fetch(ENDPOINT_URL + path, options)
+		data = await response.json()
+	} catch (e) {
+		console.error('failed to get resource', e)
+	}
 	return data
 }
 
@@ -41,7 +46,8 @@ const ApiFetch = async (method, path, body = null) => {
 	} else {
 		throw new Error(`Request failed with status ${xhr.status}`)
 	}
-}*/
+}
+export {ApiFetchSync}*/
 
-export {ApiFetchSync}
+
 export default ApiFetch
