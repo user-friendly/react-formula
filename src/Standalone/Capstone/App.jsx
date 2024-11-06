@@ -8,10 +8,10 @@ const globalFontStyle = "text-green-600"
 
 const App = () => {
 	return <BrowserRouter>
-		<NavBar />
 		<div className={`${globalFontStyle}`}>
 			<RoutesMap />
 		</div>
+		<NavBar />
 	</BrowserRouter>
 }
 
