@@ -25,7 +25,7 @@ const ApiFetch = async (method, path, body = null) => {
 	return data
 }
 
-const ApiFetchSync = (method, path, body = null) => {
+/*const ApiFetchSync = (method, path, body = null) => {
 	const xhr = new XMLHttpRequest()
 	
 	// Pass false to 3rd arg, to disable async.
@@ -41,7 +41,7 @@ const ApiFetchSync = (method, path, body = null) => {
 	} else {
 		throw new Error(`Request failed with status ${xhr.status}`)
 	}
-}
+}*/
 
 export {ApiFetchSync}
 export default ApiFetch
