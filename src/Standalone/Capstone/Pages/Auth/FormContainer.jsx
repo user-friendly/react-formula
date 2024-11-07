@@ -1,8 +1,18 @@
 
+import clsx from 'clsx'
+
 const FormContainer = (props) => {
 	const children = props.children
+	const status = props.status ? props.status : {
+		error: false,
+		message: null
+	}
 	
-	return<div className="flex">
+	if (false !== status.error && !status.message) {
+		status.message = 'Something went wrong - try again later'
+	}
+	
+	return <div className="flex">
 		<div className="relative hidden md:block">
 			<img className="h-screen object-cover"
 				title="plants on a rack" src="https://static-task-assets.react-formula.com/capstone_sign_in_scene.png" />
@@ -17,6 +27,14 @@ const FormContainer = (props) => {
 					Rica's Plants
 				</div>
 			</div>
+			
+			{status.message ? (
+			<div className={clsx('animate-slideDown py-1 px-2 rounded-lg border bg-white',
+				status.error ? 'border-red-600 text-red-600 font-medium' : 'border-green-600')}
+			>
+				{status.message}
+			</div>
+			) : null}
 			
 			{children}
 		</div>
