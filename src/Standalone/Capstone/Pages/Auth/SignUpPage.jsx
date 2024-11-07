@@ -31,7 +31,7 @@ const SignUpPage = () => {
 		const r = await ApiFetch('POST', 'users', {
 			username:			values.username,
 			password: 			values.password,
-			password_confirm:	values.password_confirmm
+			password_confirm:	values.password_confirm
 		})
 		const status = getDefaultApiStatusState()
 		
