@@ -1,6 +1,10 @@
 
-import {http, HttpResponse} from 'msw'
+import _ from 'lodash'
+
+import {http, delay, HttpResponse} from 'msw'
 import {v4 as uuidv4} from 'uuid'
+
+const randomDelay = async () => await delay(_.random(250, 1000))
 
 const store = new Map()
 
@@ -18,12 +22,17 @@ store.set('johndoe123', {
 
 const Users = (baseUrl) => {
 	return [
-		http.get(`${baseUrl}/users`, ({cookies}) => {
+		http.get(`${baseUrl}/users`, async ({cookies}) => {
+			
+			await randomDelay()
+			
 			return HttpResponse.json(Array.from(store.values()))
 		}),
 		http.post(`${baseUrl}/users`, async ({cookies, request}) => {
 			const newUser = await request.json()
 			const id = uuidv4()
+			
+			await randomDelay()
 			
 			if (newUser.username === undefined || 3 > newUser.username.length) {
 				return HttpResponse.json({
