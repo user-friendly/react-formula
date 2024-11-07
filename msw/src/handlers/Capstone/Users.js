@@ -27,18 +27,41 @@ const Users = (baseUrl) => {
 			
 			if (newUser.username === undefined || 3 > newUser.username.length) {
 				return HttpResponse.json({
-						errror: 'username is invalid',
+						error: 'Username is invalid',
+						code: 1,
+					},
+					{status: 200/*400*/}
+				)
+			}
+
+			if (store.get(newUser.username)) {
+				return HttpResponse.json({
+						error: 'Username already taken',
+						code: 3,
+					},
+					{status: 200/*409*/}
+				)
+			}
+			
+			if (newUser.password === undefined || 3 > newUser.password.length) {
+				return HttpResponse.json({
+						error: 'Password is invalid',
+						code: 2,
 					},
 					{status: 200/*400*/}
 				)
 			}
 			
-			if (store.get(newUser.username)) {
-				return HttpResponse.json({
-						errror: 'username already taken',
-					},
-					{status: 200/*409*/}
-				)
+			if (newUser.password_confirm !== undefined) {
+				if (newUser.password !== newUser.password_confirm) {
+					return HttpResponse.json({
+							error: 'Password confirm mismatch',
+							code: 2,
+						},
+						{status: 200/*400*/}
+					)
+				}
+				delete newUser.password_confirm
 			}
 			
 			newUser.id = id
@@ -51,6 +74,7 @@ const Users = (baseUrl) => {
 			return HttpResponse.json(
 				{
 					message: 'Sign up successful!',
+					code: 0,
 				},
 				{status: 201}
 			)
