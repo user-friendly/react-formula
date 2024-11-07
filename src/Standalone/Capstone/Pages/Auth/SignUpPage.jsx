@@ -38,7 +38,6 @@ const SignUpPage = () => {
 				password_confirm:	values.password_confirm,
 			}).then((r) => {
 				const status = getDefaultApiStatusState()
-				console.log(r)
 				if (r.error) {
 					status.error = true
 					status.message = r.error
