@@ -1,7 +1,7 @@
 
 import _ from 'lodash'
 
-import {useEffect, useCallback, useState, useDeferredValue, useId} from 'react'
+import {useEffect, useState, useId} from 'react'
 
 import Field from './Field'
 
@@ -39,12 +39,11 @@ const Form = (ogProps) => {
 	const formId = useId()
 	const [values, setValues] = useState(() => getFieldValues(ogProps.fields))
 	
-	// Using formId as an example dependency.
-	const handleSubmit = useCallback((e) => {
+	// Candidate to wrap in a useCallback().
+	const handleSubmit = (e) => {
 		e.preventDefault()
-		console.log(`Form ${formId} submitted.`)
-		console.log('Values to submit:', values)
-	}, [values])
+		ogProps.onSubmit(values, formId, e)
+	}
 	
 	// Set defaults.
 	const props = _.assign(_.omit(ogProps, ['fields']), {
@@ -56,11 +55,14 @@ const Form = (ogProps) => {
 	})
 	
 	return <form {...props}>
+
+		{/* FIXME The special value handling for buttons is BS. */}
 		{ogProps.fields.map((fieldProps, k) => <Field key={k}
 			onChange={(e) => setValues(setFieldValue(values, fieldProps.name, e.target.value))}
 			{...fieldProps}
-			value={values[fieldProps.name]}
+			value={!fieldProps.isButton ? values[fieldProps.name] : fieldProps.value}
 		/>)}
+		{props.children}
 	</form>
 }
 

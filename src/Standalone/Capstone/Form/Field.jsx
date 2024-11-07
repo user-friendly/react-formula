@@ -14,7 +14,7 @@ const labelStyles = {
 	button: 'hidden',
 }
 
-const Field = ({name, value, type = "text", label, placeholder = "", onChange}) => {
+const Field = ({name, value, type = "text", label, placeholder = "", onChange, isButton = false, onClick}) => {
 	//console.log(`Render field ${type}@${name}.`)
 	
 	const elemId = useId()
@@ -24,7 +24,11 @@ const Field = ({name, value, type = "text", label, placeholder = "", onChange}) 
 	
 	return <div className="my-3 flex flex-col">
 		{label && <label className={labelClass} htmlFor={elemId}>{label}</label>}
-		<input className={inputClass} type={type} name={name} id={elemId} placeholder={placeholder} value={value} onChange={onChange} />
+		{isButton ? (
+			<button className={inputClass} type={type} name={name} id={elemId} onClick={onClick}>{value}</button>
+		) : (
+			<input className={inputClass} type={type} name={name} id={elemId} placeholder={placeholder} value={value} onChange={onChange} />
+		)}
 	</div>
 }
 
