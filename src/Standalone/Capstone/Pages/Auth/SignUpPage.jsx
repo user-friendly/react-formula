@@ -1,6 +1,4 @@
 
-import _ from 'lodash'
-
 import {useState} from 'react'
 import {Link} from 'react-router-dom'
 
@@ -23,33 +21,31 @@ const SignUpPage = () => {
 	const [apiStatus, setApiStatus] = useState(() => getDefaultApiStatusState())
 	
 	// Usually, can ommit the formId and event.
-	const handleSubmit = (values, formId, event) => {
+	const handleSubmit = async (values, formId, event) => {
 		console.log(`Sing up form {${formId}} submitted.`)
 		console.log('Values:', values)
 		
 		setApiStatus(getDefaultApiStatusState())
 		setInProgress(true)
 		
-		// Yup, it's for show.
-		setTimeout(() => {		
-			const resp = ApiFetch('POST', 'users', {
-				username:			values.username,
-				password: 			values.password,
-				password_confirm:	values.password_confirm,
-			}).then((r) => {
-				const status = getDefaultApiStatusState()
-				if (r.error) {
-					status.error = true
-					status.message = r.error
-				} else if (r.message) {
-					status.message = r.message
-				} else {
-					status.message = 'Sign up successful'
-				}
-				setApiStatus(status)
-				setInProgress(false)
-			})
-		}, _.random(250, 750))
+		const r = await ApiFetch('POST', 'users', {
+			username:			values.username,
+			password: 			values.password,
+			password_confirm:	values.password_confirmm
+		})
+		const status = getDefaultApiStatusState()
+		
+		if (r.error) {
+			status.error = true
+			status.message = r.error
+		} else if (r.message) {
+			status.message = r.message
+		} else {
+			status.message = 'Sign up successful'
+		}
+		
+		setApiStatus(status)
+		setInProgress(false)
 	}
 	
 	{/* Oh my ghaaaaaa... */}
