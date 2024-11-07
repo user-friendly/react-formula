@@ -1,39 +1,95 @@
 
-import {useEffect} from 'react'
+import _ from 'lodash'
+
+import {useState} from 'react'
 import {Link} from 'react-router-dom'
+
+import ApiFetch from '#cap/Services/ApiFetch'
 
 import Form from '#cap/Form'
 import FormContainer from '#cap/Pages/Auth/FormContainer'
-import ApiFetch from '#cap/Services/ApiFetch'
+
+import Spinner from '#cap/Spinner'
+
+const getDefaultApiStatusState = () => {
+	return 	{
+		error: false,
+		message: null
+	}
+}
 
 const SignUpPage = () => {
+	const [inProgress, setInProgress] = useState(false)
+	const [apiStatus, setApiStatus] = useState(() => getDefaultApiStatusState())
 	
-	return <FormContainer>
-		<Form fields={[
-			{
-				label: 'username',
-				//placeholder: 'Username or email',
-				name: 'username',
-				type: 'text',
-			},
-			{
-				label: 'password',
-				//placeholder: 'Password',
-				name: 'password',
-				type: 'password',
-			},
-			{
-				label: 'confirm password',
-				name: 'password_confirm',
-				type: 'password',
-			},
-			{
-				name: 'submit_button',
-				value: 'Create an Account',
-				type: 'submit',
-			},
-		]} />
-
+	// Usually, can ommit the formId and event.
+	const handleSubmit = (values, formId, event) => {
+		console.log(`Sing up form {${formId}} submitted.`)
+		console.log('Values:', values)
+		
+		setApiStatus(getDefaultApiStatusState())
+		setInProgress(true)
+		
+		// Yup, it's for show.
+		setTimeout(() => {		
+			const resp = ApiFetch('POST', 'users', {
+				username:			values.username,
+				password: 			values.password,
+				password_confirm:	values.password_confirm,
+			}).then((r) => {
+				const status = getDefaultApiStatusState()
+				console.log(r)
+				if (r.error) {
+					status.error = true
+					status.message = r.error
+				} else if (r.message) {
+					status.message = r.message
+				} else {
+					status.message = 'Sign up successful'
+				}
+				setApiStatus(status)
+				setInProgress(false)
+			})
+		}, _.random(250, 750))
+	}
+	
+	{/* Oh my ghaaaaaa... */}
+	const createButtonLabel = <span className="flex justify-center"><span className="relative">
+		Create an Account {inProgress
+			? <Spinner className="absolute top-0 -right-8 ml-2 w-6 h-6 border-transparent border-t-white" />
+			: null
+		}
+	</span></span>
+	
+	const formFields = 	[
+		{
+			label: 'username',
+			//placeholder: 'Username or email',
+			name: 'username',
+			type: 'text',
+		},
+		{
+			label: 'password',
+			//placeholder: 'Password',
+			name: 'password',
+			type: 'password',
+		},
+		{
+			label: 'confirm password',
+			name: 'password_confirm',
+			type: 'password',
+		},
+		{
+			name: 'submit_button',
+			value: createButtonLabel,
+			type: 'submit',
+			isButton: true,
+		},
+	]
+	
+	return <FormContainer status={apiStatus}>
+		<Form onSubmit={handleSubmit} fields={formFields} />
+		
 		<Link to="/sing-in" className="text-sm text-green-700 underline hover:text-green-500">
 			Log into Account
 		</Link>
