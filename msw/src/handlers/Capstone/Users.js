@@ -4,7 +4,7 @@ import _ from 'lodash'
 import {http, delay, HttpResponse} from 'msw'
 import {v4 as uuidv4} from 'uuid'
 
-const randomDelay = async () => await delay(_.random(250, 1000))
+const randomDelay = async (min = 0) => await delay(min + _.random(250, 1000))
 
 const store = new Map()
 
@@ -22,6 +22,17 @@ store.set('johndoe123', {
 
 const Users = (baseUrl) => {
 	return [
+		http.post(`${baseUrl}/users/session`, async ({cookies}) => {
+			
+			await randomDelay(1000)
+		
+			return HttpResponse.json({
+					error: 'TODO Implement session handling.',
+					code: 128,
+				},
+				{status: 500}
+			)
+		}),
 		http.get(`${baseUrl}/users`, async ({cookies}) => {
 			
 			await randomDelay()
