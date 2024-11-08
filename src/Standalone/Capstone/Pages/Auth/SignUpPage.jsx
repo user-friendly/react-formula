@@ -22,11 +22,15 @@ const SignUpPage = () => {
 	
 	// Usually, can ommit the formId and event.
 	const handleSubmit = async (values, formId, event) => {
+		if (inProgress) {
+			return
+		}
+		
 		console.log(`Sing up form {${formId}} submitted.`)
 		console.log('Values:', values)
-		
-		setApiStatus(getDefaultApiStatusState())
+
 		setInProgress(true)
+		setApiStatus(getDefaultApiStatusState())
 		
 		const r = await ApiFetch('POST', 'users', {
 			username:			values.username,
@@ -44,8 +48,8 @@ const SignUpPage = () => {
 			status.message = 'Sign up successful'
 		}
 		
-		setApiStatus(status)
 		setInProgress(false)
+		setApiStatus(status)
 	}
 	
 	{/* Oh my ghaaaaaa... */}

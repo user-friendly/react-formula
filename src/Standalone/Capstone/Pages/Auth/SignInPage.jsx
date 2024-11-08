@@ -1,6 +1,6 @@
 
-import {useState, useEffect} from 'react'
-import {Link} from 'react-router-dom'
+import {useState} from 'react'
+import {Link, useNavigate} from 'react-router-dom'
 
 import ApiFetch from '#cap/Services/ApiFetch'
 
@@ -19,9 +19,14 @@ const getDefaultApiStatusState = () => {
 const SignInPage = () => {
 	const [inProgress, setInProgress] = useState(false)
 	const [apiStatus, setApiStatus] = useState(() => getDefaultApiStatusState())
+	const navigate = useNavigate()
 	
 	// Usually, can ommit the formId and event.
 	const handleSubmit = async (values, formId, event) => {
+		if (inProgress) {
+			return
+		}
+
 		console.log(`Sing up form {${formId}} submitted.`)
 		console.log('Values:', values)
 		
@@ -83,6 +88,11 @@ const SignInPage = () => {
 		<Link to="/sing-up" className="text-sm text-green-700 underline hover:text-green-500">
 			Create an Account
 		</Link>
+		
+		<strong className="py-2 px-4 mt-4 w-80 bg-white rounded-lg text-amber-400 border">
+			TODO What happens when the user sends a login request and manually
+			navigates away from the sign in, before the request is resolved?
+		</strong>
 	</FormContainer>
 }
 
