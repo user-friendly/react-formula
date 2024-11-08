@@ -21,6 +21,9 @@ const SignInPage = () => {
 	const [apiStatus, setApiStatus] = useState(() => getDefaultApiStatusState())
 	const navigate = useNavigate()
 	
+	// TODO What happens when the user sends a login request and manually
+	// navigates away from the sign in, before the request is resolved?
+	
 	// Usually, can ommit the formId and event.
 	const handleSubmit = async (values, formId, event) => {
 		if (inProgress) {
@@ -88,11 +91,6 @@ const SignInPage = () => {
 		<Link to="/sing-up" className="text-sm text-green-700 underline hover:text-green-500">
 			Create an Account
 		</Link>
-		
-		<strong className="py-2 px-4 mt-4 w-80 bg-white rounded-lg text-amber-400 border">
-			TODO What happens when the user sends a login request and manually
-			navigates away from the sign in, before the request is resolved?
-		</strong>
 	</FormContainer>
 }
 
