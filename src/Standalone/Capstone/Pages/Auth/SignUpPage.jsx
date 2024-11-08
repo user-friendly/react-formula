@@ -28,7 +28,7 @@ const SignUpPage = () => {
 		
 		console.log(`Sing up form {${formId}} submitted.`)
 		console.log('Values:', values)
-
+		
 		setInProgress(true)
 		setApiStatus(getDefaultApiStatusState())
 		
@@ -48,8 +48,8 @@ const SignUpPage = () => {
 			status.message = 'Sign up successful'
 		}
 		
-		setInProgress(false)
 		setApiStatus(status)
+		setInProgress(false)
 	}
 	
 	{/* Oh my ghaaaaaa... */}

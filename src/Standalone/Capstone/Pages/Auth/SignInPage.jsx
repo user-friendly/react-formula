@@ -30,8 +30,8 @@ const SignInPage = () => {
 		console.log(`Sing up form {${formId}} submitted.`)
 		console.log('Values:', values)
 		
-		setApiStatus(getDefaultApiStatusState())
 		setInProgress(true)
+		setApiStatus(getDefaultApiStatusState())
 		
 		const r = await ApiFetch('POST', 'users/session', {
 			username:			values.username,
