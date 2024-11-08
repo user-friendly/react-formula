@@ -6,7 +6,10 @@ import {v4 as uuidv4} from 'uuid'
 
 const randomDelay = async (min = 0) => await delay(min + _.random(250, 1000))
 
+// Users table.
 const store = new Map()
+// Sessions table.
+const session = new Map()
 
 // Add default user.
 store.set('userfriendly', {
@@ -22,15 +25,58 @@ store.set('johndoe123', {
 
 const Users = (baseUrl) => {
 	return [
-		http.post(`${baseUrl}/users/session`, async ({cookies}) => {
+		http.post(`${baseUrl}/users/session`, async ({cookies, request}) => {
+			const login = await request.json()
 			
-			await randomDelay(1000)
-		
+			await randomDelay()
+			
+			if (_.isEmpty(login.username)) {
+				return HttpResponse.json({
+						error: 'You must supply a username',
+						code: 5,
+					},
+					{status: 200/*401*/}
+				)
+			}
+			
+			if (_.isEmpty(login.password)) {
+				return HttpResponse.json({
+						error: 'You must supply a password',
+						code: 6,
+					},
+					{status: 200/*401*/}
+				)
+			}
+			
+			const user = store.get(login.username)
+			
+			if (!user) {
+				return HttpResponse.json({
+						error: 'Username not found',
+						code: 7,
+					},
+					{status: 200/*404*/}
+				)
+			}
+			
+			// Usually, these values would be hashed?
+			if (login.password !== user.password) {
+				return HttpResponse.json({
+						error: 'Invalid password',
+						code: 8,
+					},
+					{status: 200/*401*/}
+				)
+			}
+			
+			// TODO Do some session stuff here.
+			//		Check if user is already loggedin.
+			
 			return HttpResponse.json({
-					error: 'TODO Implement session handling.',
-					code: 128,
+					message: 'Sign in successful!',
+					code: 4,
 				},
-				{status: 500}
+				{status: 200}
 			)
 		}),
 		http.get(`${baseUrl}/users`, async ({cookies}) => {
