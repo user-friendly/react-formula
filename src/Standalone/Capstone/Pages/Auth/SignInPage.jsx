@@ -1,6 +1,8 @@
 
+import _ from 'lodash'
+
 import {useState} from 'react'
-import {Link, useNavigate} from 'react-router-dom'
+import {Link, useLocation} from 'react-router-dom'
 
 import {apiLoginUser} from  '#cap/Services'
 
@@ -17,9 +19,14 @@ const getDefaultApiStatusState = () => {
 }
 
 const SignInPage = () => {
+	const location = useLocation()
 	const [inProgress, setInProgress] = useState(false)
-	const [apiStatus, setApiStatus] = useState(() => getDefaultApiStatusState())
-	const navigate = useNavigate()
+	const [apiStatus, setApiStatus] = useState(() => {
+		if (_.has(location, 'state.status.message')) {
+			return location.state.status
+		}
+		return getDefaultApiStatusState()
+	})
 	
 	// TODO What happens when the user sends a login request and manually
 	// navigates away from the sign in, before the request is resolved?
@@ -56,7 +63,7 @@ const SignInPage = () => {
 			name: 'username',
 			label: 'username',
 			//placeholder: 'Username or email',
-			//value: 'JohnDoe123',
+			value: _.has(location, 'state.username') ? location.state.username : undefined,
 			type: 'text',
 		},
 		{

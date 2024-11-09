@@ -1,6 +1,8 @@
 
+import _ from 'lodash'
+
 import {useState} from 'react'
-import {Link} from 'react-router-dom'
+import {Link, useNavigate} from 'react-router-dom'
 
 import {apiCreateUser} from  '#cap/Services'
 
@@ -19,6 +21,7 @@ const getDefaultApiStatusState = () => {
 const SignUpPage = () => {
 	const [inProgress, setInProgress] = useState(false)
 	const [apiStatus, setApiStatus] = useState(() => getDefaultApiStatusState())
+	const navigate = useNavigate()
 	
 	// Usually, can ommit the formId and event.
 	const handleSubmit = async (values, formId, event) => {
@@ -35,7 +38,20 @@ const SignUpPage = () => {
 		setApiStatus(getDefaultApiStatusState())
 
 		const result = await apiCreateUser(values.username, values.password, values.password_confirm)
-
+		
+		if (result.error === false) {
+			const signInStatus = _.clone(result)
+			// Can't clone a React component. Tried using a fragment here, but history.ts fails.
+			signInStatus.message = 'You can login with Your username & password'
+			
+			result.message = <>{result.message}<br />Redirecting You to Sing In page...</>
+			
+			setTimeout(() => navigate('/sign-in', {state: {
+				status: signInStatus,
+				username: values.username
+			}}), 1000)
+		}
+		
 		setApiStatus(result)
 		setInProgress(false)
 	}
@@ -77,7 +93,7 @@ const SignUpPage = () => {
 	return <FormContainer status={apiStatus}>
 		<Form onSubmit={handleSubmit} fields={formFields} />
 		
-		<Link to="/sing-in" className="text-sm text-green-700 underline hover:text-green-500">
+		<Link to="/sign-in" className="text-sm text-green-700 underline hover:text-green-500">
 			Log into Account
 		</Link>
 	</FormContainer>
