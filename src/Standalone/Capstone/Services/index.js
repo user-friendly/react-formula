@@ -49,3 +49,4 @@ const apiLoginUser = async (username, password) => {
 }
 
 export {apiCreateUser, apiLoginUser}
+export * from './User'
