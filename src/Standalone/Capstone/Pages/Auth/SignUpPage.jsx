@@ -11,6 +11,7 @@ import FormContainer from '#cap/Pages/Auth/FormContainer'
 
 import Spinner from '#cap/Spinner'
 
+// TODO Just use Services::getStatus().
 const getDefaultApiStatusState = () => {
 	return 	{
 		error: false,
