@@ -28,8 +28,8 @@ const SignUpPage = () => {
 	const [apiStatus, setApiStatus] = useState(() => getDefaultApiStatusState())
 	
 	useEffect(() => {
-		if (session) {
-			console.log(`User is already logged in as {${session.username}}. Redirect to homepage.`)
+		if (session.isActive()) {
+			console.log(`User is already logged in as {${session.getData().username}}. Redirect to homepage.`)
 			// FIXME Navigate to actual homepage.
 			navigate('/style-guide')
 		}

@@ -4,7 +4,7 @@ import _ from 'lodash'
 import {useEffect, useState, useContext} from 'react'
 import {Link, useLocation, useNavigate} from 'react-router-dom'
 
-import {apiLoginUser, setSessionStorage} from  '#cap/Services'
+import {apiLoginUser} from  '#cap/Services'
 
 import SessionContext from '#cap/Context/Session'
 
@@ -34,8 +34,8 @@ const SignInPage = () => {
 	})
 	
 	useEffect(() => {
-		if (session) {
-			console.log(`User is already logged in as {${session.username}}. Redirect to homepage.`)
+		if (session.isActive()) {
+			console.log(`User is already logged in as {${session.getData().username}}. Redirect to homepage.`)
 			// FIXME Navigate to actual homepage.
 			navigate('/style-guide')
 		}
