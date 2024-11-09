@@ -2,7 +2,7 @@
 import {useState} from 'react'
 import {Link} from 'react-router-dom'
 
-import ApiFetch from '#cap/Services/ApiFetch'
+import {apiCreateUser} from  '#cap/Services'
 
 import Form from '#cap/Form'
 import FormContainer from '#cap/Pages/Auth/FormContainer'
@@ -28,27 +28,15 @@ const SignUpPage = () => {
 		
 		console.log(`Sing up form {${formId}} submitted.`)
 		console.log('Values:', values)
+
+		// TODO FE validation.
 		
 		setInProgress(true)
 		setApiStatus(getDefaultApiStatusState())
-		
-		const r = await ApiFetch('POST', 'users', {
-			username:			values.username,
-			password: 			values.password,
-			password_confirm:	values.password_confirm
-		})
-		const status = getDefaultApiStatusState()
-		
-		if (r.error) {
-			status.error = true
-			status.message = r.error
-		} else if (r.message) {
-			status.message = r.message
-		} else {
-			status.message = 'Sign up successful'
-		}
-		
-		setApiStatus(status)
+
+		const result = await apiCreateUser(values.username, values.password, values.password_confirm)
+
+		setApiStatus(result)
 		setInProgress(false)
 	}
 	

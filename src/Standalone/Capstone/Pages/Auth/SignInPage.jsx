@@ -2,7 +2,7 @@
 import {useState} from 'react'
 import {Link, useNavigate} from 'react-router-dom'
 
-import ApiFetch from '#cap/Services/ApiFetch'
+import {apiLoginUser} from  '#cap/Services'
 
 import Form from '#cap/Form'
 import FormContainer from '#cap/Pages/Auth/FormContainer'
@@ -33,25 +33,14 @@ const SignInPage = () => {
 		console.log(`Sing up form {${formId}} submitted.`)
 		console.log('Values:', values)
 		
+		// TODO FE validation.
+		
 		setInProgress(true)
 		setApiStatus(getDefaultApiStatusState())
 		
-		const r = await ApiFetch('POST', 'users/session', {
-			username:			values.username,
-			password: 			values.password,
-		})
-		const status = getDefaultApiStatusState()
+		const result = await apiLoginUser(values.username, values.password)
 		
-		if (r.error) {
-			status.error = true
-			status.message = r.error
-		} else if (r.message) {
-			status.message = r.message
-		} else {
-			status.message = 'Sign in successful'
-		}
-		
-		setApiStatus(status)
+		setApiStatus(result)
 		setInProgress(false)
 	}
 
