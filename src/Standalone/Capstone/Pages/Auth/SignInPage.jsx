@@ -4,7 +4,7 @@ import _ from 'lodash'
 import {useState} from 'react'
 import {Link, useLocation} from 'react-router-dom'
 
-import {apiLoginUser} from  '#cap/Services'
+import {apiLoginUser, setSessionStorage} from  '#cap/Services'
 
 import Form from '#cap/Form'
 import FormContainer from '#cap/Pages/Auth/FormContainer'
@@ -46,9 +46,17 @@ const SignInPage = () => {
 		setInProgress(true)
 		setApiStatus(getDefaultApiStatusState())
 		
-		const result = await apiLoginUser(values.username, values.password)
+		const data = await apiLoginUser(values.username, values.password)
 		
-		setApiStatus(result)
+		if (data.error === false && _.isObject(data.payload)) {
+			console.log('Login successful. Login details:', data.payload)
+			setSessionStorage(data.payload)
+		}
+		
+		setApiStatus({
+			error: data.error,
+			message: data.message
+		})
 		setInProgress(false)
 	}
 
