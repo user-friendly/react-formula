@@ -26,8 +26,12 @@ const App = () => {
 			setSession(sessionData)
 			setSessionStorage(sessionData)
 		},
-		
 		signOut: () => {
+			if (_.isObject(session)) {
+				console.log(`Sign out user {${session.username}}.`)
+			} else {
+				console.log('No user was signed in.')
+			}
 			setSession(null)
 			removeSessionStorage()
 		}

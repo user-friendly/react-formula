@@ -1,7 +1,9 @@
 
-import {useState, useRef, useEffect} from 'react'
-import {Link} from 'react-router-dom'
+import {useState, useRef, useEffect, useContext} from 'react'
+import {Link, useNavigate} from 'react-router-dom'
 import clsx from 'clsx'
+
+import SessionContext from '#cap/Context/Session'
 
 import AppSwitcher from '#AppSwitcher'
 
@@ -15,8 +17,10 @@ const linkStyle = `
 const iconStyle = 'self-end bg-sky-200 text-sky-800 hover:text-sky-300 hover:bg-sky-600'
 
 const NavBar = () => {
-	const [show, setShow] = useState(false)
+	const navigate = useNavigate()
+	const session = useContext(SessionContext)
 	const menuRef = useRef()
+	const [show, setShow] = useState(false)
 	
 	useEffect(() => {
 		const handleClickOutside = (e) => {
@@ -39,6 +43,11 @@ const NavBar = () => {
 		/>
 	)
 	
+	const handleSignOut = (e) => {
+		session.signOut()
+		navigate('/')
+	}
+	
 	return <div ref={menuRef} className={clsx('fixed top-2 right-2 w-40 p-2 flex flex-col justify-center',
 			show && 'bg-sky-100 rounded-lg shadow-lg'
 		)}>
@@ -49,9 +58,12 @@ const NavBar = () => {
 			onClick={(e) => setShow(false)}
 		>
 			<AppSwitcher className={linkStyle} appid="default">Main App</AppSwitcher>
+			
 			<Link className={linkStyle} to="/">Rica's Plants</Link>
 			<Link className={linkStyle} to="/style-guide">Style Guide</Link>
-			<Link className={linkStyle} to="/sign-in">Sign In</Link>
+			
+			{session.isActive() && <button onClick={handleSignOut} className={linkStyle} to="/sign-out">Sign Out</button>}
+			{!session.isActive() && <Link className={linkStyle} to="/sign-in">Sign In</Link>}
 		</div>
 	</div>
 }

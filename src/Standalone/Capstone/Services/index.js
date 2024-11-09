@@ -48,5 +48,10 @@ const apiLoginUser = async (username, password) => {
 	return result
 }
 
+const apiLogoutUser = async (token) => {
+	const resp = await ApiFetch('DELETE', 'users/session', token)
+	return processStatus(resp)
+}
+
 export {apiCreateUser, apiLoginUser}
 export * from './User'

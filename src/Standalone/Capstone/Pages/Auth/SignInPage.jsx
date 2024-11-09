@@ -62,7 +62,8 @@ const SignInPage = () => {
 		
 		if (data.error === false && _.isObject(data.payload)) {
 			console.log('Login successful. Login details:', data.payload)
-			setSessionStorage(data.payload)
+			session.signIn(data.payload)
+			navigate('/style-guide')
 		}
 		
 		setApiStatus({
