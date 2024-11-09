@@ -1,10 +1,12 @@
 
 import _ from 'lodash'
 
-import {useState} from 'react'
-import {Link, useLocation} from 'react-router-dom'
+import {useEffect, useState, useContext} from 'react'
+import {Link, useLocation, useNavigate} from 'react-router-dom'
 
 import {apiLoginUser, setSessionStorage} from  '#cap/Services'
+
+import SessionContext from '#cap/Context/Session'
 
 import Form from '#cap/Form'
 import FormContainer from '#cap/Pages/Auth/FormContainer'
@@ -20,7 +22,9 @@ const getDefaultApiStatusState = () => {
 }
 
 const SignInPage = () => {
+	const session = useContext(SessionContext)
 	const location = useLocation()
+	const navigate = useNavigate()
 	const [inProgress, setInProgress] = useState(false)
 	const [apiStatus, setApiStatus] = useState(() => {
 		if (_.has(location, 'state.status.message')) {
@@ -28,6 +32,14 @@ const SignInPage = () => {
 		}
 		return getDefaultApiStatusState()
 	})
+	
+	useEffect(() => {
+		if (session) {
+			console.log(`User is already logged in as {${session.username}}. Redirect to homepage.`)
+			// FIXME Navigate to actual homepage.
+			navigate('/style-guide')
+		}
+	}, [])
 	
 	// TODO What happens when the user sends a login request and manually
 	// navigates away from the sign in, before the request is resolved?

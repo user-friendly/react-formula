@@ -1,10 +1,12 @@
 
 import _ from 'lodash'
 
-import {useState} from 'react'
+import {useEffect, useState, useContext} from 'react'
 import {Link, useNavigate} from 'react-router-dom'
 
 import {apiCreateUser} from  '#cap/Services'
+
+import SessionContext from '#cap/Context/Session'
 
 import Form from '#cap/Form'
 import FormContainer from '#cap/Pages/Auth/FormContainer'
@@ -20,9 +22,18 @@ const getDefaultApiStatusState = () => {
 }
 
 const SignUpPage = () => {
+	const session = useContext(SessionContext)
+	const navigate = useNavigate()
 	const [inProgress, setInProgress] = useState(false)
 	const [apiStatus, setApiStatus] = useState(() => getDefaultApiStatusState())
-	const navigate = useNavigate()
+	
+	useEffect(() => {
+		if (session) {
+			console.log(`User is already logged in as {${session.username}}. Redirect to homepage.`)
+			// FIXME Navigate to actual homepage.
+			navigate('/style-guide')
+		}
+	}, [])
 	
 	// Usually, can ommit the formId and event.
 	const handleSubmit = async (values, formId, event) => {
