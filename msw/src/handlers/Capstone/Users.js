@@ -80,6 +80,32 @@ const deleteSession = (username) => {
 	return true
 }
 
+// Creates a client token from a session, by id.
+const createClientToken = (username) => {
+	// No tokens can be given for non-existing session.
+	if (!sessions.has(username)) {
+		console.log(`No session for {${username}} found in session store.`)
+		return false
+	}
+	
+	const session = sessions.get(username)
+	
+	// No tokens can be given for non-existing users.
+	if (!store.has(session.username)) {
+		console.log(`No user found for {${session.username}}.`)
+		return false
+	}
+	// No tokens can be given for expired sessions.
+	if (session.expires < Date.now()) {
+		console.log(`Session found for {${session.username}}, but session expired, expiration date ${(new Date(session.expires)).toUTCString()}.`)
+		return false
+	}
+	return {
+		id: session.id,
+		username: session.username
+	}
+}
+
 const Users = (baseUrl) => {
 	return [
 		http.post(`${baseUrl}/users/session`, async ({cookies, request}) => {
@@ -126,13 +152,31 @@ const Users = (baseUrl) => {
 				)
 			}
 			
-			// TODO Do some session stuff here.
-			//		Check if user is already loggedin.
+			// TODO Handle case for existing session.
+			//		This might be important for security reasons!!!
+			
+			if (!createSession(user.username)) {
+				return HttpResponse.json({
+						error: 'Internal server error.',
+						code: 9,
+					},
+					{status: 500}
+				)
+			}
+			const token = createClientToken(user.username)
+			if (!token) {
+				return HttpResponse.json({
+						error: 'Internal server error.',
+						code: 10,
+					},
+					{status: 500}
+				)
+			}
 			
 			return HttpResponse.json({
 					message: 'Sign in successful!',
-					capstone_session_token: '',
-					code: 4,
+					capstone_session_token: JSON.stringify(token),
+					code: 0,
 				},
 				{status: 200}
 			)
@@ -161,7 +205,7 @@ const Users = (baseUrl) => {
 			if (store.get(newUser.username)) {
 				return HttpResponse.json({
 						error: 'Username already taken',
-						code: 3,
+						code: 2,
 					},
 					{status: 200/*409*/}
 				)
@@ -170,7 +214,7 @@ const Users = (baseUrl) => {
 			if (newUser.password === undefined || 3 > newUser.password.length) {
 				return HttpResponse.json({
 						error: 'Password is invalid',
-						code: 2,
+						code: 3,
 					},
 					{status: 200/*400*/}
 				)
@@ -180,7 +224,7 @@ const Users = (baseUrl) => {
 				if (newUser.password !== newUser.password_confirm) {
 					return HttpResponse.json({
 							error: 'Password confirm mismatch',
-							code: 2,
+							code: 4,
 						},
 						{status: 200/*400*/}
 					)
