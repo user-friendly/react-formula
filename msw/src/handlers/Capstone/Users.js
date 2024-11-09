@@ -9,7 +9,7 @@ const randomDelay = async (min = 0) => await delay(min + _.random(250, 1000))
 // Users table.
 const store = new Map()
 // Sessions table.
-const session = new Map()
+const sessions = new Map()
 
 // Add default user.
 store.set('userfriendly', {
@@ -22,6 +22,63 @@ store.set('johndoe123', {
 	username: 'johndoe123',
 	password: '123',
 })
+
+// Minutes * seconds * milliseconds.
+const sessionMaxAge = 16*60*1000
+
+// Create session for a given user.
+const createSession = (username) => {
+	const user = store.get(username)
+	const now = Date.now()
+	
+	if (!user) {
+		return false
+	}
+	
+	const session = {
+		id: uuidv4(),
+		created: now,
+		expires: now + sessionMaxAge,
+		uid: user.id,
+		username: user.username
+	}
+	
+	sessions.set(user.username, session)
+	
+	console.log(`Created new session {${session.id}} for user {${username}}, expires at {${(new Date(session.expires)).toUTCString()}}.`)
+	
+	return true
+}
+
+/**
+ * Get active user session.
+ * 
+ * If the session expired, invalidate it (by deleting it)
+ * and return false.
+ */
+const getSession = (username) => {
+	if (!sessions.has(username)) {
+		return false
+	}
+	const session = sessions.get(username)
+	
+	if (session.expires < Date.now()) {
+		console.log(`Session {${session.id}} for user {${username}} expired, expiration date ${(new Date(session.expires)).toUTCString()}.`)
+		// Invalidate session.
+		sessions.delete(username)
+		return false
+	}
+	
+	return session
+}
+
+const deleteSession = (username) => {
+	if (!sessions.has(username)) {
+		return false
+	}
+	sessions.delete(username)
+	return true
+}
 
 const Users = (baseUrl) => {
 	return [
@@ -74,6 +131,7 @@ const Users = (baseUrl) => {
 			
 			return HttpResponse.json({
 					message: 'Sign in successful!',
+					capstone_session_token: '',
 					code: 4,
 				},
 				{status: 200}
