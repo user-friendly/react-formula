@@ -10,7 +10,7 @@ const getStatus = (error = false, message = null) => {
 	}
 }
 
-const processResponse = (result) => {
+const processStatus = (result) => {
 	const status = getStatus()
 	if (_.isObject(result)) {
 		// Should always return a failure message.
@@ -33,15 +33,19 @@ const apiCreateUser = async (username, password, passwordConfirm) => {
 		password: 		  password,
 		password_confirm: passwordConfirm
 	})
-	return processResponse(r)
+	return processStatus(r)
 }
 
 const apiLoginUser = async (username, password) => {
-	const r = await ApiFetch('POST', 'users/session', {
+	const resp = await ApiFetch('POST', 'users/session', {
 		username: username,
 		password: password,
 	})
-	return processResponse(r)
+	const result = processStatus(resp)
+	if (_.isString(resp.capstone_session_token)) {
+		result.payload = JSON.parse(resp.capstone_session_token)
+	}
+	return result
 }
 
 export {apiCreateUser, apiLoginUser}
