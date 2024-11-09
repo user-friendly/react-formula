@@ -142,7 +142,7 @@ const Users = (baseUrl) => {
 					message: 'Sign up successful!',
 					code: 0,
 				},
-				{status: 201}
+				{status: 201 /* Resource created. */}
 			)
 		}),
 		
