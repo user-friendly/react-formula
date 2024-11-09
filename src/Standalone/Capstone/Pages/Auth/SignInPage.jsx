@@ -77,7 +77,7 @@ const SignInPage = () => {
 	return 	<FormContainer status={apiStatus}>
 		<Form onSubmit={handleSubmit} fields={formFields} />
 		
-		<Link to="/sing-up" className="text-sm text-green-700 underline hover:text-green-500">
+		<Link to="/sign-up" className="text-sm text-green-700 underline hover:text-green-500">
 			Create an Account
 		</Link>
 	</FormContainer>

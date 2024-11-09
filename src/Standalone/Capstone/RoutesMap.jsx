@@ -10,8 +10,8 @@ const RoutesMap = () => {
 	const loc = useLocation()
 	
 	return <Routes>
-		<Route path="/sing-in" element={<SignInPage />} />
-		<Route path="/sing-up" element={<SignUpPage />} />
+		<Route path="/sign-in" element={<SignInPage />} />
+		<Route path="/sign-up" element={<SignUpPage />} />
 		<Route path="/" element={<SignInPage />} />
 		<Route path="/style-guide" element={<StyleGuide />} />
 		<Route path="*" element={<NotFound />} />

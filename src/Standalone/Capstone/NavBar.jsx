@@ -51,7 +51,7 @@ const NavBar = () => {
 			<AppSwitcher className={linkStyle} appid="default">Main App</AppSwitcher>
 			<Link className={linkStyle} to="/">Rica's Plants</Link>
 			<Link className={linkStyle} to="/style-guide">Style Guide</Link>
-			<Link className={linkStyle} to="/sing-in">Sign In</Link>
+			<Link className={linkStyle} to="/sign-in">Sign In</Link>
 		</div>
 	</div>
 }
