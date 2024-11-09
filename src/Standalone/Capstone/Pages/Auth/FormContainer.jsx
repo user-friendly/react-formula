@@ -29,8 +29,9 @@ const FormContainer = (props) => {
 			</div>
 			
 			{status.message ? (
-			<div className={clsx('animate-slideDown py-1 px-2 rounded-lg border bg-white',
-				status.error ? 'border-red-600 text-red-600 font-medium' : 'border-green-600')}
+			<div className={clsx('animate-slideDown py-1 px-2 rounded-lg border',
+				status.error ? 'bg-red-100 border-red-600 text-red-600 font-medium'
+					: 'text-green-800 bg-green-100 border-green-600')}
 			>
 				{status.message}
 			</div>
