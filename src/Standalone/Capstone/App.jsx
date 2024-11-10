@@ -4,7 +4,7 @@ import _ from 'lodash'
 import {useState} from 'react'
 import {BrowserRouter, Link, Routes, Route} from 'react-router-dom'
 
-import {getSessionStorage, setSessionStorage, removeSessionStorage} from '#cap/Services'
+import {apiLogoutUser, getSessionStorage, setSessionStorage, removeSessionStorage} from '#cap/Services'
 import SessionContext from '#cap/Context/Session'
 
 import RoutesMap from '#cap/RoutesMap'
@@ -26,14 +26,17 @@ const App = () => {
 			setSession(sessionData)
 			setSessionStorage(sessionData)
 		},
-		signOut: () => {
+		signOut: async () => {
+			let success = false
 			if (_.isObject(session)) {
 				console.log(`Sign out user {${session.username}}.`)
+				success = await apiLogoutUser(session)
 			} else {
 				console.log('No user was signed in.')
 			}
 			setSession(null)
 			removeSessionStorage()
+			return success
 		}
 	}
 	

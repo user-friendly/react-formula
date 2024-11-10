@@ -53,5 +53,5 @@ const apiLogoutUser = async (token) => {
 	return processStatus(resp)
 }
 
-export {apiCreateUser, apiLoginUser}
+export {apiCreateUser, apiLoginUser, apiLogoutUser}
 export * from './User'

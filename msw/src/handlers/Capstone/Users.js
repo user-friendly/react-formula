@@ -102,12 +102,44 @@ const createClientToken = (username) => {
 	}
 	return {
 		id: session.id,
-		username: session.username
+		username: session.username,
+		secret: _.random(0, Number.MAX_SAFE_INTEGER)
 	}
 }
 
 const Users = (baseUrl) => {
 	return [
+		http.delete(`${baseUrl}/users/session`, async ({cookies, request}) => {
+			const token = await request.json()
+			let username = false
+			
+			// Oooh, the server is working hard, for the money.
+			await randomDelay(2000)
+			
+			if (_.has(token, 'username') && store.has(token.username)) {
+				username = token.username
+			}
+			const session = getSession(username)
+			
+			// TODO Secret checks out?
+			if (session && session.username === username && token.sercret) {
+				console.log(`Delete user {${username}} session, logs them out.`)
+				deleteSession(username)
+				/*return HttpResponse.json({
+						message: 'Sign out successful.',
+						code: 0,
+					},
+					{status: 200}
+				)*/
+			}
+			// Throw off the bots?
+			return HttpResponse.json({
+					message: 'Sign out successful.',
+					code: 0,
+				},
+				{status: 200}
+			)
+		}),
 		http.post(`${baseUrl}/users/session`, async ({cookies, request}) => {
 			const login = await request.json()
 			
