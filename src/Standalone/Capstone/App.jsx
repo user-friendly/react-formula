@@ -8,7 +8,7 @@ import {apiLogoutUser, getSessionStorage, setSessionStorage, removeSessionStorag
 import SessionContext from '#cap/Context/Session'
 
 import RoutesMap from '#cap/RoutesMap'
-import NavBar from '#cap/NavBar'
+import NavBar from '#cap/Components/NavBar'
 
 const globalFontStyle = "text-green-600"
 
