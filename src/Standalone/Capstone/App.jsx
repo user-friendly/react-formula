@@ -8,7 +8,7 @@ import {apiLogoutUser, getSessionStorage, setSessionStorage, removeSessionStorag
 import SessionContext from '#cap/Context/Session'
 
 import RoutesMap from '#cap/RoutesMap'
-import NavBar from '#cap/Components/NavBar'
+import NavBarUserFriendly from '#cap/Components/NavBarUserFriendly'
 
 const globalFontStyle = "text-green-600"
 
@@ -43,7 +43,7 @@ const App = () => {
 			<div className={`${globalFontStyle}`}>
 				<RoutesMap />
 			</div>
-			<NavBar />
+			<NavBarUserFriendly />
 		</BrowserRouter>
 	</SessionContext.Provider>
 }
