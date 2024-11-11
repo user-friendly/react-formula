@@ -4,12 +4,6 @@ import Icon from '#cap/Components/Icon'
 import SignUpPage from '#cap/Pages/Auth/SignUpPage'
 import SignInPage from '#cap/Pages/Auth/SignInPage'
 
-// Make sure the class set in index.css is mentioned here.
-const iconStyle = `
-	p-2 material-symbols-outlined rounded-lg bg-green-100 select-none cursor-pointer
-	hover:bg-green-200 text-green-700
-`
-
 const StyleGuide = () => {
 	return <div className="p-6 max-w-lg m-auto">
 		<h1 className="my-4 text-5xl">Heading</h1>
@@ -27,9 +21,9 @@ const StyleGuide = () => {
 			<div className="flex items-center gap-4">
 				<Icon name="menu" />
 				<Icon name="home" className="text-4xl" />
-				<Icon name="account_circle" />
+				<Icon name="account_circle" className="rounded-full bg-amber-100 text-amber-700 hover:bg-amber-200 active:bg-amber-300 animate-spin" />
 				<Icon name="logout" />
-				<Icon name="close" className="bg-violet-100 text-violet-700 hover:bg-violet-200" />
+				<Icon name="close" className="bg-violet-100 text-violet-700 hover:bg-violet-200 active:bg-violet-300" />
 			</div>
 		</div>
 	</div>

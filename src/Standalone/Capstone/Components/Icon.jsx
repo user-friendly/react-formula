@@ -4,8 +4,8 @@ import _ from 'lodash'
 import {twMerge} from 'tailwind-merge'
 
 const iconStyle = `
-	p-2 rounded-lg bg-green-100 select-none cursor-pointer
-	hover:bg-green-200 text-green-700
+	p-2 rounded-lg bg-emerald-100 select-none cursor-pointer
+	hover:bg-emerald-200 active:bg-emerald-300 text-emerald-700
 `
 
 const Icon = (props) => {
