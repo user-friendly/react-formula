@@ -17,10 +17,10 @@ const FormContainer = (props) => {
 			<img className="h-screen object-cover"
 				title="plants on a rack" src="https://static-task-assets.react-formula.com/capstone_sign_in_scene.png" />
 			<div className="absolute inset-0 w-full h-full bg-black/10"></div>
-			<div className="absolute inset-0 w-full h-full bg-green-800/40"></div>
+			<div className="absolute inset-0 w-full h-full bg-emerald-800/40"></div>
 		</div>
 		
-		<div className="h-screen flex-1 bg-green-50 flex flex-col items-center justify-center">
+		<div className="h-screen flex-1 bg-emerald-50 flex flex-col items-center justify-center">
 			<div className="flex flex-col items-center mx-2 my-8">
 				<img className="w-16 mb-2 " title="brand logo" src="https://static-task-assets.react-formula.com/capstone_logo_dark.png" />
 				<div className="font-playfair text-emerald-700 text-2xl">
@@ -31,7 +31,7 @@ const FormContainer = (props) => {
 			{status.message ? (
 			<div className={clsx('animate-slideDown py-1 px-2 rounded-lg border',
 				status.error ? 'bg-red-100 border-red-600 text-red-600 font-medium'
-					: 'text-green-800 bg-green-100 border-green-600')}
+					: 'text-emerald-800 bg-emerald-100 border-emerald-600')}
 			>
 				{status.message}
 			</div>

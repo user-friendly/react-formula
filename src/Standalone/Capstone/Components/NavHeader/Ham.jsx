@@ -10,18 +10,21 @@ import AppSwitcher from '#AppSwitcher'
 import Spinner from '#cap/Spinner'
 import Icon from '#cap/Icon'
 
+import Links from './Links'
+
 const linkStyle = `
-	my-1 py-2 px-3 bg-sky-200 rounded-lg
-	text-center font-lato font-medium text-sky-800 hover:text-sky-300 hover:bg-sky-600
+	my-1 py-2 px-3 bg-emerald-200 rounded-lg
+	text-center font-lato font-medium text-emerald-800 hover:text-emerald-300 hover:bg-emerald-600
 `
 
-const iconStyle = 'self-end bg-sky-200 text-sky-800 hover:text-sky-300 hover:bg-sky-600'
+const iconStyle = 'self-end bg-emerald-800 text-emerald-200 hover:text-emerald-300 hover:bg-emerald-600'
+const iconShowStyle = 'self-end bg-emerald-200 text-emerald-800 hover:text-emerald-300 hover:bg-emerald-600'
 
 const spinnerStyle = `w-6 h-6 absolute top-2 right-2.5
-	border-transparent border-t-sky-800 group-hover:border-t-sky-300
+	border-transparent border-t-emerald-800 group-hover:border-t-emerald-300
 `
 
-const NavBar = () => {
+const Ham = () => {
 	const navigate = useNavigate()
 	const session = useContext(SessionContext)
 	const menuRef = useRef()
@@ -43,7 +46,7 @@ const NavBar = () => {
 		return () => document.removeEventListener('mousedown', handleClickOutside)
 	}, [signingOut])
 	
-	const hamButton = show ? <Icon name="close" className={iconStyle} onClick={(e) => setShow(signingOut)}/>
+	const hamButton = show ? <Icon name="close" className={iconShowStyle} onClick={(e) => setShow(signingOut)}/>
 		: <Icon name="menu" className={iconStyle} onClick={(e) => setShow(true)} />
 	
 	const handleSignOut = async (e) => {
@@ -64,10 +67,9 @@ const NavBar = () => {
 	const signOutButton = <button onClick={handleSignOut} className={linkStyle + 'relative group'} to="/sign-out">
 		Sign Out{signingOut && <Spinner className={spinnerStyle} />}
 	</button>
-		
 	
-	return <div ref={menuRef} className={clsx('fixed top-2 right-2 w-40 p-2 flex flex-col justify-center',
-			show && 'bg-sky-100 rounded-lg shadow-lg'
+	return <div ref={menuRef} className={clsx('sm:hidden fixed top-2 right-2 w-40 p-2 flex flex-col justify-center',
+			show && 'bg-emerald-800 rounded-lg shadow-lg'
 		)}>
 		
 		{hamButton}
@@ -75,12 +77,7 @@ const NavBar = () => {
 		<div className={'flex flex-col justify-center ' + (!show ? 'hidden' : null)}
 			onClick={hideMenu}
 		>
-			<AppSwitcher className={linkStyle} appid="default">Main App</AppSwitcher>
-			
-			<div className="my-2 h-1 border-2 border-neutral-300"></div>
-			
-			<Link className={linkStyle} to="/">Rica's Plants</Link>
-			<Link className={linkStyle} to="/style-guide">Style Guide</Link>
+			<Links linkstyle={linkStyle} />
 			
 			{session.isActive() && signOutButton}
 			{!session.isActive() && <Link className={linkStyle} to="/sign-in">Sign In</Link>}
@@ -88,4 +85,4 @@ const NavBar = () => {
 	</div>
 }
 
-export default NavBar
+export default Ham
