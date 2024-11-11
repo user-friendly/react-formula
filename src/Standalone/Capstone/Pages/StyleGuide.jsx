@@ -1,5 +1,5 @@
 
-import Icon from '#cap/Icon'
+import Icon from '#cap/Components/Icon'
 
 import SignUpPage from '#cap/Pages/Auth/SignUpPage'
 import SignInPage from '#cap/Pages/Auth/SignInPage'

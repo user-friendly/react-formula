@@ -13,7 +13,7 @@ import RedirectAuthenticated from '#cap/Components/RedirectAuthenticated'
 import Form from '#cap/Form'
 import FormContainer from '#cap/Pages/Auth/FormContainer'
 
-import Spinner from '#cap/Spinner'
+import Spinner from '#cap/Components/Spinner'
 
 // TODO Just use Services::getStatus().
 const getDefaultApiStatusState = () => {

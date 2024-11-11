@@ -5,8 +5,8 @@ import clsx from 'clsx'
 
 import SessionContext from '#cap/Context/Session'
 
-import Spinner from '#cap/Spinner'
-import Icon from '#cap/Icon'
+import Spinner from '#cap/Components/Spinner'
+import Icon from '#cap/Components/Icon'
 
 import Links from './Links'
 
@@ -36,7 +36,7 @@ const Bar = () => {
 		//await (new Promise((r) => setTimeout(() => r(), 1000)).then((r) => r))
 		setSigningOut(false)
 	}
-
+	
 	const signOutButton = <Link onClick={handleSignOut} className={linkStyle + ' relative group'}>
 		Sign Out <Spinner className={spinnerStyle + (!signingOut && ' invisible')} />
 	</Link>

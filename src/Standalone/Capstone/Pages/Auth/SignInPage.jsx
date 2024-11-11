@@ -13,7 +13,7 @@ import RedirectAuthenticated from '#cap/Components/RedirectAuthenticated'
 import Form from '#cap/Form'
 import FormContainer from '#cap/Pages/Auth/FormContainer'
 
-import Spinner from '#cap/Spinner'
+import Spinner from '#cap/Components/Spinner'
 
 // Redirect delay (in ms) after a successful sign in.
 const REDIRECT_DELAY = 1500

@@ -7,8 +7,8 @@ import SessionContext from '#cap/Context/Session'
 
 import AppSwitcher from '#AppSwitcher'
 
-import Spinner from '#cap/Spinner'
-import Icon from '#cap/Icon'
+import Spinner from '#cap/Components/Spinner'
+import Icon from '#cap/Components/Icon'
 
 import Links from './Links'
 

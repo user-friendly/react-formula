@@ -5,8 +5,8 @@ import clsx from 'clsx'
 
 import AppSwitcher from '#AppSwitcher'
 
-import Spinner from '#cap/Spinner'
-import Icon from '#cap/Icon'
+import Spinner from '#cap/Components/Spinner'
+import Icon from '#cap/Components/Icon'
 
 const linkStyle = `
 	my-1 py-2 px-3 bg-sky-200 rounded-lg
