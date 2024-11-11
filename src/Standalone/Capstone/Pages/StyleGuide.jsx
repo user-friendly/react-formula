@@ -27,6 +27,8 @@ const StyleGuide = () => {
 			<div className="flex items-center gap-4">
 				<Icon name="menu" />
 				<Icon name="home" className="text-4xl" />
+				<Icon name="account_circle" />
+				<Icon name="logout" />
 				<Icon name="close" className="bg-violet-100 text-violet-700 hover:bg-violet-200" />
 			</div>
 		</div>
