@@ -16,11 +16,9 @@ const App = () => {
 	const [session, setSession] = useState(() => getSessionStorage())
 	
 	const sessionUtility = {
+		data: session,
 		isActive: () => {
 			return _.isObject(session)
-		},
-		getData: () => {
-			return session
 		},
 		signIn: (sessionData) => {
 			setSession(sessionData)
