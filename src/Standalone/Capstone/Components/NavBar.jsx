@@ -77,7 +77,10 @@ const NavBar = () => {
 		>
 			<AppSwitcher className={linkStyle} appid="default">Main App</AppSwitcher>
 			
+			<div className="my-2 h-1 border-2 border-neutral-300"></div>
+			
 			<Link className={linkStyle} to="/">Rica's Plants</Link>
+			<Link className={linkStyle} to="/style-guide">Style Guide</Link>
 			
 			{session.isActive() && signOutButton}
 			{!session.isActive() && <Link className={linkStyle} to="/sign-in">Sign In</Link>}
