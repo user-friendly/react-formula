@@ -1,4 +1,4 @@
 
-export default () => {
-	return <>PlantList</>
-}
+import Page from './Page'
+
+export default Page
