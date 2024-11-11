@@ -1,12 +1,14 @@
 
 import _ from 'lodash'
 
-import {useEffect, useState, useContext} from 'react'
+import {useState, useContext} from 'react'
 import {Link, useNavigate} from 'react-router-dom'
 
 import {apiCreateUser} from  '#cap/Services'
 
 import SessionContext from '#cap/Context/Session'
+
+import RedirectAuthenticated from '#cap/Components/RedirectAuthenticated'
 
 import Form from '#cap/Form'
 import FormContainer from '#cap/Pages/Auth/FormContainer'
@@ -26,14 +28,6 @@ const SignUpPage = () => {
 	const navigate = useNavigate()
 	const [inProgress, setInProgress] = useState(false)
 	const [apiStatus, setApiStatus] = useState(() => getDefaultApiStatusState())
-	
-	useEffect(() => {
-		if (session.isActive()) {
-			console.log(`User is already logged in as {${session.getData().username}}. Redirect to homepage.`)
-			// FIXME Navigate to actual homepage.
-			navigate('/style-guide')
-		}
-	}, [])
 	
 	// Usually, can ommit the formId and event.
 	const handleSubmit = async (values, formId, event) => {
@@ -61,7 +55,7 @@ const SignUpPage = () => {
 			setTimeout(() => navigate('/sign-in', {state: {
 				status: signInStatus,
 				username: values.username
-			}}), 1000)
+			}}), 1500)
 		}
 		
 		setApiStatus(result)
@@ -102,13 +96,15 @@ const SignUpPage = () => {
 		},
 	]
 	
-	return <FormContainer status={apiStatus}>
-		<Form onSubmit={handleSubmit} fields={formFields} />
-		
-		<Link to="/sign-in" className="text-sm text-green-700 underline hover:text-green-500">
-			Log into Account
-		</Link>
-	</FormContainer>
+	return <RedirectAuthenticated path="/plants">
+		<FormContainer status={apiStatus}>
+			<Form onSubmit={handleSubmit} fields={formFields} />
+			
+			<Link to="/sign-in" className="text-sm text-green-700 underline hover:text-green-500">
+				Log into Account
+			</Link>
+		</FormContainer>
+	</RedirectAuthenticated>
 }
 
 export default SignUpPage

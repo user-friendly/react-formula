@@ -1,17 +1,22 @@
 
 import _ from 'lodash'
 
-import {useEffect, useState, useContext} from 'react'
-import {Link, useLocation, useNavigate} from 'react-router-dom'
+import {useState, useContext} from 'react'
+import {Link, useLocation} from 'react-router-dom'
 
 import {apiLoginUser} from  '#cap/Services'
 
 import SessionContext from '#cap/Context/Session'
 
+import RedirectAuthenticated from '#cap/Components/RedirectAuthenticated'
+
 import Form from '#cap/Form'
 import FormContainer from '#cap/Pages/Auth/FormContainer'
 
 import Spinner from '#cap/Spinner'
+
+// Redirect delay (in ms) after a successful sign in.
+const REDIRECT_DELAY = 1500
 
 // TODO Just use Services::getStatus().
 const getDefaultApiStatusState = () => {
@@ -24,7 +29,7 @@ const getDefaultApiStatusState = () => {
 const SignInPage = () => {
 	const session = useContext(SessionContext)
 	const location = useLocation()
-	const navigate = useNavigate()
+	const [redirectDelay, setRedirectDelay] = useState(false)
 	const [inProgress, setInProgress] = useState(false)
 	const [apiStatus, setApiStatus] = useState(() => {
 		if (_.has(location, 'state.status.message')) {
@@ -32,14 +37,6 @@ const SignInPage = () => {
 		}
 		return getDefaultApiStatusState()
 	})
-	
-	useEffect(() => {
-		if (session.isActive()) {
-			console.log(`User is already logged in as {${session.getData().username}}. Redirect to homepage.`)
-			// FIXME Navigate to actual homepage.
-			navigate('/style-guide')
-		}
-	}, [])
 	
 	// TODO What happens when the user sends a login request and manually
 	// navigates away from the sign in, before the request is resolved?
@@ -63,7 +60,7 @@ const SignInPage = () => {
 		if (data.error === false && _.isObject(data.payload)) {
 			console.log('Login successful. Login details:', data.payload)
 			session.signIn(data.payload)
-			navigate('/style-guide')
+			setRedirectDelay(REDIRECT_DELAY)
 		}
 		
 		setApiStatus({
@@ -103,13 +100,15 @@ const SignInPage = () => {
 		},
 	]
 	
-	return 	<FormContainer status={apiStatus}>
-		<Form onSubmit={handleSubmit} fields={formFields} />
-		
-		<Link to="/sign-up" className="text-sm text-green-700 underline hover:text-green-500">
-			Create an Account
-		</Link>
-	</FormContainer>
+	return <RedirectAuthenticated path="/plants" delay={redirectDelay}>
+		<FormContainer status={apiStatus}>
+			<Form onSubmit={handleSubmit} fields={formFields} />
+			
+			<Link to="/sign-up" className="text-sm text-green-700 underline hover:text-green-500">
+				Create an Account
+			</Link>
+		</FormContainer>
+	</RedirectAuthenticated>
 }
 
 export default SignInPage
