@@ -22,6 +22,7 @@ const StyleGuide = () => {
 				<Icon name="menu" />
 				<Icon name="home" className="text-4xl" />
 				<Icon name="account_circle" className="rounded-full bg-amber-100 text-amber-700 hover:bg-amber-200 active:bg-amber-300 animate-spin" />
+				<Icon name="login" />
 				<Icon name="logout" />
 				<Icon name="close" className="bg-violet-100 text-violet-700 hover:bg-violet-200 active:bg-violet-300" />
 			</div>
