@@ -5,7 +5,7 @@ import NavHeader from '#cap/Components/NavHeader'
 const StyleGuide = () => {
 	return <>
 			<NavHeader />
-			<div className="p-6 max-w-lg m-auto">
+			<div className="p-6 w-[2000px] m-auto">
 				<h1 className="my-4 text-5xl">Heading</h1>
 				
 				<div className="my-4 text-xl font-playfair">
@@ -18,7 +18,7 @@ const StyleGuide = () => {
 				
 				<div>
 					<h2 className="my-4 text-4xl">Icons</h2>
-					<div className="flex items-center gap-4">
+					<div className="flex flex-wrap items-center gap-4">
 						<Icon name="menu" />
 						<Icon name="home"
 							className="text-4xl"
