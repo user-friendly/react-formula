@@ -5,7 +5,7 @@ import NavHeader from '#cap/Components/NavHeader'
 const StyleGuide = () => {
 	return <>
 			<NavHeader />
-			<div className="p-6 w-[2000px] m-auto">
+			<div className="p-6 m-auto max-w-5xl ">
 				<h1 className="my-4 text-5xl">Heading</h1>
 				
 				<div className="my-4 text-xl font-playfair">
