@@ -43,7 +43,7 @@ const SignInPage = () => {
 	
 	// Usually, can ommit the formId and event.
 	const handleSubmit = async (values, formId, event) => {
-		if (inProgress) {
+		if (inProgress || session.isActive()) {
 			return
 		}
 
