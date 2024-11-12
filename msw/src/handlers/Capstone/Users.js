@@ -101,10 +101,59 @@ const createClientToken = (username) => {
 		return false
 	}
 	return {
-		id: session.id,
+		sid: session.id,
 		username: session.username,
+		// Right now, secret is not used. It's just for show.
 		secret: _.random(0, Number.MAX_SAFE_INTEGER)
 	}
+}
+
+// Fetch API's Headers class (request.headers) matches name ignoring case.
+const SESSION_TOKEN_HEADER = 'Capstone-Session'
+const getSessionFromRequest = (request) => {
+	if (!request.headers.has(SESSION_TOKEN_HEADER)) {
+		return false
+	}
+	try {
+		const sessionData = JSON.decode(request.headers.get(SESSION_TOKEN_HEADER))
+		console.log(`Got session data: ${sessionData}`)
+		return sessionData
+	} catch (e) {
+		console.error(`Failed to decode session token.`)
+	}
+	return false
+}
+const hasAccessTo = (request, resource) => {
+	const reqSession = getSessionFromRequest(request)
+	if (!reqSession) {
+		console.log(`Revoke access to {${resource}} - no request session token.`)
+		return false
+	}
+	const revoke_dbg_msg = `Revoke access to {${resource}} for user {${reqSession.username}}`
+	if (!(reqSession.username !== undefined && sessions.has(reqSession.username))) {
+		console.log(`${revoke_dbg_msg} - no server side session found, or session expired.`)
+		return false
+	}
+	const session = sessions.get(reqSession.username)
+	
+	if (session.id !== reqSession.id) {
+		console.log(`${revoke_dbg_msg} - session id mismatch.`)
+		return false
+	}
+	
+	// Pointless, jsut for show.
+	if (session.sercret !== reqSession.secret) {
+		console.log(`${revoke_dbg_msg} - secret mismatch.`)
+		return false
+	}
+	
+	// TODO Implement roles.
+	if (_.isString(resource) && session.username !== undefined) {
+		console.log(`Grant access to {${resource}} for {${session.username}}.`)
+		return true
+	}
+	
+	return false
 }
 
 const Users = (baseUrl) => {
@@ -283,4 +332,5 @@ const Users = (baseUrl) => {
 	]
 }
 
+export {hasAccessTo}
 export default Users
