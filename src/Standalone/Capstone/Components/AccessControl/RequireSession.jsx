@@ -7,7 +7,7 @@ import SessionContext from '#cap/Context/Session'
  */
 const RequireSession = (props) => {
 	const session = useContext(SessionContext)
-	return (!props.not ? session.isActive() : !session.isActive()) ? props.children : null
+	return session.isActive() === !props.not ? props.children : null
 }
 
 export default RequireSession
