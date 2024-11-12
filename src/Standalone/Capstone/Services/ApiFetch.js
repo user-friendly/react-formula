@@ -1,20 +1,25 @@
 
-const { VITE_API_BASE_URL, VITE_API_KEY } = import.meta.env
+import _ from 'lodash'
 
+const { VITE_API_BASE_URL, VITE_API_KEY } = import.meta.env
 const ENDPOINT_URL = `${import.meta.env.VITE_API_BASE_URL}/learning-api/demos/capstone/`
 const API_KEY = import.meta.env.VITE_API_KEY !== undefined
 	? import.meta.env.VITE_API_KEY
 	: 'browser-mock-api-key'
 
-const ApiFetch = async (method, path, body = null) => {
-	const options = {
+const ApiFetch = async (method, path, headers = {}, body = null) => {
+	if (!_.isObject(headers)) {
+		headers = {}
+	}
+	// Using spread operator, later objects' props override eariler ones.
+	const options = {...headers, ...{
 		method,
 		credentials: 'same-origin',
 		headers: {
 			Authorization: `Bearer ${API_KEY}`,
 			'Content-Type': 'application/json',
 		},
-	}
+	}}
 	
 	if (body) {
 		options.body = JSON.stringify(body);
@@ -49,5 +54,31 @@ const ApiFetch = async (method, path, body = null) => {
 }
 export {ApiFetchSync}*/
 
+const getStatus = (error = false, message = null) => {
+	return 	{
+		error: error,
+		message: message
+	}
+}
 
+const processStatus = (result) => {
+	const status = getStatus()
+	if (_.isObject(result)) {
+		// Should always return a failure message.
+		if (result.error) {
+			status.error = true
+			status.message = result.error
+		} else if (result.message) {
+			status.message = result.message
+		// Generic success message.
+		} else {
+			status.message = 'Success'
+		}
+		return {...result, ...status}
+	}
+	return status
+}
+
+export const SESSION_TOKEN_HEADER = 'Capstone-Session'
+export {processStatus}
 export default ApiFetch
