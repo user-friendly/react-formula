@@ -77,6 +77,8 @@ const Ham = () => {
 		<div className={'flex flex-col justify-center ' + (!show ? 'hidden' : null)}
 			onClick={hideMenu}
 		>
+			<Link className={linkStyle} to="/">Home</Link>
+			
 			<Links linkstyle={linkStyle} />
 			
 			{session.isActive() && signOutButton}

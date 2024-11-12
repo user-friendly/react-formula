@@ -9,8 +9,6 @@ import Icon from '#cap/Components/Icon'
 
 import Links from './Links'
 
-const navBarStyle = `fixed top-2 right-2 w-40 p-2 flex flex-col justify-center`
-
 const linkStyle = `p-2 font-lato font-medium hover:text-emerald-200 hover:underline active:translate-y-0.5`
 const linkIconStyle = `mx-1`
 
@@ -47,10 +45,12 @@ const Bar = () => {
 	
 	return <div className="hidden sm:flex justify-center bg-emerald-800">
 		<div className="w-full max-w-5xl flex p-8 justify-end items-center text-white">
-			<div className="flex-1 flex justify-start items-center">
-				<img className="w-10" title="brand logo"
-					src="https://static-task-assets.react-formula.com/capstone_logo_light.png" />
-				<div className="ml-8 font-playfair text-2xl">Rica's Plants</div>
+			<div className="flex-1">
+				<Link to="/" className="flex justify-start items-center">
+					<img className="w-10" title="brand logo"
+						src="https://static-task-assets.react-formula.com/capstone_logo_light.png" />
+					<span className="ml-8 font-playfair text-2xl">Rica's Plants</span>
+				</Link>
 			</div>	
 			
 			<Links linkstyle={linkStyle} />
