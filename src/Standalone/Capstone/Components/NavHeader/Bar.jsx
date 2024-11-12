@@ -1,24 +1,31 @@
 
+import _ from 'lodash'
+
 import {useState, useContext} from 'react'
 import {Link, useNavigate} from 'react-router-dom'
 import clsx from 'clsx'
 
-import SessionContext from '#cap/Context/Session'
-
+import {RequireSession} from '#cap/Components/AccessControl'
 import Icon from '#cap/Components/Icon'
+
+import SessionContext from '#cap/Context/Session'
 
 import Links from './Links'
 
-const linkStyle = `p-2 font-lato font-medium hover:text-emerald-200 hover:underline active:translate-y-0.5`
-const linkIconStyle = `mx-1`
+const baseLinkStyle = `py-2 px-1 font-lato font-medium hover:text-emerald-200 active:translate-y-0.5`
+
+const linkStyle = `${baseLinkStyle} hover:underline`
 
 // TODO Might want to change the default icon style to match this one.
-const iconStyle = `bg-transparent text-white hover:bg-emerald-700 active:bg-emerald-600`
+const iconStyle = `
+	bg-transparent text-white
+	hover:bg-emerald-700 group-hover:bg-emerald-700 active:bg-emerald-600 group-active:bg-emerald-600
+`
 const iconProgressStyle = `${iconStyle} rounded-full animate-spin`
 
-const spinnerStyle = `ml-1 w-4 h-4 inline-block
-	border-transparent border-t-white group-hover:border-t-emerald-200
-`
+const linkButtonStyle = `${baseLinkStyle} relative group flex items-center`
+const linkButtonTextStyle = `px-1 group-hover:underline`
+const linkButtonIconStyle = `${iconStyle}`
 
 const Bar = () => {
 	const navigate = useNavigate()
@@ -39,24 +46,42 @@ const Bar = () => {
 		setSigningOut(false)
 	}
 	
-	const signOutButton = <Link onClick={handleSignOut} className={linkIconStyle + ' relative group'}>
-		{signingOut && <Icon name="progress_activity" className={iconProgressStyle} /> || <Icon name="logout" className={iconStyle} />}
-	</Link>
-	
 	return <div className="hidden sm:flex justify-center bg-emerald-800">
 		<div className="w-full max-w-5xl flex p-8 justify-end items-center text-white">
-			<div className="flex-1">
-				<Link to="/" className="flex justify-start items-center">
+			<div className="flex-1 flex">
+				<Link to="/" className="p-2 flex justify-start items-center">
 					<img className="w-10" title="brand logo"
 						src="https://static-task-assets.react-formula.com/capstone_logo_light.png" />
-					<span className="ml-8 font-playfair text-2xl">Rica's Plants</span>
+					<span className="ml-4 font-playfair text-2xl">Rica's Plants</span>
 				</Link>
 			</div>	
 			
 			<Links linkstyle={linkStyle} />
 			
-			{session.isActive() && signOutButton}
-			{!session.isActive() && <Link className={linkIconStyle} to="/sign-in"><Icon name="login" className={iconStyle}/></Link>}
+			<RequireSession>
+				<Link className={linkButtonStyle}>
+					<span className={linkButtonTextStyle}>
+						{_.get(session, 'data.username')}
+					</span>
+					<Icon name="account_circle" className={linkButtonIconStyle} />
+				</Link>
+				
+				<Link onClick={handleSignOut} className={linkButtonStyle}>
+					<span className={linkButtonTextStyle}>
+						Sign Out
+					</span>
+					{signingOut && <Icon name="progress_activity" className={iconProgressStyle} /> || <Icon name="logout" className={iconStyle} />}
+				</Link>
+			</RequireSession>
+			
+			<RequireSession not>
+				<Link className={linkButtonStyle} to="/sign-in">
+					<span className={linkButtonTextStyle}>
+						Sign In
+					</span>
+					<Icon name="login" className={iconStyle}/>
+				</Link>
+			</RequireSession>
 		</div>
 	</div>
 }

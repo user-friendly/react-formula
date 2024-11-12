@@ -7,6 +7,7 @@ import SessionContext from '#cap/Context/Session'
 
 import AppSwitcher from '#AppSwitcher'
 
+import {RequireSession} from '#cap/Components/AccessControl'
 import Spinner from '#cap/Components/Spinner'
 import Icon from '#cap/Components/Icon'
 
@@ -63,10 +64,6 @@ const Ham = () => {
 		setSigningOut(false)
 		setShow(false)
 	}
-
-	const signOutButton = <button onClick={handleSignOut} className={linkStyle + 'relative group'} to="/sign-out">
-		Sign Out{signingOut && <Spinner className={spinnerStyle} />}
-	</button>
 	
 	return <div ref={menuRef} className={clsx('sm:hidden fixed top-2 right-2 w-40 p-2 flex flex-col justify-center',
 			show && 'bg-emerald-800 rounded-lg shadow-lg'
@@ -81,8 +78,15 @@ const Ham = () => {
 			
 			<Links linkstyle={linkStyle} />
 			
-			{session.isActive() && signOutButton}
-			{!session.isActive() && <Link className={linkStyle} to="/sign-in">Sign In</Link>}
+			<RequireSession>
+				<button onClick={handleSignOut} className={linkStyle + 'relative group'} to="/sign-out">
+					Sign Out{signingOut && <Spinner className={spinnerStyle} />}
+				</button>
+			</RequireSession>
+
+			<RequireSession not>
+				<Link className={linkStyle} to="/sign-in">Sign In</Link>
+			</RequireSession>
 		</div>
 	</div>
 }
