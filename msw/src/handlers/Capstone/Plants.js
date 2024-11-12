@@ -47,7 +47,7 @@ const Plants = (baseUrl) => {
 			)
 		}),
 		http.post(`${baseUrl}/plants`, async ({cookies, request}) => {
-			const newPlant = await request.json()
+			let newPlant = await request.json()
 			const sessionToken = request.headers.get()
 			
 			await randomDelay()
