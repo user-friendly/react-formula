@@ -10,7 +10,7 @@ import SessionContext from '#cap/Context/Session'
 import RoutesMap from '#cap/RoutesMap'
 import NavBarUserFriendly from '#cap/Components/NavBarUserFriendly'
 
-const globalFontStyle = "text-emerald-600"
+const globalFontStyle = "font-lato text-emerald-600"
 
 const App = () => {
 	const [session, setSession] = useState(() => getSessionStorage())
