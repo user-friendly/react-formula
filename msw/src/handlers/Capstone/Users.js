@@ -110,6 +110,7 @@ const createClientToken = (username) => {
 
 // Fetch API's Headers class (request.headers) matches name ignoring case.
 const SESSION_TOKEN_HEADER = 'Capstone-Session'
+
 const getSessionFromRequest = (request) => {
 	if (!request.headers.has(SESSION_TOKEN_HEADER)) {
 		return false
@@ -123,6 +124,7 @@ const getSessionFromRequest = (request) => {
 	}
 	return false
 }
+
 const hasAccessTo = (request, resource) => {
 	const reqSession = getSessionFromRequest(request)
 	if (!reqSession) {
@@ -130,21 +132,21 @@ const hasAccessTo = (request, resource) => {
 		return false
 	}
 	const revoke_dbg_msg = `Revoke access to {${resource}} for user {${reqSession.username}}`
-	if (!(reqSession.username !== undefined && sessions.has(reqSession.username))) {
+	if (!(_.isString(reqSession.username) && reqSession.username.length && sessions.has(reqSession.username))) {
 		console.log(`${revoke_dbg_msg} - no server side session found, or session expired.`)
 		return false
 	}
 	const session = sessions.get(reqSession.username)
-	
-	if (session.id !== reqSession.id) {
+	if (session.id !== reqSession.sid) {
 		console.log(`${revoke_dbg_msg} - session id mismatch.`)
 		return false
 	}
 	
 	// Pointless, jsut for show.
-	if (session.sercret !== reqSession.secret) {
-		console.log(`${revoke_dbg_msg} - secret mismatch.`)
-		return false
+	if (/*session.sercret !== */reqSession.secret) {
+		console.log(`User {${reqSession.username}} has session token secret {${reqSession.secret}}`)
+		//console.log(`${revoke_dbg_msg} - secret mismatch.`)
+		// return false
 	}
 	
 	// TODO Implement roles.
@@ -233,10 +235,7 @@ const Users = (baseUrl) => {
 				)
 			}
 			
-			// TODO Handle case for existing session.
-			//		This might be important for security reasons!!!
-			
-			if (!createSession(user.username)) {
+			if (!getSession(user.username) && !createSession(user.username)) {
 				return HttpResponse.json({
 						error: 'Internal server error.',
 						code: 9,
@@ -244,6 +243,7 @@ const Users = (baseUrl) => {
 					{status: 500}
 				)
 			}
+			
 			const token = createClientToken(user.username)
 			if (!token) {
 				return HttpResponse.json({
