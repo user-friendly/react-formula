@@ -1,6 +1,16 @@
 
 import Icon from '#cap/Components/Icon'
 import NavHeader from '#cap/Components/NavHeader'
+import {Section, Heading, Paragraph} from '#cap/Components/Text'
+
+const placeholder = `
+	The quick brown fox jumps over the lazy dog, darting swiftly across the field with grace.
+	As it leaps, its sleek fur glistens under the afternoon sun, casting fleeting shadows on the
+	ground. The dog, unmoved by the fox's antics, lies lazily on the grass, its eyes half-closed
+	in contentment. Around them, the sounds of nature fill the air: the chirping of birds,
+	the rustling of leaves, and the distant hum of a breeze that stirs the tall grass. Time seems
+	to slow in this peaceful moment, where the simple beauty of the scene speaks louder than words.
+`
 
 const StyleGuide = () => {
 	return <>
@@ -35,6 +45,58 @@ const StyleGuide = () => {
 					</div>
 				</div>
 			</div>
+			
+			<Section className="my-20">
+				<Heading>Sub heading</Heading>
+				
+				<Paragraph>{placeholder}</Paragraph>
+				<Section>
+					<Heading>Sub heading</Heading>
+					
+					<Paragraph>{placeholder}</Paragraph>
+					<Section>
+						<Heading>Sub heading</Heading>
+						
+						<Paragraph>{placeholder}</Paragraph>
+						<Section>
+							<Heading>Sub heading</Heading>
+	
+							<Paragraph>{placeholder}</Paragraph>
+							<Section>
+								<Heading>Sub heading</Heading>
+	
+								<Paragraph>{placeholder}</Paragraph>
+								<Section>
+									<Heading>Sub heading</Heading>
+	
+									<Paragraph>{placeholder}</Paragraph>
+									<Section>
+										<Heading>Sub heading</Heading>
+	
+										<Paragraph>{placeholder}</Paragraph>
+										<Section>
+											<Heading>Sub heading</Heading>
+											
+											<Paragraph>{placeholder}</Paragraph>
+										</Section>
+									</Section>
+								</Section>
+							</Section>
+						</Section>
+					</Section>
+				</Section>
+			</Section>
+			
+			<Section className="my-20">
+				<Heading>Sub heading</Heading>
+
+				<Paragraph>{placeholder}</Paragraph>
+				<Section>
+					<Heading>Sub heading</Heading>
+
+					<Paragraph>{placeholder}</Paragraph>
+				</Section>
+			</Section>		
 		</>
 	}
 
