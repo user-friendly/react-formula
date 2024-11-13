@@ -5,7 +5,7 @@ export const ApiGetPlants = async (sessionData) => {
 	try {
 		const sessionToken = JSON.stringify(sessionData)
 		const r = await ApiFetch('GET', 'plants', {
-			SESSION_TOKEN_HEADER: sessionToken,
+			[SESSION_TOKEN_HEADER]: sessionToken,
 		})
 		return processStatus(r)
 	} catch (e) {

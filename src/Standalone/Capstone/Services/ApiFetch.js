@@ -12,14 +12,15 @@ const ApiFetch = async (method, path, headers = {}, body = null) => {
 		headers = {}
 	}
 	// Using spread operator, later objects' props override eariler ones.
-	const options = {...headers, ...{
+	const options = {
 		method,
 		credentials: 'same-origin',
-		headers: {
+		headers: {...headers, ...{
 			Authorization: `Bearer ${API_KEY}`,
 			'Content-Type': 'application/json',
-		},
-	}}
+			'Accept': 'application/json',
+		}},
+	}
 	
 	if (body) {
 		options.body = JSON.stringify(body);
