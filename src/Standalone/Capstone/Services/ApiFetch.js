@@ -36,6 +36,13 @@ const ApiFetch = async (method, path, headers = {}, body = null) => {
 	return data
 }
 
+// TODO Implement.
+const ApiAuthorizedFetch = async (sessionToken, method, path, headers = {}, body = null) => {
+	// Somehow notify App component (or where the Session handle resides)
+	// of session expiration, if a reponse is returned with a particular code.
+	throw 'TODO Implement.'
+}
+
 /*const ApiFetchSync = (method, path, body = null) => {
 	const xhr = new XMLHttpRequest()
 	
