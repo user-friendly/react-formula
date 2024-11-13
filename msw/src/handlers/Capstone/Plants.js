@@ -14,13 +14,15 @@ const store = new Map()
 // Add defaults.
 store.set('4e9482ac-c661-4c77-8755-be50376b12ef', {
 	id: 1,
-	name: 'rose',
-	
+	name: 'Rose',
+	image: '/images/rose.jpeg',
+	description: 'It\'s a rose plant.',
 })
 store.set('1a1d6735-be08-4d34-9736-2e03da2c9d98', {
 	id: 2,
-	name: 'succulent',
-	
+	name: 'Succulent',
+	image: '/images/succulent.jpeg',
+	description: 'It\'s a succulent plant.',
 })
 
 const Plants = (baseUrl) => {
