@@ -115,11 +115,11 @@ const getSessionFromRequest = (request) => {
 		return false
 	}
 	try {
-		const sessionData = JSON.decode(request.headers.get(SESSION_TOKEN_HEADER))
-		console.log(`Got session data: ${sessionData}`)
+		const sessionData = JSON.parse(request.headers.get(SESSION_TOKEN_HEADER))
+		console.log(`Got session data:`, sessionData)
 		return sessionData
 	} catch (e) {
-		console.error(`Failed to decode session token.`)
+		console.error(`Failed to decode session token. Error:`, e)
 	}
 	return false
 }
