@@ -4,7 +4,7 @@ import {createContext, useContext} from 'react'
 
 const SectionLevelContext = createContext(0)
 
-const defaultStyle = `my-2`
+const defaultStyle = ``
 
 const Section = (props) => {
 	const level = useContext(SectionLevelContext)
