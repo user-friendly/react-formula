@@ -82,7 +82,7 @@ store.set('812bcf9c-62d6-497e-a686-34c044a21ee9', {
 		},
 	],
 	description: 'It\'s a succulent plant.',
-	price: 13.37,
+	price: 16.89,
 })
 
 
@@ -93,10 +93,26 @@ const Plants = (baseUrl) => {
 			
 			// await randomDelay()
 			
+			let data = Array.from(store.values())
+			const delta = data.length
+			
+			const dummySize = 30
+			if (data.length < dummySize) {
+				for (let i = 3; i < dummySize; i++) {
+					const newPlant = _.clone(data[i % delta])
+					newPlant.id = data[i-1] + 1
+					data.push(newPlant)
+				}
+				data.forEach((plant, i) => {
+					plant.id = i > 2 ? data[i-1].id + 1 : plant.id
+				})
+			}
+			data = _.shuffle(data)
+			
 			// FIXME Remove!
 			return HttpResponse.json(
 				{
-					data: Array.from(store.values()),
+					data: data,
 					code: 0,
 				},
 				{status: 200}
