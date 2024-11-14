@@ -65,7 +65,7 @@ const SignUpPage = () => {
 	{/* Oh my ghaaaaaa... */}
 	const createButtonLabel = <span className="flex justify-center"><span className="relative">
 		Create an Account {inProgress
-			? <Spinner className="absolute top-0 -right-8 ml-2 w-6 h-6 border-transparent border-t-white" />
+			? <Spinner className="absolute top-0 -right-8 ml-2 w-6 h-6 border-4 border-transparent border-t-white" />
 			: null
 		}
 	</span></span>

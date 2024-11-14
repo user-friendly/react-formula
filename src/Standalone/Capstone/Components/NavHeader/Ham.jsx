@@ -22,7 +22,7 @@ const iconStyle = 'self-end bg-emerald-800 text-emerald-200 hover:text-emerald-3
 const iconShowStyle = 'self-end bg-emerald-200 text-emerald-800 hover:text-emerald-300 hover:bg-emerald-600'
 
 const spinnerStyle = `w-6 h-6 absolute top-2 right-2.5
-	border-transparent border-t-emerald-800 group-hover:border-t-emerald-300
+	border-4 border-transparent border-t-emerald-800 group-hover:border-t-emerald-300
 `
 
 const Ham = () => {

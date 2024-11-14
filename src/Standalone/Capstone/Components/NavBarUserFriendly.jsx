@@ -15,9 +15,10 @@ const linkStyle = `
 
 const iconStyle = 'self-end bg-sky-200 text-sky-800 hover:text-sky-300 hover:bg-sky-600'
 
-const spinnerStyle = `w-6 h-6 absolute top-2 right-2.5
-	border-transparent border-t-sky-800 group-hover:border-t-sky-300
-`
+// Might find a use for this later.
+//const spinnerStyle = `w-6 h-6 absolute top-2 right-2.5
+//	border-4 border-transparent border-t-sky-800 group-hover:border-t-sky-300
+//`
 
 const NavBarUserFriendly = () => {
 	const menuRef = useRef()
