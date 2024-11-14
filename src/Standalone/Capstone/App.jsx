@@ -2,17 +2,23 @@
 import _ from 'lodash'
 
 import {useState} from 'react'
-import {BrowserRouter, Link, Routes, Route} from 'react-router-dom'
+import {RouterProvider, createBrowserRouter, Link, Routes, Route} from 'react-router-dom'
 
 import {apiLogoutUser, getSessionStorage, setSessionStorage, removeSessionStorage} from '#cap/Services'
 import SessionContext from '#cap/Context/Session'
 
 import RoutesMap from '#cap/RoutesMap'
-import NavBarUserFriendly from '#cap/Components/NavBarUserFriendly'
 
 // import './Style/index.css'
 
 const globalStyles = `bg-emerald-50 font-lato text-emerald-600`
+
+const router = createBrowserRouter([
+	{
+		path: "*",
+		element: <RoutesMap />,
+	},
+])
 
 const App = () => {
 	const [session, setSession] = useState(() => getSessionStorage())
@@ -41,12 +47,9 @@ const App = () => {
 	}
 	
 	return <SessionContext.Provider value={sessionUtility}>
-		<BrowserRouter>
-			<div className={`${globalStyles} min-h-screen`}>
-				<RoutesMap />
-			</div>
-			<NavBarUserFriendly />
-		</BrowserRouter>
+		<div className={`${globalStyles} min-h-screen`}>
+			<RouterProvider router={router} />
+		</div>
 	</SessionContext.Provider>
 }
 
