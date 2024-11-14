@@ -55,7 +55,7 @@ const Page = () => {
 				</div>
 			)}
 			<div className="w-full max-w-5xl">
-				<Heading className="text-4xl">
+				<Heading className="px-8 text-4xl">
 					Plants In Stock <button onClick={() => refreshList()}>{refreshIcon}</button>
 				</Heading>
 				<div className="flex flex-wrap justify-center">
