@@ -15,21 +15,92 @@ const store = new Map()
 store.set('4e9482ac-c661-4c77-8755-be50376b12ef', {
 	id: 1,
 	name: 'Rose',
-	image: '/images/rose.jpeg',
+	images: [
+		{
+			pot_color: 'amber',
+			src: '/images/rose-amber-600.jpeg',
+		},
+		{
+			pot_color: 'white',
+			src: '/images/rose-gray-50.jpeg',
+		},
+		{
+			pot_color: 'black',
+			src: '/images/rose-gray-600.jpeg',
+		},
+		{
+			pot_color: 'sky',
+			src: '/images/rose-sky-700.jpeg',
+		},
+		{
+			pot_color: 'slate',
+			src: '/images/rose-slate-300.jpeg',
+		},
+		{
+			pot_color: 'stone',
+			src: '/images/rose-stone-200.jpeg',
+		},
+	],
 	description: 'It\'s a rose plant.',
+	price: 24.59,
 })
 store.set('1a1d6735-be08-4d34-9736-2e03da2c9d98', {
 	id: 2,
 	name: 'Succulent',
-	image: '/images/succulent.jpeg',
+	images: [
+		{
+			pot_color: 'white',
+			src: '/images/succulent-gray-50.jpeg',
+		},
+		{
+			pot_color: 'black',
+			src: '/images/succulent-gray-600.jpeg',
+		},
+		{
+			pot_color: 'sky',
+			src: '/images/succulent-sky-700.jpeg',
+		},
+	],
 	description: 'It\'s a succulent plant.',
+	price: 13.37,
 })
+store.set('812bcf9c-62d6-497e-a686-34c044a21ee9', {
+	id: 3,
+	name: 'Siberian Scilla',
+	images: [
+		{
+			pot_color: 'amber',
+			src: '/images/siberian-scilla-amber-600.jpeg',
+		},
+		{
+			pot_color: 'slate',
+			src: '/images/siberian-scilla-slate-300.jpeg',
+		},
+		{
+			pot_color: 'stone',
+			src: '/images/siberian-scilla-stone-200.jpeg',
+		},
+	],
+	description: 'It\'s a succulent plant.',
+	price: 13.37,
+})
+
+
 
 const Plants = (baseUrl) => {
 	return [
 		http.get(`${baseUrl}/plants`, async ({cookies, request}) => {
 			
-			await randomDelay()
+			// await randomDelay()
+			
+			// FIXME Remove!
+			return HttpResponse.json(
+				{
+					data: Array.from(store.values()),
+					code: 0,
+				},
+				{status: 200}
+			)
 			
 			if (!hasAccessTo(request, 'get plants list')) {
 				return HttpResponse.json({
