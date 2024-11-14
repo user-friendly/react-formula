@@ -91,7 +91,7 @@ const Plants = (baseUrl) => {
 	return [
 		http.get(`${baseUrl}/plants`, async ({cookies, request}) => {
 			
-			// await randomDelay()
+			await randomDelay(500)
 			
 			let data = Array.from(store.values())
 			const delta = data.length

@@ -1,4 +1,7 @@
 
+import _ from 'lodash'
+import clsx from 'clsx'
+
 import {useContext, useEffect, useState} from 'react'
 
 import SessionContext from '#cap/Context/Session'
@@ -8,9 +11,12 @@ import RedirectAuthenticated from '#cap/Components/RedirectAuthenticated'
 
 import NavHeader from '#cap/Components/NavHeader'
 import Spinner from '#cap/Components/Spinner'
+import Icon from '#cap/Components/Icon'
 import {Section, Heading} from '#cap/Components/Text'
 
 import PlantItem from './PlantItem'
+
+const REFRESHING_STATE = 1
 
 const Page = () => {
 	const session = useContext(SessionContext)
@@ -18,7 +24,10 @@ const Page = () => {
 	const [status, setStatus] = useState({error: false})
 	
 	const refreshList = async () => {
-		setList(null)
+		if (list === REFRESHING_STATE) {
+			return
+		}
+		setList(REFRESHING_STATE)
 		const result = await ApiGetPlants(session?.data)
 		if (result.error === false) {
 			setList(result.data)
@@ -32,9 +41,10 @@ const Page = () => {
 		refreshList()
 	}, [session.data])
 	
-	const spinner = <Spinner />
-	
-	
+	const refreshIcon = <Icon name="refresh" className={clsx('rounded-full', 
+		list === REFRESHING_STATE && 'animate-spinOnce'
+	)} />
+	const spinner = <Spinner className="mt-28" />
 	
 	return <RedirectAuthenticated not path="/sign-in">
 		<NavHeader />
@@ -44,11 +54,12 @@ const Page = () => {
 					{status.message}
 				</div>
 			)}
-			
 			<div className="w-full max-w-5xl">
-				<Heading className="text-4xl">Plants In Stock</Heading>
+				<Heading className="text-4xl">
+					Plants In Stock <button onClick={() => refreshList()}>{refreshIcon}</button>
+				</Heading>
 				<div className="flex flex-wrap justify-center">
-					{(list && list.map((plant, i) => <PlantItem key={plant.id} data={plant} />))
+					{(_.isArray(list) && list.map((plant, i) => <PlantItem key={plant.id} data={plant} />))
 						|| (status?.error === false && spinner)}
 				</div>
 			</div>

@@ -24,7 +24,7 @@ const TEXT_COLORS = {
 }
 
 const PlantItem = (props) => {
-	const [selected, setSelected] = useState(_.random(0, props.data.images.length-1))
+	const [selected, setSelected] = useState(() => _.random(0, props.data.images.length-1))
 	const [imageIdx, setImageIdx] = useState(selected)
 	
 	const {data} = props
