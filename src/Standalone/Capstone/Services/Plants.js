@@ -13,3 +13,16 @@ export const ApiGetPlants = async (sessionData) => {
 	}
 	return false
 }
+
+export const ApiGetPlant = async (sessionData, plantId) => {
+	try {
+		const sessionToken = JSON.stringify(sessionData)
+		const r = await ApiFetch('GET', `plant/${plantId}` , {
+			[SESSION_TOKEN_HEADER]: sessionToken,
+		})
+		return processStatus(r)
+	} catch (e) {
+		console.error(`Failed to get plant {${plantId}}.`)
+	}
+	return false
+}

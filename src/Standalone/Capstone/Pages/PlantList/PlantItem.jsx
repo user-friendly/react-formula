@@ -2,6 +2,7 @@
 import _ from 'lodash'
 
 import {useState} from 'react'
+import {Link} from 'react-router-dom'
 
 import clsx from 'clsx'
 
@@ -32,8 +33,10 @@ const PlantItem = (props) => {
 	const color = data.images[imageIdx].pot_color
 	
 	return <div className="mx-5 my-8">
-		<img className="w-[280px] h-[320px] object-cover rounded-md"
-			alt={data.description} src={data.images[imageIdx].src} />
+		<Link to={`/plant/${data.uuid}`}>
+			<img className="w-[280px] h-[320px] object-cover rounded-md"
+				alt={data.description} src={data.images[imageIdx].src} />
+		</Link>
 			
 		<div className="my-3 flex justify-between">
 			<div className="text-xl text-emerald-700">{data.name}</div>

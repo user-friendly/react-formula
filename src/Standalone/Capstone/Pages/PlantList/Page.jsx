@@ -27,12 +27,14 @@ const Page = () => {
 		if (list === REFRESHING_STATE) {
 			return
 		}
+		setStatus({error: false})
 		setList(REFRESHING_STATE)
 		const result = await ApiGetPlants(session?.data)
 		if (result.error === false) {
 			setList(result.data)
 		} else {
 			console.error(`Failed to get plants list. Response:`, result)
+			setList(null)
 		}
 		setStatus(result)
 	}
@@ -49,11 +51,6 @@ const Page = () => {
 	return <RedirectAuthenticated not path="/sign-in">
 		<NavHeader />
 		<Section className="py-24 flex justify-center">
-			{status?.error !== false && (
-				<div className="mb-8 px-2 py-1 bg-rose-100 border border-rose-300 rounded-lg text-red-600 font-medium">
-					{status.message}
-				</div>
-			)}
 			<div className="w-full max-w-5xl">
 				<Heading className="px-8 text-4xl">
 					Plants In Stock <button onClick={() => refreshList()}>{refreshIcon}</button>
@@ -62,6 +59,11 @@ const Page = () => {
 					{(_.isArray(list) && list.map((plant, i) => <PlantItem key={plant.id} data={plant} />))
 						|| (status?.error === false && spinner)}
 				</div>
+				{status?.error !== false && (
+					<div className="px-2 py-1 max-w-80 bg-rose-100 border border-rose-300 rounded-lg text-red-600 font-medium">
+						{status.message}
+					</div>
+				)}
 			</div>
 		</Section>
 	</RedirectAuthenticated>
