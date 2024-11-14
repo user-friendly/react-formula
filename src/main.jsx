@@ -9,8 +9,8 @@ import {Routes, Route} from 'react-router-dom'
 
 import {default as MainApp} from './App'
 
+//import ScreenSizeDebug from './ScreenSizeDebug'
 import Spinner from '#Components/Spinner'
-import ScreenSizeDebug from './ScreenSizeDebug'
 
 import AppWrapperContext from '#AppWrapperContext'
 
@@ -192,6 +192,7 @@ if (true /*import.meta.env.DEV === true*/) {
 	ReactDOM.createRoot(document.getElementById('root')).render(<AppWrapper />)
 }
 
-ReactDOM.createRoot(document.getElementById('screenSizeDebug')).render(
-	<ScreenSizeDebug />
-)
+// TODO Make this a toggle, using local storage.
+//ReactDOM.createRoot(document.getElementById('screenSizeDebug')).render(
+//	<ScreenSizeDebug />
+//)
