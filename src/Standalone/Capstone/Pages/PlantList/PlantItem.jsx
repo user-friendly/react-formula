@@ -34,17 +34,13 @@ const PlantItem = (props) => {
 	return <div className="mx-5 my-8">
 		<img className="w-[280px] h-[320px] object-cover rounded-md"
 			alt={data.description} src={data.images[imageIdx].src} />
-
-		<div className="my-3 max-w-[280px]">
-			{data.description}
-		</div>
 			
-		<div className="flex justify-between">
+		<div className="my-3 flex justify-between">
 			<div className="text-xl text-emerald-700">{data.name}</div>
 			<div className="text-lg text-emerald-600">${price}</div>
 		</div>
 		
-		<div className="flex justify-between my-3">
+		<div className="my-3 flex justify-between">
 			<div className={TEXT_COLORS[color] + ' font-medium'}>{color}</div>
 			<div className="flex justify-end">
 				{data.images.map((image, i) => <button key={i} className={clsx(
