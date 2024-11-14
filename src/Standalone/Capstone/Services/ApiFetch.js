@@ -7,6 +7,31 @@ const API_KEY = import.meta.env.VITE_API_KEY !== undefined
 	? import.meta.env.VITE_API_KEY
 	: 'browser-mock-api-key'
 
+const getStatus = (error = false, message = null) => {
+	return 	{
+		error: error,
+		message: message
+	}
+}
+
+const processStatus = (result) => {
+	const status = getStatus()
+	if (_.isObject(result)) {
+		// Should always return a failure message.
+		if (result.error) {
+			status.error = true
+			status.message = result.error
+		} else if (result.message) {
+			status.message = result.message
+		// Generic success message.
+		} else {
+			status.message = 'Success'
+		}
+		return {...result, ...status}
+	}
+	return status
+}
+
 const ApiFetch = async (method, path, headers = {}, body = null) => {
 	if (!_.isObject(headers)) {
 		headers = {}
@@ -32,6 +57,7 @@ const ApiFetch = async (method, path, headers = {}, body = null) => {
 		data = await response.json()
 	} catch (e) {
 		console.error('failed to get resource', e)
+		return getStatus(_.isObject(e) ? e.toString() : e)
 	}
 	return data
 }
@@ -61,31 +87,6 @@ const ApiAuthorizedFetch = async (sessionToken, method, path, headers = {}, body
 	}
 }
 export {ApiFetchSync}*/
-
-const getStatus = (error = false, message = null) => {
-	return 	{
-		error: error,
-		message: message
-	}
-}
-
-const processStatus = (result) => {
-	const status = getStatus()
-	if (_.isObject(result)) {
-		// Should always return a failure message.
-		if (result.error) {
-			status.error = true
-			status.message = result.error
-		} else if (result.message) {
-			status.message = result.message
-		// Generic success message.
-		} else {
-			status.message = 'Success'
-		}
-		return {...result, ...status}
-	}
-	return status
-}
 
 export const SESSION_TOKEN_HEADER = 'Capstone-Session'
 export {processStatus}
