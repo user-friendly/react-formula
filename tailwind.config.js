@@ -43,6 +43,7 @@ export default {
 		animation: {
 			slideDown: 'slideDown 0.5s ease-out',
 			fadeUp: 'fadeUp 0.5s ease-out forwards',
+			spinOnce: 'spin 1s linear forwards',
 		}
 	},
   },
