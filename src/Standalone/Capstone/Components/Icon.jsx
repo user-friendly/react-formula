@@ -8,6 +8,8 @@ const iconStyle = `
 	hover:bg-emerald-200 active:bg-emerald-300 text-emerald-700
 `
 
+// TODO Is this an Icon or is it a button?
+
 const Icon = (props) => {
 	if (props.name === undefined) {
 		return <></>
