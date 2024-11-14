@@ -12,7 +12,7 @@ import NavBarUserFriendly from '#cap/Components/NavBarUserFriendly'
 
 // import './Style/index.css'
 
-const globalFontStyle = "font-lato text-emerald-600"
+const globalStyles = `bg-emerald-50 font-lato text-emerald-600`
 
 const App = () => {
 	const [session, setSession] = useState(() => getSessionStorage())
@@ -42,7 +42,7 @@ const App = () => {
 	
 	return <SessionContext.Provider value={sessionUtility}>
 		<BrowserRouter>
-			<div className={`${globalFontStyle}`}>
+			<div className={`${globalStyles} min-h-screen`}>
 				<RoutesMap />
 			</div>
 			<NavBarUserFriendly />
