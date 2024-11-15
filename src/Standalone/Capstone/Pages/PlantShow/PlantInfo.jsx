@@ -2,10 +2,23 @@
 import {Heading, Paragraph} from '#cap/Components/Text'
 import {IconDecorative} from '#cap/Components/Icon'
 
+const PlantHeading = (props) => {
+	const {plant, className} = props
+	return <div className={className}>
+		<Heading className="text-4xl flex justify-between">
+			<span>{plant.name}</span>
+			<span>${plant.price}</span>
+		</Heading>
+		<span className="my-2 inline-block italic text-gray-400 text-lg">{plant.botanical_name}</span>
+	</div>
+}
+
 const PlantInfo = (props) => {
-	const plant = props.plant
+	const {plant} = props
 	
-	return 	<div className="w-full max-w-5xl flex justify-between">
+	return 	<div className="w-full max-w-5xl flex flex-col md:flex-row">
+		<PlantHeading className="mb-4 md:hidden" plant={plant} />
+		
 		<div className="flex-1 flex flex-col">
 			<img className="rounded-lg" title={plant.botanical_name} src={plant.images[0].src} />
 			<div className="flex">
@@ -26,13 +39,9 @@ const PlantInfo = (props) => {
 			</div>
 		</div>
 		
-		<div className="ml-8 flex-1 flex flex-col">
-			<Heading className="max- text-4xl flex justify-between">
-				<span>{plant.name}</span>
-				<span>${plant.price}</span>
-			</Heading>
-			<span className="mt-2 italic text-gray-400">{plant.botanical_name}</span>
-			<Paragraph className="text-gray-600">{plant.description}</Paragraph>
+		<div className="md:ml-8 flex-1 flex flex-col">
+			<PlantHeading className="hidden md:block" plant={plant} />
+			<Paragraph className="py-2 px-0 text-gray-600">{plant.description}</Paragraph>
 		</div>
 	</div>
 }
