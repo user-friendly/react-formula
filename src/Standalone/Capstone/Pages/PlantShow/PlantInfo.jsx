@@ -1,17 +1,8 @@
 
-import {Heading, Paragraph} from '#cap/Components/Text'
+import {Paragraph} from '#cap/Components/Text'
 import {IconDecorative} from '#cap/Components/Icon'
 
-const PlantHeading = (props) => {
-	const {plant, className} = props
-	return <div className={className}>
-		<Heading className="text-4xl flex justify-between">
-			<span>{plant.name}</span>
-			<span>${plant.price}</span>
-		</Heading>
-		<span className="my-2 inline-block italic text-gray-400 text-lg">{plant.botanical_name}</span>
-	</div>
-}
+import PlantHeading from './PlantHeading'
 
 const PlantInfo = (props) => {
 	const {plant} = props

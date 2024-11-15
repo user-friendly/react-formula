@@ -1,6 +1,5 @@
 
 import _ from 'lodash'
-import clsx from 'clsx'
 
 import {useContext, useEffect, useState} from 'react'
 import {useParams} from 'react-router-dom'
@@ -12,7 +11,6 @@ import RedirectAuthenticated from '#cap/Components/RedirectAuthenticated'
 
 import NavHeader from '#cap/Components/NavHeader'
 import Spinner from '#cap/Components/Spinner'
-import Icon from '#cap/Components/Icon'
 import {Section} from '#cap/Components/Text'
 
 import PlantInfo from './PlantInfo'
@@ -43,7 +41,7 @@ const Page = () => {
 
 	useEffect(() => {
 		fetchPlant()
-	}, [session.data])
+	}, [session.data, uuid])
 	
 	const spinner = <div className="flex justify-center"><Spinner className="mt-28" /></div>
 	
