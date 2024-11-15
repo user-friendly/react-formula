@@ -5,9 +5,9 @@ import {IconDecorative} from '#cap/Components/Icon'
 const PlantInfo = (props) => {
 	const plant = props.plant
 	
-	return 	<div className="w-full max-w-5xl flex">
-		<div className="flex-1 max-w-[550px] flex flex-col">
-			<img className="w-[500px] rounded-lg" title={plant.botanical_name} src={plant.images[0].src} />
+	return 	<div className="w-full max-w-5xl flex justify-between">
+		<div className="flex-1 flex flex-col">
+			<img className="rounded-lg" title={plant.botanical_name} src={plant.images[0].src} />
 			<div className="flex">
 				<div className="my-4 px-4 flex flex-col items-center border-r border-gray-300">
 					<IconDecorative name="check_circle" className="text-5xl" />
@@ -21,13 +21,13 @@ const PlantInfo = (props) => {
 					<span className="my-1 font-bold text-gray-700 text-center">
 						Free Shipping</span>
 					<span className="text-gray-400 text-center">
-						Guaranteed to arrive healthy or your money back</span>
+						Get free ground shipping on orders of $50 or more</span>
 				</div>
 			</div>
 		</div>
 		
-		<div className="ml-8 flex flex-col">
-			<Heading className="text-4xl flex justify-between">
+		<div className="ml-8 flex-1 flex flex-col">
+			<Heading className="max- text-4xl flex justify-between">
 				<span>{plant.name}</span>
 				<span>${plant.price}</span>
 			</Heading>
