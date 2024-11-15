@@ -4,16 +4,7 @@ import _ from 'lodash'
 import {useState} from 'react'
 import {Link} from 'react-router-dom'
 
-import clsx from 'clsx'
-
-const POT_COLORS = {
-  stone: 'bg-stone-200', // #e7e5e4
-  slate: 'bg-slate-300', // #cbd5e1
-  sky: 	 'bg-sky-700',	 // #0369a1
-  black: 'bg-gray-600',	 // #4b5563
-  white: 'bg-gray-50',	 // #f9fafb
-  amber: 'bg-amber-600', // #d97706
-}
+import PotColorButtons from '#cap/Components/PotColorButtons'
 
 const TEXT_COLORS = {
   stone: 'text-stone-400', // #e7e5e4
@@ -33,7 +24,7 @@ const PlantItem = (props) => {
 	const color = data.images[imageIdx].pot_color
 	
 	return <div className="mx-5 my-8">
-		<Link to={`/plant/${data.uuid}`}>
+		<Link to={`/plant/${data.uuid}`} state={{plantImageIdx: selected}}>
 			<img className="w-[280px] h-[320px] object-cover rounded-md"
 				alt={data.description} src={data.images[imageIdx].src} />
 		</Link>
@@ -45,17 +36,13 @@ const PlantItem = (props) => {
 		
 		<div className="my-3 flex justify-between">
 			<div className={TEXT_COLORS[color] + ' font-medium'}>{color}</div>
-			<div className="flex justify-end">
-				{data.images.map((image, i) => <button key={i} className={clsx(
-					'flex justify-center items-center ml-2 w-5 h-5 rounded-full block ',
-					selected === i && 'outline outline-1 outline-offset-2 outline-slate-400',
-					POT_COLORS[data.images[i].pot_color]
-				)}
-					onClick={() => {setSelected(i); setImageIdx(i)}}
-					onMouseEnter={() => setImageIdx(i)}
-					onMouseLeave={() => setImageIdx(selected)}
-				/>)}
-			</div>
+			<PotColorButtons className="flex justify-end"
+				images={data.images}
+				selected={selected}
+				onClick={(i) => {setSelected(i); setImageIdx(i)}}
+				onMouseEnter={(i) => setImageIdx(i)}
+				onMouseLeave={() => setImageIdx(selected)}
+			/>
 		</div>
 	</div>
 }
