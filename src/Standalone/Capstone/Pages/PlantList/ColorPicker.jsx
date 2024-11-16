@@ -3,8 +3,8 @@ import {twMerge} from 'tailwind-merge'
 
 import {POT_COLORS} from '#cap/Utility'
 
-const PotColorButtons = (props) => {
-	const {images, selected, labels = false, className,
+const ColorPicker = (props) => {
+	const {images, selected, className,
 		onClick, onMouseEnter, onMouseLeave,
 		buttonStyle, labelStyle
 	} = props
@@ -20,10 +20,10 @@ const PotColorButtons = (props) => {
 					onClick={() => onClick(i)}
 					onMouseEnter={() => onMouseEnter(i)}
 					onMouseLeave={() => onMouseLeave(i)} />
-				{labels && <span className={labelStyle}>{images[i].pot_color}</span>}
+				{/*<span className={labelStyle}>{images[i].pot_color}</span>*/}
 			</div>
 		)}
 	</div>
 }
 
-export default PotColorButtons
+export default ColorPicker

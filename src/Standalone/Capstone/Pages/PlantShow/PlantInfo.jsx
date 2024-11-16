@@ -5,7 +5,6 @@ import {useState} from 'react'
 import {useLocation} from 'react-router-dom'
 
 import {Paragraph} from '#cap/Components/Text'
-import PotColorButtons from '#cap/Components/PotColorButtons'
 
 import PlantHeading from './PlantHeading'
 import ColorPicker from './ColorPicker'

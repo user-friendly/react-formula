@@ -4,7 +4,7 @@ import _ from 'lodash'
 import {useState} from 'react'
 import {Link} from 'react-router-dom'
 
-import PotColorButtons from '#cap/Components/PotColorButtons'
+import ColorPicker from './ColorPicker'
 
 const TEXT_COLORS = {
   stone: 'text-stone-400', // #e7e5e4
@@ -28,7 +28,7 @@ const PlantItem = (props) => {
 			<img className="w-[280px] h-[320px] object-cover rounded-md"
 				alt={data.description} src={data.images[imageIdx].src} />
 		</Link>
-			
+		
 		<div className="my-3 flex justify-between">
 			<div className="text-xl text-emerald-700">{data.name}</div>
 			<div className="text-lg text-emerald-600">${price}</div>
@@ -36,7 +36,7 @@ const PlantItem = (props) => {
 		
 		<div className="my-3 flex justify-between">
 			<div className={TEXT_COLORS[color] + ' font-medium'}>{color}</div>
-			<PotColorButtons className="flex justify-end"
+			<ColorPicker className="flex justify-end"
 				images={data.images}
 				selected={selected}
 				onClick={(i) => {setSelected(i); setImageIdx(i)}}
