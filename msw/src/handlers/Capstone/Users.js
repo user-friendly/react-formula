@@ -111,86 +111,62 @@ const createClientToken = (username) => {
 // Fetch API's Headers class (request.headers) matches name ignoring case.
 const SESSION_TOKEN_HEADER = 'Capstone-Session'
 
+/**
+ * Get cloned session associated with request.
+ * 
+ * If the session is not valid (for any reason), returns false.
+ */
 const getSessionFromRequest = (request) => {
 	if (!request.headers.has(SESSION_TOKEN_HEADER)) {
 		return false
 	}
+	let reqSession = null
 	try {
-		const sessionData = JSON.parse(request.headers.get(SESSION_TOKEN_HEADER))
-		console.log(`Got session data:`, sessionData)
-		return sessionData
+		reqSession = JSON.parse(request.headers.get(SESSION_TOKEN_HEADER))
+		console.log(`Got session token data:`, reqSession)
 	} catch (e) {
 		console.error(`Failed to decode session token. Error:`, e)
-	}
-	return false
-}
-
-const hasAccessTo = (request, resource) => {
-	const reqSession = getSessionFromRequest(request)
-	if (!reqSession) {
-		console.log(`Revoke access to {${resource}} - no request session token.`)
 		return false
 	}
-	const revoke_dbg_msg = `Revoke access to {${resource}} for user {${reqSession.username}}`
+	if (!_.isObject(reqSession)) {
+		console.log(`Invalid session token.`)
+		return false
+	}
 	if (!(_.isString(reqSession.username) && reqSession.username.length && sessions.has(reqSession.username))) {
-		console.log(`${revoke_dbg_msg} - no server side session found, or session expired.`)
+		console.log(`No session found for user {${reqSession.username}}.`)
 		return false
 	}
 	const session = sessions.get(reqSession.username)
 	if (session.id !== reqSession.sid) {
-		console.log(`${revoke_dbg_msg} - session id mismatch.`)
+		console.log(`Session id mismatch, user {${reqSession.username}}.`)
 		return false
 	}
-	
 	// Pointless, jsut for show.
 	if (/*session.sercret !== */reqSession.secret) {
 		console.log(`User {${reqSession.username}} has session token secret {${reqSession.secret}}`)
 		//console.log(`${revoke_dbg_msg} - secret mismatch.`)
-		// return false
+		//return false
 	}
-	
+	return _.clone(session)
+}
+
+const hasAccessTo = (request, resource) => {
+	const session = getSessionFromRequest(request)
 	// TODO Implement roles.
 	if (_.isString(resource) && session.username !== undefined) {
-		console.log(`Grant access to {${resource}} for {${session.username}}.`)
+		console.log(`Grant {${resource}} access to {${session.username}}.`)
 		return true
 	}
-	
+	if (session.username) {
+		console.log(`Revoke {${resource}} access to {${session.username}}.`)
+	} else {
+		console.log(`Revoke {${resource}} access to {unknown}.`)
+	}
 	return false
 }
 
 const Users = (baseUrl) => {
 	return [
-		http.delete(`${baseUrl}/users/session`, async ({cookies, request}) => {
-			const token = await request.json()
-			let username = false
-			
-			// Oooh, the server is working hard, for the money.
-			await randomDelay(2000)
-			
-			if (_.has(token, 'username') && store.has(token.username)) {
-				username = token.username
-			}
-			const session = getSession(username)
-			
-			// TODO Secret checks out?
-			if (session && session.username === username && token.sercret) {
-				console.log(`Delete user {${username}} session, logs them out.`)
-				deleteSession(username)
-				/*return HttpResponse.json({
-						message: 'Sign out successful.',
-						code: 0,
-					},
-					{status: 200}
-				)*/
-			}
-			// Throw off the bots?
-			return HttpResponse.json({
-					message: 'Sign out successful.',
-					code: 0,
-				},
-				{status: 200}
-			)
-		}),
 		http.post(`${baseUrl}/users/session`, async ({cookies, request}) => {
 			const login = await request.json()
 			
@@ -257,6 +233,36 @@ const Users = (baseUrl) => {
 			return HttpResponse.json({
 					message: 'Sign in successful!',
 					capstone_session_token: JSON.stringify(token),
+					code: 0,
+				},
+				{status: 200}
+			)
+		}),
+		http.delete(`${baseUrl}/users/session`, async ({cookies, request}) => {
+			const token = await request.json()
+			let username = false
+			
+			await randomDelay()
+			
+			if (_.has(token, 'username') && store.has(token.username)) {
+				username = token.username
+			}
+			const session = getSession(username)
+			
+			// TODO Secret checks out?
+			if (session && session.username === username && token.sercret) {
+				console.log(`Delete user {${username}} session, logs them out.`)
+				deleteSession(username)
+				/*return HttpResponse.json({
+						message: 'Sign out successful.',
+						code: 0,
+					},
+					{status: 200}
+				)*/
+			}
+			// Throw off the bots?
+			return HttpResponse.json({
+					message: 'Sign out successful.',
 					code: 0,
 				},
 				{status: 200}
@@ -332,5 +338,5 @@ const Users = (baseUrl) => {
 	]
 }
 
-export {hasAccessTo}
+export {hasAccessTo, getSessionFromRequest}
 export default Users
