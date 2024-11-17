@@ -1,8 +1,11 @@
 
 import _ from 'lodash'
 
-import {useState} from 'react'
+import {useState, useContext} from 'react'
 import {useLocation} from 'react-router-dom'
+
+import SessionContext from '#cap/Context/Session'
+import {ApiAddToCart} from '#cap/Services'
 
 import {Paragraph} from '#cap/Components/Text'
 
@@ -12,6 +15,7 @@ import BenefitBox from './BenefitBox'
 import AddToCart from './AddToCart'
 
 const PlantInfo = (props) => {
+	const session = useContext(SessionContext)
 	const location = useLocation()
 	const [selected, setSelected] = useState(() => {
 		if (_.has(location, 'state.plantImageIdx')) {
@@ -22,6 +26,7 @@ const PlantInfo = (props) => {
 	const [imageIdx, setImageIdx] = useState(selected)
 	const [quantity, setQuantity] = useState(1)
 	const [inProgress, setInProgress] = useState(false)
+	const [status, setStatus] = useState({error: false})
 	const {plant} = props
 	
 	const handleAddToCart = (e) => {
@@ -29,10 +34,27 @@ const PlantInfo = (props) => {
 			return
 		}
 		setInProgress(true)
-		setTimeout(() => {
+		setStatus({error: false});
+		
+		(async () => {
+			// Create cart item.
+			const cartItem = {
+				plant: {
+					uuid: plant.uuid,
+					quantity: quantity,
+					pot_color: plant.images[selected].pot_color,
+				}
+			}
+			// Currently, API method accepts single item.
+			const result = await ApiAddToCart(session?.data, cartItem)
+			if (result.error === false) {
+				console.log(`Added {${cartItem.plant.quantity}} {${cartItem.plant.pot_color}} plants to cart.`)
+			} else {
+				console.error(`Failed to get plants list. Response:`, result)
+			}
+			setStatus(result)
 			setInProgress(false)
-			console.log(`Added {${quantity}} {${plant.images[selected].pot_color}} plants to cart.`)
-		}, 1500)
+		})();
 	}
 	
 	return <div className="w-full max-w-5xl flex flex-col md:flex-row">
