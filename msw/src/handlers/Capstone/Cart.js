@@ -76,6 +76,8 @@ const Plants = (baseUrl) => {
 			// }]
 			//
 			const items = await request.json()
+
+			await randomDelay()
 			
 			if (!hasAccessTo(request, 'add cart items')) {
 				return HttpResponse.json({
@@ -120,6 +122,8 @@ const Plants = (baseUrl) => {
 				)
 			}
 			const session = getSessionFromRequest(request)
+
+			await randomDelay()
 			
 			// Clears cart.
 			store.set(session.username, [])
@@ -134,6 +138,8 @@ const Plants = (baseUrl) => {
 		}),
 		http.delete(`${baseUrl}/cart/:offset`, async ({cookies, request, params}) => {
 			const {offset} = params
+
+			await randomDelay()
 			
 			if (!hasAccessTo(request, 'add cart items')) {
 				return HttpResponse.json({
