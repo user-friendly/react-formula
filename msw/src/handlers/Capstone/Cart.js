@@ -4,7 +4,7 @@ import _ from 'lodash'
 import {http, delay, HttpResponse} from 'msw'
 import {v4 as uuidv4} from 'uuid'
 
-import {hasAccessTo} from './Users'
+import {hasAccessTo, getSessionFromRequest} from './Users'
 
 const randomDelay = async (min = 0) => await delay(min + _.random(250, 1000))
 
@@ -75,7 +75,7 @@ const Plants = (baseUrl) => {
 			// 		}
 			// }]
 			//
-			const item = await request.json()
+			const items = await request.json()
 			
 			if (!hasAccessTo(request, 'add cart items')) {
 				return HttpResponse.json({
@@ -87,7 +87,7 @@ const Plants = (baseUrl) => {
 			}
 			const session = getSessionFromRequest(request)
 			
-			if (!_isArray(items) || _.isEmpty(items)) {
+			if (!_.isArray(items) || _.isEmpty(items)) {
 				return HttpResponse.json({
 						error: 'Invalid request',
 						code: 3,
