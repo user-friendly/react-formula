@@ -6,6 +6,7 @@ import Home from '#cap/Pages/Home'
 import StyleGuide from '#cap/Pages/StyleGuide'
 import SignInPage from '#cap/Pages/Auth/SignInPage'
 import SignUpPage from '#cap/Pages/Auth/SignUpPage'
+import CartPage from '#cap/Pages/Cart'
 import PlantList from '#cap/Pages/PlantList'
 import PlantShow from '#cap/Pages/PlantShow'
 
@@ -32,8 +33,9 @@ const RoutesMap = () => {
 			<Route path="/style-guide" element={<StyleGuide />} />
 			
 			<Route path="/plants" element={<PlantList />} />
-			
 			<Route path="/plant/:uuid" element={<PlantShow />} />
+			
+			<Route path="/cart" element={<CartPage />} />
 			
 			<Route path="*" element={<NotFound />} />
 		</Route>
