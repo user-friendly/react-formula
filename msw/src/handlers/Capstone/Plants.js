@@ -115,15 +115,6 @@ const Plants = (baseUrl) => {
 			}
 			data = _.shuffle(data)
 			
-			// FIXME Remove!
-			return HttpResponse.json(
-				{
-					data: data,
-					code: 0,
-				},
-				{status: 200}
-			)
-			
 			if (!hasAccessTo(request, 'get plants list')) {
 				return HttpResponse.json({
 						error: 'Access forbidden.',
@@ -135,7 +126,7 @@ const Plants = (baseUrl) => {
 			
 			return HttpResponse.json(
 				{
-					data: Array.from(store.values()),
+					data: data,
 					code: 0,
 				},
 				{status: 200}
@@ -146,24 +137,6 @@ const Plants = (baseUrl) => {
 			
 			await randomDelay()
 			
-			if (!store.has(uuid)) {
-				return HttpResponse.json({
-						error: 'Plant not found.',
-						code: 1,
-					},
-					{status: 404}
-				)
-			}
-
-			// FIXME Remove! 
-			return HttpResponse.json(
-				{
-					data: store.get(uuid),
-					code: 0,
-				},
-				{status: 200}
-			)
-			
 			if (!hasAccessTo(request, 'get plant data')) {
 				return HttpResponse.json({
 						error: 'Access forbidden.',
@@ -172,10 +145,19 @@ const Plants = (baseUrl) => {
 					{status: 401}
 				)
 			}
+
+			if (!store.has(uuid)) {
+				return HttpResponse.json({
+						error: 'Plant not found.',
+						code: 1,
+					},
+					{status: 404}
+				)
+			}
 			
 			return HttpResponse.json(
 				{
-					data: Array.from(store.values()),
+					data: store.get(uuid),
 					code: 0,
 				},
 				{status: 200}
