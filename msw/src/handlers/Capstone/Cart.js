@@ -60,7 +60,8 @@ const Plants = (baseUrl) => {
 				{status: 200}
 			)
 		}),
-		http.get(`${baseUrl}/cart/:uuid`, async ({cookies, request, params}) => {
+		// Leave UUID param to keep similar structure to React Formula's API.
+		http.post(`${baseUrl}/cart/:uuid`, async ({cookies, request, params}) => {
 			const {uuid} = params
 			// An array of item(s) to add to cart.
 			// Each object is keyed by item type.
@@ -86,7 +87,7 @@ const Plants = (baseUrl) => {
 			}
 			const session = getSessionFromRequest(request)
 			
-			if (!_isArray(items) || .isEmpty(items)) {
+			if (!_isArray(items) || _.isEmpty(items)) {
 				return HttpResponse.json({
 						error: 'Invalid request',
 						code: 3,
