@@ -54,20 +54,22 @@ const Bar = () => {
 						src="https://static-task-assets.react-formula.com/capstone_logo_light.png" />
 					<span className="ml-4 font-playfair text-2xl">Rica's Plants</span>
 				</Link>
-			</div>	
-			
-			<Links linkstyle={linkStyle} />
+			</div>
 			
 			<RequireSession>
+				<Link className={linkButtonStyle} to="/plants">
+					<span className={linkButtonTextStyle}>Plant List</span>
+					<Icon name="potted_plant" className={linkButtonIconStyle} />
+				</Link>
+				
 				<Link className={linkButtonStyle}>
-					<span className={linkButtonTextStyle}>
-						{_.get(session, 'data.username')}
-					</span>
+					<span className={linkButtonTextStyle}>{_.get(session, 'data.username')}</span>
 					<Icon name="account_circle" className={linkButtonIconStyle} />
 				</Link>
 				
 				<Link className={linkButtonStyle} to="/cart">
-					<span className={linkButtonTextStyle}>Cart</span><Icon className={linkButtonIconStyle} name="shopping_cart" />
+					<span className={linkButtonTextStyle}>Cart</span>
+					<Icon className={linkButtonIconStyle} name="shopping_cart" />
 				</Link>
 				
 				<Link onClick={handleSignOut} className={linkButtonStyle}>
