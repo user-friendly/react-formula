@@ -24,7 +24,7 @@ const iconStyle = `
 const iconProgressStyle = `${iconStyle} rounded-full animate-spin`
 
 const linkButtonStyle = `${baseLinkStyle} relative group flex items-center`
-const linkButtonTextStyle = `px-1 group-hover:underline`
+const linkButtonTextStyle = `hidden md:inline px-1 group-hover:underline`
 const linkButtonIconStyle = `${iconStyle}`
 
 const Bar = () => {
@@ -64,6 +64,10 @@ const Bar = () => {
 						{_.get(session, 'data.username')}
 					</span>
 					<Icon name="account_circle" className={linkButtonIconStyle} />
+				</Link>
+				
+				<Link className={linkButtonStyle} to="/cart">
+					<span className={linkButtonTextStyle}>Cart</span><Icon className={linkButtonIconStyle} name="shopping_cart" />
 				</Link>
 				
 				<Link onClick={handleSignOut} className={linkButtonStyle}>

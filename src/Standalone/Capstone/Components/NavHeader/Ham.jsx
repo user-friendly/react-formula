@@ -1,4 +1,6 @@
 
+import _ from 'lodash'
+
 import {useState, useRef, useEffect, useContext} from 'react'
 import {Link, useNavigate} from 'react-router-dom'
 import clsx from 'clsx'
@@ -79,6 +81,8 @@ const Ham = () => {
 			<Links linkstyle={linkStyle} />
 			
 			<RequireSession>
+				<Link className={linkStyle}>{_.get(session, 'data.username')}</Link>
+				<Link className={linkStyle} to="/cart">Cart</Link>
 				<button onClick={handleSignOut} className={linkStyle + 'relative group'} to="/sign-out">
 					Sign Out{signingOut && <Spinner className={spinnerStyle} />}
 				</button>
