@@ -1,4 +1,17 @@
 
+/*
+
+const Modal = () => {
+	return <div className="fixed top-0 right-0 w-96 bg-emerald-800">
+		<div>
+			
+		</div>
+	</div>
+}
+
+export default Modal*/
+
+
 import _ from 'lodash'
 import clsx from 'clsx'
 
@@ -18,7 +31,7 @@ import {ItemList} from '#cap/Components/Cart'
 
 const REFRESHING_STATE = 1
 
-const Page = () => {
+const Modal = () => {
 	const session = useContext(SessionContext)
 	const [list, setList] = useState(null)
 	const [status, setStatus] = useState({error: false})
@@ -49,7 +62,6 @@ const Page = () => {
 	const spinner = <Spinner className="mt-28" />
 	
 	return <RedirectAuthenticated not path="/sign-in">
-		<NavHeader />
 		<Section className="py-24 flex justify-center">
 			<div className="w-full max-w-5xl">
 				<Heading className="px-8 text-4xl">
@@ -68,5 +80,6 @@ const Page = () => {
 	</RedirectAuthenticated>
 }
 
-export default Page
+export default Modal
+
 
