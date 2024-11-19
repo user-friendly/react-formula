@@ -33,7 +33,7 @@ const Ham = () => {
 	const hamButton = show ? <Icon name="close" className={iconShowStyle} onClick={(e) => setShow(false)}/>
 		: <Icon name="menu" className={iconStyle} onClick={(e) => setShow(true)} />
 	
-	return <div ref={menuRef} className={clsx('sm:hidden fixed top-2 right-2 w-40 p-2 flex flex-col justify-center',
+	return <nav ref={menuRef} className={clsx('sm:hidden fixed top-2 right-2 w-40 p-2 flex flex-col justify-center',
 			show && 'bg-emerald-800/95 rounded-lg shadow-lg'
 		)}>
 		
@@ -42,7 +42,7 @@ const Ham = () => {
 		<div className={'flex flex-col justify-center ' + (!show ? 'hidden' : null)} onClick={hideMenu}>
 			<Links isHam={true} />
 		</div>
-	</div>
+	</nav>
 }
 
 export default Ham

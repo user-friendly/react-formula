@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom'
 import Links from './Links'
 
 const Bar = () => {
-	return <div className="navbar hidden sm:flex justify-center bg-emerald-800">
+	return <nav className="navbar hidden sm:flex justify-center bg-emerald-800">
 		<div className="w-full max-w-5xl flex p-8 justify-end items-center text-white">
 			<div className="flex-1 flex">
 				<Link to="/" className="p-2 flex justify-start items-center">
@@ -15,7 +15,7 @@ const Bar = () => {
 			
 			<Links />
 		</div>
-	</div>
+	</nav>
 }
 
 export default Bar
