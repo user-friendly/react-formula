@@ -5,6 +5,7 @@ import {http, delay, HttpResponse} from 'msw'
 import {v4 as uuidv4} from 'uuid'
 
 import {hasAccessTo, getSessionFromRequest} from './Users'
+import {PlantStore} from './Plants'
 
 const randomDelay = async (min = 0) => await delay(min + _.random(250, 1000))
 
@@ -50,6 +51,24 @@ const Plants = (baseUrl) => {
 			let cart = []
 			if (store.has(session.username)) {
 				cart = Array.from(store.get(session.username))
+			}
+			if (!_.isEmpty(cart)) {
+				for (let item of cart) {
+					if (!PlantStore.has(item.plant.uuid)) {
+						item = null
+						continue
+					}
+					const plant = PlantStore.get(item.plant.uuid)
+					const image = plant.images.find((img) => img.pot_color === item.plant.pot_color)
+					if (!image) {
+						item = null
+						continue
+					}
+					item.plant.name = plant.name
+					item.plant.price = plant.price
+					item.plant.image = image
+				}
+				cart = _.compact(cart)
 			}
 			
 			return HttpResponse.json(

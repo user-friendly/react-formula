@@ -218,4 +218,5 @@ const Plants = (baseUrl) => {
 	]
 }
 
+export {store as PlantStore}
 export default Plants
