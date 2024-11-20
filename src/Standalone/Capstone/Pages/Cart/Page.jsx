@@ -53,7 +53,7 @@ const Page = () => {
 		<Section className="py-24 flex justify-center">
 			<div className="w-full max-w-5xl">
 				<Heading className="px-8 text-4xl">
-					Your Cart <button onClick={() => refreshList()}>{refreshIcon}</button>
+					{_.get(session, "data.username")}'s Cart <button onClick={() => refreshList()}>{refreshIcon}</button>
 				</Heading>
 				
 				<ItemList items={list} />
