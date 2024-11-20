@@ -3,6 +3,7 @@ import _ from 'lodash'
 import clsx from 'clsx'
 
 import {useContext, useEffect, useState} from 'react'
+import {RemoveScroll} from 'react-remove-scroll'
 
 import SessionContext from '#cap/Context/Session'
 import {ApiGetCart, ApiAddToCart, ApiRemoveFromCart, ApiClearCart} from  '#cap/Services'
@@ -67,24 +68,24 @@ const Modal = () => {
 		}
 	}
 	
-	return <RequireSession>
+	return <RequireSession><RemoveScroll enabled={show}>
 		<Section id={cartModalId} className={clsx(!show && "hidden" || "flex", modalStyle)}
 			onClick={handleBackgroundClick}
 		>
-			<div className="w-full max-w-lg p-8 flex justify-between bg-emerald-800">
-				<button onClick={() => refreshList()}>{iconRefresh}</button>
-				<Heading className="flex-1 text-center text-2xl text-white">
-					{_.get(session, "data.username")}'s Cart
-				</Heading>
-				<button onClick={() => setShow(false)}>{iconClose}</button>
-			</div>
-			<div className="w-full max-w-lg p-4 flex-1 flex flex-col bg-emerald-50">
-				{list === REFRESHING_STATE && spinner}
-				{message}
-				<ItemList className="p-2" items={list} />
-			</div>
+				<div className="w-full max-w-lg p-8 flex justify-between bg-emerald-800">
+					<button onClick={() => refreshList()}>{iconRefresh}</button>
+					<Heading className="flex-1 text-center text-2xl text-white">
+						{_.get(session, "data.username")}'s Cart
+					</Heading>
+					<button onClick={() => setShow(false)}>{iconClose}</button>
+				</div>
+				<div className="w-full max-w-lg p-4 flex-1 flex flex-col bg-emerald-50">
+					{list === REFRESHING_STATE && spinner}
+					{message}
+					<ItemList className="p-2" items={list} />
+				</div>
 		</Section>
-	</RequireSession>
+	</RemoveScroll></RequireSession>
 }
 
 export default Modal
