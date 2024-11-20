@@ -15,7 +15,7 @@ import Spinner from '#cap/Components/Spinner'
 import Icon from '#cap/Components/Icon'
 import {Section, Heading, Paragraph} from '#cap/Components/Text'
 
-import {ItemList} from '#cap/Components/Cart'
+import {ItemList} from './'
 
 const REFRESHING_STATE = 1
 
@@ -25,11 +25,26 @@ const modalStyle = `fixed top-0 right-0 w-full h-full bg-black/30 backdrop-blur-
 	flex-col items-end overflow-auto
 `
 
+const ShowCartModal = () => {
+	window.dispatchEvent(new Event('showCartModal'))
+}
+
+const HideCartModal = () => {
+	window.dispatchEvent(new Event('hideCartModal'))
+}
+
 const Modal = () => {
 	const session = useContext(SessionContext)
-	const [show, setShow] = useState(true)
+	const [show, setShow] = useState(false)
 	const [list, setList] = useState(null)
 	const [status, setStatus] = useState({error: false})
+	
+	const handleShow = () => {
+		setShow(true);
+	}
+	const handleHide = () => {
+		setShow(false);
+	}
 	
 	const refreshList = async () => {
 		if (!session.isActive() || list === REFRESHING_STATE) {
@@ -51,6 +66,15 @@ const Modal = () => {
 		refreshList()
 	}, [session.data])
 	
+	useEffect(() => {
+	  window.addEventListener('showCartModal', handleShow);
+	  window.addEventListener('hideCartModal', handleHide);
+	  return () => {
+	    window.removeEventListener('showCartModal', handleShow);
+	    window.removeEventListener('hideCartModal', handleHide);
+	  }
+	}, [show])
+	
 	const iconClose = <Icon name="close" className="rounded-full" />
 	const iconRefresh = <Icon name="refresh" className={clsx('rounded-full', 
 		list === REFRESHING_STATE && 'animate-spinOnce'
@@ -64,7 +88,7 @@ const Modal = () => {
 	
 	const handleBackgroundClick = (e) => {
 		if (e.target.id === cartModalId) {
-			setShow(false)
+			HideCartModal()
 		}
 	}
 	
@@ -77,7 +101,7 @@ const Modal = () => {
 					<Heading className="flex-1 text-center text-2xl text-white">
 						{_.get(session, "data.username")}'s Cart
 					</Heading>
-					<button onClick={() => setShow(false)}>{iconClose}</button>
+					<button onClick={HideCartModal}>{iconClose}</button>
 				</div>
 				<div className="w-full max-w-lg p-4 flex-1 flex flex-col bg-emerald-50">
 					{list === REFRESHING_STATE && spinner}
@@ -88,6 +112,5 @@ const Modal = () => {
 	</RemoveScroll></RequireSession>
 }
 
+export {ShowCartModal, HideCartModal}
 export default Modal
-
-

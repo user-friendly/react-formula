@@ -1,12 +1,14 @@
 
 import _ from 'lodash'
+import clsx from 'clsx'
 
 import {useState, useContext} from 'react'
 import {Link, useNavigate} from 'react-router-dom'
-import clsx from 'clsx'
 
 import {RequireSession} from '#cap/Components/AccessControl'
 import SessionContext from '#cap/Context/Session'
+
+import {ShowCartModal} from '#cap/Components/Cart'
 
 import Icon from '#cap/Components/Icon'
 
@@ -48,6 +50,11 @@ const Links = ({isHam = false}) => {
 		setSigningOut(false)
 	}
 	
+	const handleShowCart = (e) => {
+		e.preventDefault()
+		ShowCartModal()
+	}
+	
 	return <>
 		<RequireSession>
 			<Link className={linkButtonStyle} to="/plants">
@@ -60,7 +67,7 @@ const Links = ({isHam = false}) => {
 				<Icon name="account_circle" className={linkButtonIconStyle} />
 			</Link>
 			
-			<Link className={linkButtonStyle} to="/cart">
+			<Link className={linkButtonStyle} to="/cart" onClick={handleShowCart}>
 				<span className={linkTextStyle}>Cart</span>
 				<Icon className={linkButtonIconStyle} name="shopping_cart" />
 			</Link>
