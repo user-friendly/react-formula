@@ -40,10 +40,10 @@ const Modal = () => {
 	const [status, setStatus] = useState({error: false})
 	
 	const handleShow = () => {
-		setShow(true);
+		setShow(true)
 	}
 	const handleHide = () => {
-		setShow(false);
+		setShow(false)
 	}
 	
 	const refreshList = async () => {
@@ -63,8 +63,10 @@ const Modal = () => {
 	}
 	
 	useEffect(() => {
-		refreshList()
-	}, [session.data])
+		if (show === true) {
+			refreshList()
+		}
+	}, [session.data, show])
 	
 	useEffect(() => {
 	  window.addEventListener('showCartModal', handleShow);
