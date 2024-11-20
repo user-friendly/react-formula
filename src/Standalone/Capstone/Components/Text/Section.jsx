@@ -1,4 +1,5 @@
 
+import _ from 'lodash'
 import {twMerge} from 'tailwind-merge'
 import {createContext, useContext} from 'react'
 
@@ -8,8 +9,9 @@ const defaultStyle = ``
 
 const Section = (props) => {
 	const level = useContext(SectionLevelContext)
+	const newProps = _.omit(_.clone(props), ['className'])
 	return <SectionLevelContext.Provider value={level + 1}>
-		<div className={twMerge(defaultStyle, props.className)}>
+		<div className={twMerge(defaultStyle, props.className)} {...newProps}>
 			{props.children}
 		</div>
 	</SectionLevelContext.Provider>
