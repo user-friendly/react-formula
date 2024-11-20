@@ -21,13 +21,13 @@ const ItemPlant = ({item}) => {
 	const totalPrice = Number(price * quantity).toFixed(2)
 	
 	return <div className="mb-10 pb-10 border-b-2 flex text-neutral-500 font-bold">
-		<div>
+		<div className="basis-2/6">
 			<img className="w-48 rounded-lg" alt={name} src={image.src} />
 		</div>
 		<div className="pl-8 flex-1 flex flex-col">
 			<div className="flex justify-between">
-				<span className="font-playfair text-3xl text-emerald-700 font-normal">{name}</span>
-				<span>${totalPrice}</span>
+				<span className="font-playfair text-lg sm:text-3xl text-emerald-700 font-normal">{name}</span>
+				<span className="ml-2">${totalPrice}</span>
 			</div>
 			<div className="my-2">
 				<span className="w-16 inline-block text-neutral-400 font-normal">qty: </span>{quantity}

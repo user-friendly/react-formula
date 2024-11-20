@@ -18,9 +18,10 @@ import {ItemList} from '#cap/Components/Cart'
 
 const REFRESHING_STATE = 1
 
-const modalStyle = `
-	fixed top-0 right-0 w-full min-h-full bg-black/30 backdrop-blur-sm
-	flex-col items-end
+const cartModalId = 'cart-modal'
+
+const modalStyle = `fixed top-0 right-0 w-full h-full bg-black/30 backdrop-blur-sm
+	flex-col items-end overflow-auto
 `
 
 const Modal = () => {
@@ -60,8 +61,16 @@ const Modal = () => {
 		</div>
 	)
 	
+	const handleBackgroundClick = (e) => {
+		if (e.target.id === cartModalId) {
+			setShow(false)
+		}
+	}
+	
 	return <RequireSession>
-		<Section className={clsx(!show && "hidden" || "flex", modalStyle)}>
+		<Section id={cartModalId} className={clsx(!show && "hidden" || "flex", modalStyle)}
+			onClick={handleBackgroundClick}
+		>
 			<div className="w-full max-w-lg p-8 flex justify-between bg-emerald-800">
 				<button onClick={() => refreshList()}>{iconRefresh}</button>
 				<Heading className="flex-1 text-center text-2xl text-white">
@@ -72,7 +81,7 @@ const Modal = () => {
 			<div className="w-full max-w-lg p-4 flex-1 flex flex-col bg-emerald-50">
 				{list === REFRESHING_STATE && spinner}
 				{message}
-				<ItemList items={list} />
+				<ItemList className="p-2" items={list} />
 			</div>
 		</Section>
 	</RequireSession>

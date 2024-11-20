@@ -8,7 +8,7 @@ import ItemPlant from './ItemPlant'
 const ItemList = (props) => {
 	const {items, className} = props
 	
-	return <div className="p-12 flex flex-col">
+	return <div className={twMerge("p-6 flex flex-col", className)}>
 		{(_.isArray(items) && items.map((item, i) => <ItemPlant key={i} item={item} />))}
 	</div>
 }
