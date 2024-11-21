@@ -29,13 +29,13 @@ const ApiAddToCart = async (sessionData, item) => {
 	return false
 }
 
-const ApiRemoveFromCart = async (sessionData, offset) => {
+const ApiRemoveFromCart = async (sessionData, id) => {
 	try {
 		const sessionToken = JSON.stringify(sessionData)
-		const r = await ApiFetch('DELETE', `cart/${offset}`, {[SESSION_TOKEN_HEADER]: sessionToken})
+		const r = await ApiFetch('DELETE', `cart/${id}`, {[SESSION_TOKEN_HEADER]: sessionToken})
 		return processStatus(r)
 	} catch (e) {
-		console.error(`Failed to remove item at {${offset}} from cart list, error:`, e)
+		console.error(`Failed to remove item {${id}} from cart list, error:`, e)
 	}
 	return false
 }
