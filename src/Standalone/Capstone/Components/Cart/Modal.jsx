@@ -3,6 +3,7 @@ import _ from 'lodash'
 import clsx from 'clsx'
 
 import {useContext, useEffect, useState} from 'react'
+import {Link} from 'react-router-dom'
 import {RemoveScroll} from 'react-remove-scroll'
 
 import SessionContext from '#cap/Context/Session'
@@ -24,6 +25,7 @@ const cartModalId = 'cart-modal'
 const modalStyle = `fixed top-0 right-0 w-full h-full bg-black/30 backdrop-blur-sm
 	flex-col items-end overflow-auto
 `
+const linkStyle = `underline text-neutral-400 hover:text-neutral-600 active:translate-y-0.5`
 
 const ShowCartModal = () => {
 	window.dispatchEvent(new Event('showCartModal'))
@@ -94,22 +96,35 @@ const Modal = () => {
 		}
 	}
 	
+	const handleItemRemoved = (item) => {
+		const idx = list.findIndex((listItem) => listItem.id === item.id)
+		if (list[idx] !== undefined) {
+			list.splice(idx, 1)
+			setList([...list])
+		}
+	}
+	
 	return <RequireSession><RemoveScroll enabled={show}>
 		<Section id={cartModalId} className={clsx(!show && "hidden" || "flex", modalStyle)}
 			onClick={handleBackgroundClick}
 		>
-				<div className="w-full max-w-lg p-8 flex justify-between bg-emerald-800">
-					<button onClick={() => refreshList()}>{iconRefresh}</button>
-					<Heading className="flex-1 text-center text-2xl text-white">
-						{_.get(session, "data.username")}'s Cart
-					</Heading>
-					<button onClick={HideCartModal}>{iconClose}</button>
-				</div>
-				<div className="w-full max-w-lg p-4 flex-1 flex flex-col bg-emerald-50">
-					{list === REFRESHING_STATE && spinner}
-					{message}
-					<ItemList className="p-2" items={list} />
-				</div>
+			<div className="w-full max-w-lg p-8 flex justify-between bg-emerald-800">
+				<button onClick={() => refreshList()}>{iconRefresh}</button>
+				<Heading className="flex-1 text-center text-2xl text-white">
+					{_.get(session, "data.username")}'s Cart
+				</Heading>
+				<button onClick={HideCartModal}>{iconClose}</button>
+			</div>
+			<div className="w-full max-w-lg p-4 flex-1 flex flex-col bg-emerald-50">
+				{list === REFRESHING_STATE && spinner}
+				{message}
+				<ItemList className="p-2" items={list} onRemove={handleItemRemoved} />
+				{list !== REFRESHING_STATE && _.isEmpty(list) && <>
+					<div>Your cart is empty.</div>
+					<div>Visit the <Link className={linkStyle} to="/plants">Plant List</Link>
+						&nbsp;page for a great selection of plants ready to be Yours!</div>
+				</>}
+			</div>
 		</Section>
 	</RemoveScroll></RequireSession>
 }
