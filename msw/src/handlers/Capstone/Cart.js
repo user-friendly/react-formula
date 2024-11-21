@@ -14,21 +14,30 @@ const store = new Map()
 
 // Add some dummy cart items.
 store.set('johndoe123', [
-	{plant: {
-		quantity: 2,
-		uuid: '1a1d6735-be08-4d34-9736-2e03da2c9d98',
-		pot_color: 'black',
-	}},
-	{plant: {
-		quantity: 1,
-		uuid: '4e9482ac-c661-4c77-8755-be50376b12ef',
-		pot_color: 'sky',
-	}},
-	{plant: {
-		quantity: 1,
-		uuid: '1a1d6735-be08-4d34-9736-2e03da2c9d98',
-		pot_color: 'sky',
-	}},
+	{
+		id: 1,
+		plant: {
+			quantity: 2,
+			uuid: '1a1d6735-be08-4d34-9736-2e03da2c9d98',
+			pot_color: 'black',
+		}
+	},
+	{
+		id: 2,
+		plant: {
+			quantity: 1,
+			uuid: '4e9482ac-c661-4c77-8755-be50376b12ef',
+			pot_color: 'sky',
+		}
+	},
+	{
+		id: 3,
+		plant: {
+			quantity: 1,
+			uuid: '1a1d6735-be08-4d34-9736-2e03da2c9d98',
+			pot_color: 'sky',
+		}
+	},
 ])
 
 const Plants = (baseUrl) => {
@@ -118,7 +127,11 @@ const Plants = (baseUrl) => {
 			}
 			
 			const cartList = store.has(session.username) ? store.get(session.username) : []
+			// Serial id.
+			let sid = parseInt(cartList.reduce((id, item) => item.id > id ? item.id : id, 0))
+			
 			for (const item of items) {
+				item.id = ++sid
 				cartList.push(item)
 			}
 			store.set(session.username, cartList)
@@ -155,9 +168,9 @@ const Plants = (baseUrl) => {
 				{status: 200}
 			)
 		}),
-		http.delete(`${baseUrl}/cart/:offset`, async ({cookies, request, params}) => {
-			const {offset} = params
-
+		http.delete(`${baseUrl}/cart/:id`, async ({cookies, request, params}) => {
+			const id = parseInt(params.id)
+			
 			await randomDelay()
 			
 			if (!hasAccessTo(request, 'add cart items')) {
@@ -169,10 +182,20 @@ const Plants = (baseUrl) => {
 				)
 			}
 			
+			if (isNaN(id)) {
+				return HttpResponse.json({
+						error: 'Invalid request',
+						code: 3,
+					},
+					{status: 200/*401*/}
+				)
+			}
+			
 			const session = getSessionFromRequest(request)
 			const cartList = store.has(session.username) ? store.get(session.username) : []
-			if (cartList[offset] !== undefined) {
-				cartList.splice(offset, 1)
+			const idx = cartList.findIndex((item) => item.id === id )
+			if (cartList[idx] !== undefined) {
+				cartList.splice(idx, 1)
 				store.set(session.username, cartList)
 			} else {
 				// NOTE Notify user?
