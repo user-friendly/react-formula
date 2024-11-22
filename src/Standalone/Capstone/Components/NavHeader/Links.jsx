@@ -57,6 +57,8 @@ const Links = ({isHam = false}) => {
 	
 	return <>
 		<RequireSession>
+			{/*<Link className={linkButtonStyle} to="/cart">Cart</Link>*/}
+			
 			<Link className={linkButtonStyle} to="/plants">
 				<span className={linkTextStyle}>Plant List</span>
 				<Icon name="potted_plant" className={linkButtonIconStyle} />
