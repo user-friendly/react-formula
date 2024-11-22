@@ -60,7 +60,7 @@ const ItemPlant = ({item, onRemove}) => {
 		</div>
 	)
 	
-	return <div className="mb-10 pb-10 border-b-2 flex text-neutral-500 font-bold">
+	return <div className="mb-10 last:mb-0 pb-10 border-b-2 flex text-neutral-500 font-bold">
 		<div className="basis-2/6 pb-6">
 			<img className="w-48 rounded-lg" alt={name} src={image.src} />
 		</div>

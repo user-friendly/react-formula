@@ -13,7 +13,7 @@ import {ApiGetCart} from  '#cap/Services'
 // import {RequireSession} from '#cap/Components/AccessControl'
 
 import Spinner from '#cap/Components/Spinner'
-import Icon from '#cap/Components/Icon'
+import {default as Icon, IconDecorative} from '#cap/Components/Icon'
 import {Section, Heading, Paragraph} from '#cap/Components/Text'
 
 import ItemPlant from './ItemPlant'
@@ -21,6 +21,31 @@ import ItemPlant from './ItemPlant'
 const REFRESHING_STATE = 1
 
 const linkStyle = `underline text-neutral-400 hover:text-neutral-600 active:translate-y-0.5`
+
+const checkoutButtonStyle = `p-2 self-stretch rounded-full
+	flex justify-center items-center
+	bg-emerald-700 hover:bg-emerald-800 active:bg-emerald-600 font-medium text-white text-lg`
+
+const Footer = ({list}) => {
+	if (!_.isArray(list) || _.isEmpty(list)) {
+		return <></>
+	}
+	console.log(list)
+	const count = list.length
+	const total = list.reduce((total, item) => total + item.plant.price, 0)
+	
+	return <div className="p-6 pt-2 text-neutral-400 flex flex-col items-end">
+		<div className="my-4 self-stretch flex justify-between items-center">
+			<div>{count} items</div>
+			<div className="flex items-center">subtotal:
+				<span className="ml-2 text-neutral-500 text-lg font-bold">${total.toFixed(2)}</span>
+			</div>
+		</div>
+		<button className={checkoutButtonStyle}>
+			Checkout <IconDecorative className="text-white text-2xl" name="shopping_cart_checkout" />
+		</button>
+	</div>
+}
 
 const ItemList = (props) => {
 	const {className, onRemove} = props
@@ -69,16 +94,17 @@ const ItemList = (props) => {
 	)
 	
 	return <div className={twMerge("w-full max-w-lg p-4 flex-1 flex flex-col bg-emerald-50", className)}>
-		{list === REFRESHING_STATE && spinner}
 		{message}
-		<div className="p-6 flex flex-col">
-			{_.isArray(list) && list.map((item, i) => <ItemPlant key={i} item={item} onRemove={handleItemRemoved} />)}
-		</div>
+		{list === REFRESHING_STATE && spinner}
 		{list !== REFRESHING_STATE && _.isEmpty(list) && <>
 			<div>Your cart is empty.</div>
 			<div>Visit the <Link className={linkStyle} to="/plants">Plant List</Link>
 				&nbsp;page for a great selection of plants ready to be Yours!</div>
 		</>}
+		<div className="p-6 pb-0 flex flex-col">
+			{_.isArray(list) && list.map((item, i) => <ItemPlant key={i} item={item} onRemove={handleItemRemoved} />)}
+		</div>
+		<Footer list={list} />
 	</div>
 }
 
