@@ -10,7 +10,7 @@ import RedirectAuthenticated from '#cap/Components/RedirectAuthenticated'
 import NavHeader from '#cap/Components/NavHeader'
 import {Section, Heading, Paragraph} from '#cap/Components/Text'
 
-import {ItemList} from '#cap/Components/Cart'
+import Cart from '#cap/Components/Cart'
 
 const REFRESHING_STATE = 1
 
@@ -25,7 +25,7 @@ const Page = () => {
 					{_.get(session, "data.username")}'s Cart
 				</Heading>
 				
-				<ItemList />
+				<Cart />
 			</div>
 		</Section>
 	</RedirectAuthenticated>

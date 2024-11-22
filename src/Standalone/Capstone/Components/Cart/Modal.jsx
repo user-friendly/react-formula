@@ -15,7 +15,7 @@ import Spinner from '#cap/Components/Spinner'
 import Icon from '#cap/Components/Icon'
 import {Section, Heading, Paragraph} from '#cap/Components/Text'
 
-import {ItemList} from './'
+import {default as ItemList} from './'
 
 const REFRESHING_STATE = 1
 
