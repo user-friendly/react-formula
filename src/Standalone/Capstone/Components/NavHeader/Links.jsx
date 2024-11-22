@@ -59,22 +59,32 @@ const Links = ({isHam = false}) => {
 		<RequireSession>
 			{/*<Link className={linkButtonStyle} to="/cart">Cart</Link>*/}
 			
-			<Link className={linkButtonStyle} to="/plants">
+			<Link className={linkButtonStyle} to="/" title="Home">
+				<span className={linkTextStyle}>Home</span>
+				<Icon name="home" className={linkButtonIconStyle} />
+			</Link>
+			
+			<Link className={linkButtonStyle} to="/about" title="About">
+				<span className={linkTextStyle}>About</span>
+				<Icon name="info" className={linkButtonIconStyle} />
+			</Link>
+			
+			<Link className={linkButtonStyle} to="/plants" title="Plant List">
 				<span className={linkTextStyle}>Plant List</span>
 				<Icon name="potted_plant" className={linkButtonIconStyle} />
 			</Link>
 			
-			<Link className={linkButtonStyle}>
+			<Link className={linkButtonStyle} title="Account">
 				<span className={linkTextStyle}>{_.get(session, 'data.username')}</span>
 				<Icon name="account_circle" className={linkButtonIconStyle} />
 			</Link>
 			
-			<Link className={linkButtonStyle} to="/cart" onClick={handleShowCart}>
+			<Link className={linkButtonStyle} to="/cart" title="Cart" onClick={handleShowCart}>
 				<span className={linkTextStyle}>Cart</span>
 				<Icon className={linkButtonIconStyle} name="shopping_cart" />
 			</Link>
 			
-			<Link className={linkButtonStyle} onClick={handleSignOut}>
+			<Link className={linkButtonStyle} onClick={handleSignOut} title="Sign Out">
 				<span className={linkTextStyle}>
 					Sign Out
 				</span>
@@ -83,7 +93,7 @@ const Links = ({isHam = false}) => {
 		</RequireSession>
 		
 		<RequireSession not>
-			<Link className={linkButtonStyle} to="/sign-in">
+			<Link className={linkButtonStyle} to="/sign-in" title="Sign In">
 				<span className={linkTextStyle}>
 					Sign In
 				</span>
