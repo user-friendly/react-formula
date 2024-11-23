@@ -59,19 +59,11 @@ const Links = ({isHam = false}) => {
 		<RequireSession>
 			{/*<Link className={linkButtonStyle} to="/cart">Cart</Link>*/}
 			
-			<Link className={linkButtonStyle} to="/" title="Home">
-				<span className={linkTextStyle}>Home</span>
-				<Icon name="home" className={linkButtonIconStyle} />
-			</Link>
-			
-			<Link className={linkButtonStyle} to="/about" title="About">
-				<span className={linkTextStyle}>About</span>
-				<Icon name="info" className={linkButtonIconStyle} />
-			</Link>
-			
-			<Link className={linkButtonStyle} to="/plants" title="Plant List">
-				<span className={linkTextStyle}>Plant List</span>
-				<Icon name="potted_plant" className={linkButtonIconStyle} />
+			<Link className={linkButtonStyle} onClick={handleSignOut} title="Sign Out">
+				<span className={linkTextStyle}>
+					Sign Out
+				</span>
+				{signingOut && <Icon name="progress_activity" className={iconProgressStyle} /> || <Icon name="logout" className={iconStyle} />}
 			</Link>
 			
 			<Link className={linkButtonStyle} title="Account">
@@ -84,12 +76,21 @@ const Links = ({isHam = false}) => {
 				<Icon className={linkButtonIconStyle} name="shopping_cart" />
 			</Link>
 			
-			<Link className={linkButtonStyle} onClick={handleSignOut} title="Sign Out">
-				<span className={linkTextStyle}>
-					Sign Out
-				</span>
-				{signingOut && <Icon name="progress_activity" className={iconProgressStyle} /> || <Icon name="logout" className={iconStyle} />}
+			<Link className={linkButtonStyle} to="/" title="Home">
+				<span className={linkTextStyle}>Home</span>
+				<Icon name="home" className={linkButtonIconStyle} />
 			</Link>
+			
+			<Link className={linkButtonStyle} to="/plants" title="Plant List">
+				<span className={linkTextStyle}>Plant List</span>
+				<Icon name="potted_plant" className={linkButtonIconStyle} />
+			</Link>
+
+			<Link className={linkButtonStyle} to="/about" title="About">
+				<span className={linkTextStyle}>About</span>
+				<Icon name="info" className={linkButtonIconStyle} />
+			</Link>
+			
 		</RequireSession>
 		
 		<RequireSession not>
