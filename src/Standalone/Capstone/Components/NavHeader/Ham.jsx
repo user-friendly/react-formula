@@ -41,7 +41,7 @@ const Ham = () => {
 				<nav ref={menuRef} className='p-4 flex flex-col justify-center block bg-emerald-800/95 rounded-bl-lg'>
 					<Icon name="close" className={iconCloseStyle} onClick={(e) => setShow(false)}/>
 					
-					<div className="flex flex-col justify-center overflow-y-auto" onClick={hideMenu}>
+					<div className="flex flex-col justify-start items-end max-h-[500px] overflow-y-auto" onClick={hideMenu}>
 						<Links isHam={true} />
 					</div>
 				</nav>
