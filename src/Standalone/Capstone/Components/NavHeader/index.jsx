@@ -23,7 +23,7 @@ export default () => {
 					</Link>
 				</div>
 				
-				<div className="hidden sm:flex flex-wrap justify-end">
+				<div className="hidden sm:flex flex-row-reverse flex-wrap justify-start">
 					<Links />
 				</div>
 				
