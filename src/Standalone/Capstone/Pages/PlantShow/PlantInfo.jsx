@@ -4,6 +4,9 @@ import _ from 'lodash'
 import {useState, useContext} from 'react'
 import {useLocation} from 'react-router-dom'
 
+import Zoom from 'react-medium-image-zoom'
+import 'react-medium-image-zoom/dist/styles.css'
+
 import SessionContext from '#cap/Context/Session'
 import {ApiAddToCart} from '#cap/Services'
 
@@ -75,7 +78,9 @@ const PlantInfo = (props) => {
 		/>
 		
 		<div className="flex-1 flex flex-col">
-			<img className="rounded-lg" title={plant.botanical_name} src={plant.images[imageIdx].src} />
+			<Zoom>
+				<img className="rounded-lg" title={plant.botanical_name} src={plant.images[imageIdx].src} />
+			</Zoom>
 			<BenefitBox />
 		</div>
 		
