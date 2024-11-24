@@ -30,7 +30,7 @@ const Footer = ({list}) => {
 	if (!_.isArray(list) || _.isEmpty(list)) {
 		return <></>
 	}
-	console.log(list)
+	
 	const count = list.length
 	const total = list.reduce((total, item) => total + item.plant.price, 0)
 	
