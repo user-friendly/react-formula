@@ -38,7 +38,7 @@ const Ham = () => {
 		<Icon name="menu" className={iconShowStyle} onClick={(e) => setShow(true)} />
 		<RemoveScroll enabled={show}>
 			<div className={clsx(!show && 'hidden', modalBgStyle)}>
-				<nav ref={menuRef} className='p-4 flex flex-col justify-center block bg-emerald-800/95 rounded-bl-lg'>
+				<nav ref={menuRef} className='p-4 flex flex-col justify-center block bg-emerald-800/95 rounded-bl-lg animate-slideDown'>
 					<Icon name="close" className={iconCloseStyle} onClick={(e) => setShow(false)}/>
 					
 					<div className="flex flex-col justify-start items-end max-h-[500px] overflow-y-auto" onClick={hideMenu}>
