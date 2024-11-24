@@ -28,6 +28,16 @@ export default {
 				    opacity: 1,
 				},
 			},
+			slideRight: {
+				'from': {
+					transform: 'translateX(100%)',
+				    opacity: 0,
+				},
+				'to': {
+					transform: 'translateX(0)',
+				    opacity: 1,
+				},
+			},
 			fadeUp: {
 				'from': {
 					transform: 'translateY(0)',
@@ -42,6 +52,7 @@ export default {
 		},
 		animation: {
 			slideDown: 'slideDown 0.5s ease-out',
+			slideRight: 'slideRight 0.5s ease-out',
 			fadeUp: 'fadeUp 0.5s ease-out forwards',
 			spinOnce: 'spin 1s linear forwards',
 		}
