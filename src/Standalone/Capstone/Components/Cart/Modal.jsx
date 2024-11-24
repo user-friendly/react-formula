@@ -64,14 +64,14 @@ const Modal = () => {
 	return <RequireSession><RemoveScroll enabled={show}>
 		<Section id={cartModalId} className={clsx(!show && "hidden" || "flex", modalStyle)}
 			onClick={handleBackgroundClick}
-		>
-			<div className="w-full max-w-lg p-8 flex justify-between bg-emerald-800">
+		>   
+			<div className="w-full max-w-lg p-8 flex justify-between bg-emerald-800 animate-slideRight">
 				<Heading className="flex-1 text-center text-2xl text-white">
 					{_.get(session, "data.username")}'s Cart
 				</Heading>
 				<button onClick={HideCartModal}>{iconClose}</button>
 			</div>
-			{show && <ItemList />}
+			{show && <ItemList className="animate-slideRight" />}
 		</Section>
 	</RemoveScroll></RequireSession>
 }
