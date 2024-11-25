@@ -1,15 +1,10 @@
 
-import _ from 'lodash'
 import clsx from 'clsx'
-
 import {useState, useContext} from 'react'
 import {Link, useNavigate} from 'react-router-dom'
-
 import {RequireSession} from '#cap/Components/AccessControl'
 import SessionContext from '#cap/Context/Session'
-
 import {ShowCartModal} from '#cap/Components/Cart'
-
 import Icon from '#cap/Components/Icon'
 
 const baseLinkStyle = `py-2 px-1 font-lato font-medium hover:text-emerald-200 active:translate-y-0.5`
@@ -67,7 +62,7 @@ const Links = ({isHam = false}) => {
 			</Link>
 			
 			<Link className={linkButtonStyle} title="Account">
-				<span className={linkTextStyle}>{_.get(session, 'data.username')}</span>
+				<span className={linkTextStyle}>{session.data?.username}</span>
 				<Icon name="account_circle" className={linkButtonIconStyle} />
 			</Link>
 			

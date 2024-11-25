@@ -1,15 +1,11 @@
 
-import _ from 'lodash'
 import clsx from 'clsx'
 
 import {useContext, useEffect, useState} from 'react'
 import {Link} from 'react-router-dom'
 import {RemoveScroll} from 'react-remove-scroll'
-
 import SessionContext from '#cap/Context/Session'
-
 import {RequireSession} from '#cap/Components/AccessControl'
-
 import NavHeader from '#cap/Components/NavHeader'
 import Spinner from '#cap/Components/Spinner'
 import Icon from '#cap/Components/Icon'
@@ -67,7 +63,7 @@ const Modal = () => {
 		>   
 			<div className="w-full max-w-lg p-8 flex justify-between bg-emerald-800 animate-slideRight">
 				<Heading className="flex-1 text-center text-2xl text-white">
-					{_.get(session, "data.username")}'s Cart
+					{session.data?.username}'s Cart
 				</Heading>
 				<button onClick={HideCartModal}>{iconClose}</button>
 			</div>
