@@ -6,6 +6,8 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
+import { compression } from 'vite-plugin-compression2'
+
 // Project plugins.
 import ImportRoutes from './plugins/src/ImportRoutes.js'
 
@@ -14,6 +16,7 @@ export default defineConfig({
   plugins: [
 	ImportRoutes(),
 	react(),
+	compression(),
   ],
   server: {
 	port: 3000
@@ -21,6 +24,7 @@ export default defineConfig({
   clearScreen: false,
   build: {
 	manifest: 'manifest.json',
+	reportCompressedSize: false,
 	rollupOptions: {
 		output: {
 			manualChunks: {
