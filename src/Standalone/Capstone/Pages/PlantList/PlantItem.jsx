@@ -23,7 +23,7 @@ const PlantItem = (props) => {
 	const price = Number(data.price).toFixed(2)
 	const color = data.images[imageIdx].pot_color
 	
-	return <div className="mx-5 my-8">
+	return <div className="plantItem mx-5 my-8 invisible">
 		<Link to={`/plant/${data.uuid}`} state={{plantImageIdx: selected}}>
 			<img className="w-[280px] h-[320px] object-cover rounded-md"
 				alt={data.description} src={data.images[imageIdx].src} />

@@ -2,7 +2,7 @@
 import _ from 'lodash'
 import clsx from 'clsx'
 
-import {useContext, useEffect, useState} from 'react'
+import {useContext, useEffect, useState, useRef} from 'react'
 
 import SessionContext from '#cap/Context/Session'
 import {ApiGetPlants} from  '#cap/Services'
@@ -22,6 +22,7 @@ const Page = () => {
 	const session = useContext(SessionContext)
 	const [list, setList] = useState(null)
 	const [status, setStatus] = useState({error: false})
+	const itemsContRef = useRef(null)
 	
 	const refreshList = async () => {
 		if (list === REFRESHING_STATE) {
@@ -40,6 +41,26 @@ const Page = () => {
 	}
 	
 	useEffect(() => {
+		const observer = new IntersectionObserver(
+			(entries) => entries.forEach((entry, index) => {
+				if (entry.isIntersecting && entry.target.classList.contains('plantItem')) {
+					console.log('show element')
+					entry.target.classList.remove('invisible')
+					entry.target.classList.add('animate-slideDown')
+				}
+			}),
+			{threshold: 0.1}
+		)
+		
+		const children = itemsContRef.current?.children
+		if (children) {
+			Array.from(children).forEach((child) => observer.observe(child))
+		}
+		
+		return () => observer.disconnect()
+	}, [list])
+	
+	useEffect(() => {
 		refreshList()
 	}, [session.data])
 	
@@ -55,7 +76,7 @@ const Page = () => {
 				<Heading className="px-8 text-4xl">
 					Plants In Stock <button onClick={() => refreshList()}>{refreshIcon}</button>
 				</Heading>
-				<div className="flex flex-wrap justify-center">
+				<div ref={itemsContRef} className="flex flex-wrap justify-center">
 					{(_.isArray(list) && list.map((plant, i) => <PlantItem key={plant.id} data={plant} />))
 						|| (status?.error === false && spinner)}
 				</div>
