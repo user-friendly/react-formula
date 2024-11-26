@@ -3,6 +3,7 @@ import {Routes, Route, Navigate, Outlet, useLocation} from 'react-router-dom'
 
 import NotFound from '#cap/Pages/NotFound'
 import Home from '#cap/Pages/Home'
+import About from '#cap/Pages/About'
 import StyleGuide from '#cap/Pages/StyleGuide'
 import SignInPage from '#cap/Pages/Auth/SignInPage'
 import SignUpPage from '#cap/Pages/Auth/SignUpPage'
@@ -27,6 +28,8 @@ const RoutesMap = () => {
 	return <Routes>
 		<Route element={<ExampleLayout />}>
 			<Route path="/" element={<Home />} />
+			<Route path="/about" element={<About />} />
+			
 			<Route path="/sign-in" element={<SignInPage />} />
 			<Route path="/sign-up" element={<SignUpPage />} />
 			
