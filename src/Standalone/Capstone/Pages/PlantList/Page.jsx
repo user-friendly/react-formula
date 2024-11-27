@@ -46,6 +46,7 @@ const Page = () => {
 				if (entry.isIntersecting && entry.target.classList.contains('plantItem')) {
 					entry.target.classList.remove('invisible')
 					entry.target.classList.add('animate-slideDown')
+					
 				}
 			}),
 			{threshold: 0.1}
@@ -54,6 +55,7 @@ const Page = () => {
 		const children = itemsContRef.current?.children
 		if (children) {
 			Array.from(children).forEach((child) => observer.observe(child))
+			
 		}
 		
 		return () => observer.disconnect()
@@ -68,6 +70,12 @@ const Page = () => {
 	)} />
 	const spinner = <Spinner className="mt-28" />
 	
+	const message = status?.error !== false && (
+		<div className="m-4 p-4 bg-rose-100 border border-rose-300 rounded-lg text-red-600 font-medium text-center">
+			{status.message}
+		</div>
+	)
+	
 	return <RedirectAuthenticated not path="/sign-in">
 		<NavHeader />
 		<Section className="py-24 flex justify-center">
@@ -79,11 +87,7 @@ const Page = () => {
 					{(_.isArray(list) && list.map((plant, i) => <PlantItem key={plant.id} data={plant} />))
 						|| (status?.error === false && spinner)}
 				</div>
-				{status?.error !== false && (
-					<div className="px-2 py-1 max-w-80 bg-rose-100 border border-rose-300 rounded-lg text-red-600 font-medium">
-						{status.message}
-					</div>
-				)}
+				{message}
 			</div>
 		</Section>
 	</RedirectAuthenticated>
