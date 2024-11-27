@@ -44,7 +44,6 @@ const Page = () => {
 		const observer = new IntersectionObserver(
 			(entries) => entries.forEach((entry, index) => {
 				if (entry.isIntersecting && entry.target.classList.contains('plantItem')) {
-					console.log('show element')
 					entry.target.classList.remove('invisible')
 					entry.target.classList.add('animate-slideDown')
 				}
