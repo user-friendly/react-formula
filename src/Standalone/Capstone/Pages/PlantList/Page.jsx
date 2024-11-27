@@ -45,7 +45,7 @@ const Page = () => {
 			(entries) => entries.forEach((entry, index) => {
 				if (entry.isIntersecting && entry.target.classList.contains('plantItem')) {
 					entry.target.classList.remove('invisible')
-					entry.target.classList.add('animate-slideDown')
+					entry.target.classList.add('animate-slideLeft')
 					
 				}
 			}),
