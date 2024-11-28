@@ -43,10 +43,12 @@ const Page = () => {
 	useEffect(() => {
 		const observer = new IntersectionObserver(
 			(entries) => entries.forEach((entry, index) => {
-				if (entry.isIntersecting && entry.target.classList.contains('plantItem')) {
+				if (entry.isIntersecting && entry.target.classList.contains('plantItem')
+					&& entry.target.classList.contains('invisible')
+				) {
 					entry.target.classList.remove('invisible')
 					entry.target.classList.add('animate-slideLeft')
-					
+					console.log('animated')
 				}
 			}),
 			{threshold: 0.1}
@@ -54,8 +56,11 @@ const Page = () => {
 		
 		const children = itemsContRef.current?.children
 		if (children) {
-			Array.from(children).forEach((child) => observer.observe(child))
-			
+			Array.from(children).forEach((child) => {
+				console.log('observing')
+				observer.observe(child)
+				console.log('observed')
+			})
 		}
 		
 		return () => observer.disconnect()
