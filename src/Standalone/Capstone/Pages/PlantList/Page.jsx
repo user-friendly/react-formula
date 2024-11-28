@@ -41,13 +41,35 @@ const Page = () => {
 	}
 	
 	useEffect(() => {
+		let cid = false
+		const queue = []
+		
+		const animate = () => {
+			if (cid) {
+				return
+			}
+			const target = queue.shift()
+			
+			if (target) {
+				cid = setTimeout(() => {
+					if (target.classList.contains('invisible')) {
+						target.classList.remove('invisible')
+						target.classList.add('animate-slideLeft')
+					}
+					
+					cid = false
+					animate()
+				}, 250)
+			}
+		}
+		
 		const observer = new IntersectionObserver(
 			(entries) => entries.forEach((entry, index) => {
 				if (entry.isIntersecting && entry.target.classList.contains('plantItem')
 					&& entry.target.classList.contains('invisible')
 				) {
-					entry.target.classList.remove('invisible')
-					entry.target.classList.add('animate-slideLeft')
+					queue.push(entry.target)
+					animate()
 				}
 			}),
 			{threshold: 0.1}
@@ -57,7 +79,7 @@ const Page = () => {
 		if (children) {
 			const vp = window.visualViewport
 			
-			const isInViewport = (rect) => {
+			const collidesWithViewport = (rect) => {
 				return rect.bottom > vp.offsetTop &&
 					rect.top < vp.offsetTop + vp.height &&
 				    rect.right > vp.offsetLeft &&
@@ -65,7 +87,7 @@ const Page = () => {
 			}
 			
 			Array.from(children).forEach((child) => {
-				if (!isInViewport(child.getBoundingClientRect())) {
+				if (!collidesWithViewport(child.getBoundingClientRect())) {
 					observer.observe(child)
 				}
 				else {
