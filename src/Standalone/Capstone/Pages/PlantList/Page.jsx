@@ -48,7 +48,6 @@ const Page = () => {
 				) {
 					entry.target.classList.remove('invisible')
 					entry.target.classList.add('animate-slideLeft')
-					console.log('animated')
 				}
 			}),
 			{threshold: 0.1}
@@ -56,10 +55,22 @@ const Page = () => {
 		
 		const children = itemsContRef.current?.children
 		if (children) {
+			const vp = window.visualViewport
+			
+			const isInViewport = (rect) => {
+				return rect.bottom > vp.offsetTop &&
+					rect.top < vp.offsetTop + vp.height &&
+				    rect.right > vp.offsetLeft &&
+				    rect.left < vp.offsetLeft + vp.width
+			}
+			
 			Array.from(children).forEach((child) => {
-				console.log('observing')
-				observer.observe(child)
-				console.log('observed')
+				if (!isInViewport(child.getBoundingClientRect())) {
+					observer.observe(child)
+				}
+				else {
+					child.classList.remove('invisible')
+				}
 			})
 		}
 		
