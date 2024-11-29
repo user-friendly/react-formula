@@ -105,10 +105,7 @@ const getSessionAppId = () => {
 		return false
 	}
 	
-	const cookies = _.fromPairs(document.cookie.split(';').map((c) => c.split('=')))
-	
-	// TODO Cookie security? Can code be injected into cookie values?
-	
+	const cookies = _.fromPairs(document.cookie.split(';').map((c) => c.trim().split('=')))
 	return cookies.currentApp !== undefined ? cookies.currentApp : false
 }
 
