@@ -1,3 +1,6 @@
+
+import GoogleAnalytics from '#GoogleAnalytics'
+
 import _ from 'lodash'
 
 import {default as MswBrowser} from '/msw/src/Browser'
@@ -11,6 +14,8 @@ import {default as MainApp} from './App'
 
 //import ScreenSizeDebug from './ScreenSizeDebug'
 import Spinner from '#Components/Spinner'
+
+import CookieBanner from '#Components/CookieBanner'
 
 import AppWrapperContext from '#AppWrapperContext'
 
@@ -188,6 +193,10 @@ if (true /*import.meta.env.DEV === true*/) {
 } else {
 	ReactDOM.createRoot(document.getElementById('root')).render(<AppWrapper />)
 }
+
+ReactDOM.createRoot(document.getElementById('cookieBanner')).render(
+	<CookieBanner show={true} onAccept={() => console.log('Cookies accepted.')} onDecline={() => console.log('Cookies declined.')} />
+)
 
 // TODO Make this a toggle, using local storage.
 //ReactDOM.createRoot(document.getElementById('screenSizeDebug')).render(
