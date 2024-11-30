@@ -10,6 +10,8 @@ import ReactDOM from 'react-dom/client'
 
 import {Routes, Route} from 'react-router-dom'
 
+import {useCookies} from 'react-cookie'
+
 import {default as MainApp} from './App'
 
 //import ScreenSizeDebug from './ScreenSizeDebug'
@@ -66,6 +68,10 @@ if (import.meta.hot) {
 	}
 })();
 
+const defaultApp = import.meta.env.VITE_DEFAULT_APP !== undefined
+	? import.meta.env.VITE_DEFAULT_APP
+	: 'default'
+
 // I guess this is the meta for an app?
 const standaloneApps = [
 	// TODO Redesign these paths. They're basically a way to switch to an app. Perhaps using paths is pointless?
@@ -100,50 +106,13 @@ const createContextValue = (appId = 'default') => {
 	}
 }
 
-const getSessionAppId = () => {
-	// Currently, the only supported platform is web.
-	if (document === undefined) {
-		return false
-	}
-	
-	if (document.cookie === undefined || !document.cookie.trim().length) {
-		return false
-	}
-	
-	const cookies = _.fromPairs(document.cookie.split(';').map((c) => c.trim().split('=')))
-	return cookies.currentApp !== undefined ? cookies.currentApp : false
-}
-
-const setSessionAppId = (appId) => {
-	// Currently, the only supported platform is web.
-	if (document === undefined) {
-		return false
-	}
-	
-	const domain = window.location.host.split('.').splice(-2).join('.')
-	const path = '/'
-	const expires = (new Date(Date.now() + 30 * 86400000)).toUTCString()
-	document.cookie = `currentApp=${appId}; Domain=${domain}; Path=${path}; Expires=${expires};`
-	
-	return true
-}
-
-const getDefaultCurrentApp = () => {
-	// Currently, the only supported platform is web.
-	if (document === undefined) {
-		return 'default'
-	}
-	
-	const stateDefault = getSessionAppId()
-	if (!stateDefault) {
-		setSessionAppId('default')
-		return 'default'
-	}
-	return stateDefault
-}
-
 const AppWrapper = () => {
-	const [currentApp, setCurrentApp] = useState(getDefaultCurrentApp())
+	const [cookies, setCookie, removeCookie] = useCookies(['currentApp'])
+	const [currentApp, setCurrentApp] = useState(() => {
+		return cookies.currentApp !== undefined
+			? cookies.currentApp
+			: defaultApp
+	})
 	const contextValue = createContextValue(currentApp)
 	let App = standaloneApps.find(app => currentApp === app.id)
 	
@@ -167,7 +136,13 @@ const AppWrapper = () => {
 		}
 		// Remember choice, using platform specific storage.
 		// For web, this will be cookies.
-		setSessionAppId(appId)
+		const expireDate = new Date()
+		expireDate.setMonth(expireDate.getMonth() + 1)
+		setCookie('currentApp', appId, {
+			domain: window.location.host.split('.').splice(-2).join('.'),
+			path: '/',
+			expires: expireDate,
+		})
 		setCurrentApp(appId)
 	}
 	
