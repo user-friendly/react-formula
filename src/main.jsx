@@ -146,12 +146,12 @@ const AppWrapper = () => {
 		setCurrentApp(appId)
 	}
 	
+	const bigSpinner = <div className="fixed inset-0 w-secreen h-screen flex justify-center items-center">
+		<Spinner dim="w-40 h-40" borderWidth="border-[2.5rem]" borderColor="border-gray-700" />
+	</div>
+	
 	return <StrictMode>
-		<Suspense fallback={
-			<div className="fixed inset-0 w-secreen h-screen flex justify-center items-center">
-				<Spinner dim="w-40 h-40" borderWidth="border-[2.5rem]" borderColor="border-gray-700" />
-			</div>
-		}>
+		<Suspense fallback={bigSpinner}>
 			<AppWrapperContext.Provider value={contextValue}>
 				<App.Component />
 			</AppWrapperContext.Provider>
