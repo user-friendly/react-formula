@@ -5,8 +5,8 @@ import {Section, Heading, Paragraph} from '#Components/Text'
 const sectionStyle = `m-4 p-6 max-w-[700px] rounded-lg text-white text-2xl bg-neutral-600/95`
 const buttonStyle = `hover:underline active:translate-y-1`
 
-const CookieBanner = ({show, onAccept, onDecline}) => {
-	return <div className={'z-50 fixed bottom-0 left-0 ' + (!show && 'hidden')}>
+const CookieBanner = ({onAccept, onDecline}) => {
+	return <div className="z-50 fixed bottom-0 left-0">
 		<Section className={sectionStyle}>
 			<Heading className="mb-4">
 				Cookies <IconDecorative name="cookie" className="text-white" />
