@@ -1,25 +1,51 @@
 
 const TAG_ID = import.meta.env.VITE_GA_ID
 
-if (window.dataLayer === undefined && window.gtag === undefined) {
+// Boolean true is converted to GA consent status:
+const consentStatusYes = 'granted'
+// Boolean false is converted to GA consent status:
+const consentStatusNo = 'denied'
+
+const defaultConsentOptions = {
+	'ad_storage':				false,
+	'ad_user_data':				false,
+	'ad_personalization':		false,
+	'analytics_storage':		false,
+	'functionality_storage':	false,
+	'personalization_storage':	false,
+	'security_storage':			false,
+}
+
+const initGa = (consent = {}) => {
+	if (!(window.dataLayer === undefined && window.gtag === undefined)) {
+		return
+	}
 	console.log('Setup Google Analytics.')
+	
+	const consentOptions = defaultConsentOptions
+	// Override defaults.
+	for (const type in consent) {
+		if (typeof consent[type] === 'boolean'
+			&& consentOptions[type] !== undefined
+			&& consent[type] !== consentOptions[type]
+		) {
+			consentOptions[type] = consent[type]
+		}
+	}
+	// Convert booleans to GA consent status.
+	for (const type in consentOptions) {
+		consentOptions[type] = consentOptions[type] === true ? consentStatusYes : consentStatusNo
+	}
 	
 	// Define dataLayer and the gtag function.
 	window.dataLayer = window.dataLayer || [];
 	function gtag(){dataLayer.push(arguments);}
 	window.gtag = gtag
 	
-	gtag('js', new Date());
-	gtag('config', TAG_ID);
+	gtag('js', new Date())
+	gtag('config', TAG_ID)
 	
-	// Set default consent to 'denied' as a placeholder
-	// Determine actual values based on your own requirements
-	gtag('consent', 'default', {
-		'ad_storage': 'denied',
-		'ad_user_data': 'denied',
-		'ad_personalization': 'denied',
-		'analytics_storage': 'denied'
-	});
+	gtag('consent', 'default', consentOptions)
 	
 	const script = document.createElement('script')
 	script.src = `https://www.googletagmanager.com/gtag/js?id=${TAG_ID}`
@@ -34,9 +60,10 @@ if (window.dataLayer === undefined && window.gtag === undefined) {
 }
 
 const GoogleAnalytics = {
-	consentGrantedAdStorage: () => {
+	init: initGa,
+	consentToAnalytics: () => {
 		gtag('consent', 'update', {
-			'ad_storage': 'granted'
+			'analytics_storage': 'granted'
 		})
 	}
 }
