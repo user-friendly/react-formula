@@ -61,6 +61,8 @@ if (import.meta.hot) {
 	}
 })();
 
+const baseDomain = window.location.host.split('.').splice(-2).join('.')
+
 const defaultApp = import.meta.env.VITE_DEFAULT_APP !== undefined
 	? import.meta.env.VITE_DEFAULT_APP
 	: 'default'
@@ -100,7 +102,7 @@ const createContextValue = (appId = 'default') => {
 }
 
 const AppWrapper = () => {
-	const [cookies, setCookie, removeCookie] = useCookies(['currentApp'])
+	const [cookies, setCookie, removeCookie] = useCookies(['currentApp', 'cookieConsent'])
 	const [currentApp, setCurrentApp] = useState(() => {
 		return cookies.currentApp !== undefined
 			? cookies.currentApp
@@ -109,7 +111,33 @@ const AppWrapper = () => {
 	const contextValue = createContextValue(currentApp)
 	let App = standaloneApps.find(app => currentApp === app.id)
 	
-	console.debug('Render AppWrapper.')
+	let cookieBanner = null
+	if (cookies.cookieConsent === undefined) {
+		// Figure out cookies as early as possible.
+		// This looks like it will be a security issue. Server side consent storage should be preferred.
+		const saveConsent = (consent) => {
+			const expireDate = new Date()
+			expireDate.setMonth(expireDate.getMonth() + 1)
+			setCookie('cookieConsent', JSON.stringify(consent), {
+				domain: baseDomain,
+				path: '/',
+				expires: expireDate,
+			})
+		}
+		const onCookieAccept = (e) => {
+			const consentStatusYes = {
+				'analytics_storage': true,
+			}
+			saveConsent(consentStatusYes)
+		}
+		const onCookieDecline = (e) => {
+			const consentStatusNo = {
+				'analytics_storage': false,
+			}
+			saveConsent(consentStatusNo)
+		}
+		cookieBanner = <CookieBanner onAccept={onCookieAccept} onDecline={onCookieDecline} />
+	}
 	
 	console.log(`Current app is {${currentApp}}.`)
 	if (App === undefined) {
@@ -132,7 +160,7 @@ const AppWrapper = () => {
 		const expireDate = new Date()
 		expireDate.setMonth(expireDate.getMonth() + 1)
 		setCookie('currentApp', appId, {
-			domain: window.location.host.split('.').splice(-2).join('.'),
+			domain: baseDomain,
 			path: '/',
 			expires: expireDate,
 		})
@@ -148,6 +176,7 @@ const AppWrapper = () => {
 			<AppWrapperContext.Provider value={contextValue}>
 				<App.Component />
 			</AppWrapperContext.Provider>
+			{cookieBanner}
 		</Suspense>
 	</StrictMode>
 }
@@ -161,7 +190,3 @@ if (true /*import.meta.env.DEV === true*/) {
 } else {
 	ReactDOM.createRoot(document.getElementById('root')).render(<AppWrapper />)
 }
-
-ReactDOM.createRoot(document.getElementById('cookieBanner')).render(
-	<CookieBanner show={true} onAccept={() => console.log('Cookies accepted.')} onDecline={() => console.log('Cookies declined.')} />
-)
