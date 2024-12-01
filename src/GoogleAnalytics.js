@@ -16,11 +16,15 @@ const defaultConsentOptions = {
 	'security_storage':			false,
 }
 
-const initGa = (consent = {}) => {
+const init = (consent = {}) => {
 	if (!(window.dataLayer === undefined && window.gtag === undefined)) {
 		return
 	}
 	console.log('Setup Google Analytics.')
+	
+	if (typeof consent !== 'object') {
+		consent = {}
+	}
 	
 	const consentOptions = defaultConsentOptions
 	// Override defaults.
@@ -51,7 +55,7 @@ const initGa = (consent = {}) => {
 	script.src = `https://www.googletagmanager.com/gtag/js?id=${TAG_ID}`
 	script.async = true
 	script.onload = (...args) => {
-		console.log('Loaded GA script.', args)
+		console.log('Loaded GA script.')
 	}
 	script.onerror = () => {
 		console.error('Failed to load GA script.')
@@ -60,7 +64,7 @@ const initGa = (consent = {}) => {
 }
 
 const GoogleAnalytics = {
-	init: initGa,
+	init: init,
 	consentToAnalytics: () => {
 		gtag('consent', 'update', {
 			'analytics_storage': 'granted'
