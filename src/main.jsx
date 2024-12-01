@@ -1,5 +1,5 @@
 
-import GoogleAnalytics from '#GoogleAnalytics'
+import GA from '#GoogleAnalytics'
 
 import _ from 'lodash'
 import {default as MswBrowser} from '/msw/src/Browser'
@@ -111,6 +111,9 @@ const AppWrapper = () => {
 	const contextValue = createContextValue(currentApp)
 	let App = standaloneApps.find(app => currentApp === app.id)
 	
+	// If there are no consent cookies, the default denied state is set for all.
+	GA.init(cookies?.cookieConsent)
+	
 	let cookieBanner = null
 	if (cookies.cookieConsent === undefined) {
 		// Figure out cookies as early as possible.
@@ -118,19 +121,24 @@ const AppWrapper = () => {
 		const saveConsent = (consent) => {
 			const expireDate = new Date()
 			expireDate.setMonth(expireDate.getMonth() + 1)
-			setCookie('cookieConsent', JSON.stringify(consent), {
+			setCookie('cookieConsent', consent, {
 				domain: baseDomain,
 				path: '/',
 				expires: expireDate,
 			})
 		}
 		const onCookieAccept = (e) => {
+			// On initial page load, fresh session, the default is to deny all.
+			// Make sure the dataLayer receives the updated consent status.
+			GA.consentToAnalytics()
+			// Sets the default GA consent status, for subsequent session page loads.
 			const consentStatusYes = {
 				'analytics_storage': true,
 			}
 			saveConsent(consentStatusYes)
 		}
 		const onCookieDecline = (e) => {
+			// No need to update dataLayer - default consent status is to deny by default.
 			const consentStatusNo = {
 				'analytics_storage': false,
 			}
