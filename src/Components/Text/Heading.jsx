@@ -12,7 +12,7 @@ const indentStyle = [
 	`text-xl`, // h6
 ]
 
-const defaultTextStyle = 'text-xl font-playfair'
+const defaultTextStyle = 'text-xl'
 
 const HtmlElement = (props) => {
 	switch (props.level) {
