@@ -70,10 +70,6 @@ const App = () => {
 					</AppSwitcher>
 					
 					<RouteSelect />
-					
-					<Link className={linkStyle} to="/about">
-						About
-					</Link>
 				</NavBar>
 				<NavBar>
 					<Link className={linkStyle} to="/weather">
@@ -103,6 +99,7 @@ const App = () => {
 			{/* Footer */}
 			<div className="bg-indigo-100">
 				<NavBar>
+					<Link className={linkStyle} to="/about">About</Link>
 					<Link className={linkStyle} to="/terms">Terms of Service</Link>
 					<Link className={linkStyle} to="/privacy">Privacy Policy</Link>
 					<Link className={linkStyle} to="/contact">Contact</Link>
