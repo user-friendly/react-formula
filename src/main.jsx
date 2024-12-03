@@ -112,7 +112,7 @@ const AppWrapper = () => {
 	let App = standaloneApps.find(app => currentApp === app.id)
 	
 	// If there are no consent cookies, the default denied state is set for all.
-	GA.init(cookies?.cookieConsent)
+	GA.load(cookies?.cookieConsent)
 	
 	let cookieBanner = null
 	if (cookies.cookieConsent === undefined) {

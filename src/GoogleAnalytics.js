@@ -16,8 +16,16 @@ const defaultConsentOptions = {
 	'security_storage':			false,
 }
 
-const init = (consent = {}) => {
-	if (!(window.dataLayer === undefined && window.gtag === undefined)) {
+const init = () => {
+	// Define dataLayer and the gtag function.
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	window.gtag = gtag
+}
+init()
+
+const load = (consent = {}) => {
+	if (window.GAInitDone) {
 		return
 	}
 	console.log('Setup Google Analytics.')
@@ -41,11 +49,6 @@ const init = (consent = {}) => {
 		consentOptions[type] = consentOptions[type] === true ? consentStatusYes : consentStatusNo
 	}
 	
-	// Define dataLayer and the gtag function.
-	window.dataLayer = window.dataLayer || [];
-	function gtag(){dataLayer.push(arguments);}
-	window.gtag = gtag
-	
 	gtag('js', new Date())
 	gtag('config', TAG_ID)
 	
@@ -55,21 +58,23 @@ const init = (consent = {}) => {
 	script.src = `https://www.googletagmanager.com/gtag/js?id=${TAG_ID}`
 	script.async = true
 	script.onload = (...args) => {
-		console.log('Loaded GA script.')
+		window.GAInitDone = true
 	}
 	script.onerror = () => {
-		console.error('Failed to load GA script.')
+		window.GAInitDone = false
+		delete window.dataLayer
+		init()
 	}
 	document.head.appendChild(script)
 }
 
 const GoogleAnalytics = {
-	init: init,
+	load: load,
 	consentToAnalytics: () => {
 		gtag('consent', 'update', {
 			'analytics_storage': 'granted'
 		})
-	}
+	},
 }
 
 export default GoogleAnalytics
