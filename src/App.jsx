@@ -103,7 +103,7 @@ const App = () => {
 			{/* Footer */}
 			<div className="bg-indigo-100">
 				<NavBar>
-					<Link className={linkStyle} to="/terms">Terms & Conditions</Link>
+					<Link className={linkStyle} to="/terms">Terms of Service</Link>
 					<Link className={linkStyle} to="/privacy">Privacy Policy</Link>
 					<Link className={linkStyle} to="/contact">Contact</Link>
 				</NavBar>
