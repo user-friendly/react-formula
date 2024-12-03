@@ -51,7 +51,7 @@ const LegaleseMarkdown = (props) => {
 		ul: (props) => <ul className="list-disc pl-8">{props.children}</ul>,
 	}
 	
-	return <Markdown components={components}>{children}</Markdown>
+	return <Markdown components={components} {...rest}>{children}</Markdown>
 }
 
 export default LegaleseMarkdown
