@@ -5,18 +5,12 @@
  * %route = /privacy
  */
 
-import {Section, Heading, Paragraph} from '#Components/Text'
+import LegaleseMarkdown from '#Components/LegaleseMarkdown'
+
+import MD_COOKIES from '#Data/Cookie-Policy.md?raw'
 
 const PrivacyPolicy = () => {
-	return <Section>
-		<Heading className="">Privacy Policy</Heading>
-		
-		<Paragraph>[filler]</Paragraph>
-		
-		<Paragraph>[filler]</Paragraph>
-
-		<Paragraph>[filler]</Paragraph>
-	</Section>
+	return <LegaleseMarkdown className="m-auto p-4 max-w-5xl">{MD_COOKIES}</LegaleseMarkdown>
 }
 
 export default PrivacyPolicy
