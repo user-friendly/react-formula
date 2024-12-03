@@ -3,7 +3,7 @@ Privacy Policy
 
 Effective Date: December 2, 2024
 
-[User-Friendly.dev] ("we," "us," "our") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, and protect your information when you visit our website.
+User-Friendly.dev ("we," "us," "our") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, and protect your information when you visit our website.
 
 Information We Collect
 ----------------------
