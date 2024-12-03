@@ -47,7 +47,8 @@ const LegaleseMarkdown = (props) => {
 		h5: (props) => heading(props, 5),
 		h6: (props) => heading(props, 6),
 		p: para,
-		a: link, 
+		a: link,
+		ul: (props) => <ul className="list-disc pl-8">{props.children}</ul>,
 	}
 	
 	return <Markdown components={components}>{children}</Markdown>
