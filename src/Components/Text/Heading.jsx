@@ -36,7 +36,7 @@ const HtmlElement = (props) => {
 }
 
 const Heading = (props) => {
-	const level = useContext(SectionLevelContext)
+	const level = props.level !== undefined ? props.level : useContext(SectionLevelContext)
 	const sectionIndentStyle = GetSectionLevelIndentStyle()
 	return <HtmlElement level={level} className={twMerge(defaultTextStyle, sectionIndentStyle, indentStyle[level-1], props.className)}>
 		{props.children}
