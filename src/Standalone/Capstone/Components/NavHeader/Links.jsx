@@ -1,7 +1,7 @@
 
 import clsx from 'clsx'
 import {useState, useContext} from 'react'
-import {Link, useNavigate} from 'react-router-dom'
+import {Link, useNavigate} from 'react-router'
 import {RequireSession} from '#cap/Components/AccessControl'
 import SessionContext from '#cap/Context/Session'
 import {ShowCartModal} from '#cap/Components/Cart'

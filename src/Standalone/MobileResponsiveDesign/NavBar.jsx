@@ -1,6 +1,6 @@
 
 import {useState} from 'react'
-import {Link} from 'react-router-dom'
+import {Link} from 'react-router'
 import AppSwitcher from '#AppSwitcher'
 import clsx from 'clsx'
 

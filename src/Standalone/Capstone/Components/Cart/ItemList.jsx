@@ -4,7 +4,7 @@ import clsx from 'clsx'
 import {twMerge} from 'tailwind-merge'
 
 import {useContext, useEffect, useState} from 'react'
-import {Link} from 'react-router-dom'
+import {Link} from 'react-router'
 import {RemoveScroll} from 'react-remove-scroll'
 
 import SessionContext from '#cap/Context/Session'

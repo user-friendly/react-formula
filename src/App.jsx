@@ -11,7 +11,7 @@ import {default as RouteMap, RouterPathMap} from '#RouteMap'
 import {
 	BrowserRouter, Routes, Route, Link,
 	useLocation, useNavigate
-} from 'react-router-dom'
+} from 'react-router'
 
 import AppSwitcher from '#AppSwitcher'
 import SelectItem from '#SelectItem'

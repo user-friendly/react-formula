@@ -1,5 +1,5 @@
 
-import {Link} from 'react-router-dom'
+import {Link} from 'react-router'
 
 import Links from './Links'
 import Ham from './Ham'

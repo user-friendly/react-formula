@@ -2,7 +2,7 @@
 import clsx from 'clsx'
 
 import {useContext, useEffect, useState} from 'react'
-import {Link} from 'react-router-dom'
+import {Link} from 'react-router'
 import {RemoveScroll} from 'react-remove-scroll'
 import SessionContext from '#cap/Context/Session'
 import {RequireSession} from '#cap/Components/AccessControl'

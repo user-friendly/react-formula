@@ -2,7 +2,7 @@
 import _ from 'lodash'
 
 import {useState, useContext} from 'react'
-import {Link, useLocation} from 'react-router-dom'
+import {Link, useLocation} from 'react-router'
 
 import {apiLoginUser} from  '#cap/Services'
 

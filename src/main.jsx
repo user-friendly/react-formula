@@ -6,7 +6,7 @@ import {default as MswBrowser} from '/msw/src/Browser'
 
 import {StrictMode, Suspense, useEffect, useState, lazy} from 'react'
 import ReactDOM from 'react-dom/client'
-import {Routes, Route} from 'react-router-dom'
+import {Routes, Route} from 'react-router'
 import {useCookies} from 'react-cookie'
 
 import {default as MainApp} from './App'

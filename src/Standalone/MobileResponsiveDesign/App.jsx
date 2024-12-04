@@ -1,6 +1,6 @@
 
 
-import {BrowserRouter} from 'react-router-dom'
+import {BrowserRouter} from 'react-router'
 
 import NavBar from './NavBar'
 import Hero from './Hero'

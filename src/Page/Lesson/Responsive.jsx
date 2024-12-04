@@ -13,7 +13,7 @@ import Collapsable from './Components/Collapsable'
 
 import Breakpoints from './Components/Responsive/Breakpoints'
 
-import {Link} from 'react-router-dom'
+import {Link} from 'react-router'
 
 const linkStyle=`text-xl select-none cursor-pointer
 	px-2.5 py-0.5 rounded-xl bg-sky-400 transition-bg hover:bg-sky-500 hover:text-white`

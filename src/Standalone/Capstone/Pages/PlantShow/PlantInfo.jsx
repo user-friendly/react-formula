@@ -2,7 +2,7 @@
 import _ from 'lodash'
 
 import {useState, useContext} from 'react'
-import {useLocation} from 'react-router-dom'
+import {useLocation} from 'react-router'
 
 import Zoom from 'react-medium-image-zoom'
 import 'react-medium-image-zoom/dist/styles.css'

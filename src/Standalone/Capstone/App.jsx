@@ -2,7 +2,7 @@
 import _ from 'lodash'
 
 import {useState} from 'react'
-import {RouterProvider, createBrowserRouter, Link, Routes, Route} from 'react-router-dom'
+import {RouterProvider, createBrowserRouter, Link, Routes, Route} from 'react-router'
 
 import {apiLogoutUser, getSessionStorage, setSessionStorage, removeSessionStorage} from '#cap/Services'
 import SessionContext from '#cap/Context/Session'

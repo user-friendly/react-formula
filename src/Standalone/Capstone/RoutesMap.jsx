@@ -1,5 +1,5 @@
 
-import {Routes, Route, Navigate, Outlet, useLocation} from 'react-router-dom'
+import {Routes, Route, Navigate, Outlet, useLocation} from 'react-router'
 
 import NotFound from '#cap/Pages/NotFound'
 import Home from '#cap/Pages/Home'

@@ -2,7 +2,7 @@
 import _ from 'lodash'
 
 import {useState} from 'react'
-import {Link} from 'react-router-dom'
+import {Link} from 'react-router'
 
 import ColorPicker from './ColorPicker'
 

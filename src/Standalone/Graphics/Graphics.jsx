@@ -5,7 +5,7 @@
 import _ from 'lodash'
 
 import {useRef, useState, useEffect, useLayoutEffect} from 'react'
-import {BrowserRouter, Link, useNavigate} from 'react-router-dom'
+import {BrowserRouter, Link, useNavigate} from 'react-router'
 
 import AppSwitcher from '#AppSwitcher'
 

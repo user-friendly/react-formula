@@ -2,7 +2,7 @@
 import _ from 'lodash'
 
 import {useContext, useEffect, useState} from 'react'
-import {useParams} from 'react-router-dom'
+import {useParams} from 'react-router'
 
 import SessionContext from '#cap/Context/Session'
 import {ApiGetPlant} from  '#cap/Services'

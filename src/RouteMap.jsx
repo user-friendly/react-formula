@@ -5,7 +5,7 @@
 
 import {lazy} from 'react'
 
-import {Routes, Route} from 'react-router-dom'
+import {Routes, Route} from 'react-router'
 
 import RouterPathMap from 'RouterPathMap'
 
