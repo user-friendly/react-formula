@@ -3,9 +3,9 @@
  * Include docs about the Vite/Rollup plugin.
  */
 
-import {lazy} from 'react'
+import {lazy, useEffect} from 'react'
 
-import {Routes, Route} from 'react-router'
+import {Routes, Route, useLocation} from 'react-router'
 
 import RouterPathMap from 'RouterPathMap'
 
@@ -19,7 +19,21 @@ const routes = RouterPathMap.map((r, k) =>
 	<Route key={k} path={r.path} Component={r.component} />
 )
 
+const getTitleByPath = (path) => {
+	const mapObj = RouterPathMap.find((r) => r.path === path)
+	return mapObj?.title !== undefined ? mapObj.title : false 
+}
+
 const RouteMap = ({home, notfound}) => {
+	const loc = useLocation()
+	
+	useEffect(() => {
+		const title = getTitleByPath(loc.pathname)
+		if (title) {
+			document.title = title
+		} // TODO Report to GA?
+	}, [loc])
+	
 	return <Routes>
 		{routes}
 		
