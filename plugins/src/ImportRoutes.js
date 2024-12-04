@@ -47,7 +47,7 @@ const ListFilesRec = (baseDir) => {
 const regCommentBlock = /\/\/.*?$|\/\*[\s\S]*?\*\//gm
 const regSourceProperty = /\%([a-zA-Z_$][\w$]+)\s*=\s*([^;\n]+)/g
 
-// TODO I have the feeling this concept is kinda dumb.
+// TODO Look for alternatives to this DIY reflection.
 /**
   * Grab properties in comment blocks.
   * 
