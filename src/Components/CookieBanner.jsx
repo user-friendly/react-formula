@@ -17,8 +17,8 @@ const CookieBanner = ({onAccept, onDecline}) => {
 			</Paragraph>
 			
 			<div className="mt-4 flex justify-evenly">
-				<button className={buttonStyle} onClick={onAccept}>Accept</button>
 				<button className={buttonStyle} onClick={onDecline}>Decline</button>
+				<button className={buttonStyle} onClick={onAccept}>Accept</button>
 			</div>
 		</Section>
 	</div>
