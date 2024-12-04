@@ -13,7 +13,7 @@ const CookieBanner = ({onAccept, onDecline}) => {
 			</Heading>
 			
 			<Paragraph>
-				This website uses cookies to improve your experience and to analyze traffic. By continuing to use our site, you agree to our use of cookies.
+				This website uses cookies to improve your experience and analyze traffic. Please select 'Accept' to consent to our use of cookies or 'Decline' to refuse.
 			</Paragraph>
 			
 			<div className="mt-4 flex justify-evenly">
