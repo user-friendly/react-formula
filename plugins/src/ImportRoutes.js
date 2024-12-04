@@ -4,7 +4,8 @@
  * Altough you don't need React Router, it works with it
  * and the RouteMap component.
  * 
- * TODO Document.
+ * TODO Look into: https://reactrouter.com/7.0.2/how-to/file-route-conventions
+ * 		Should be able to replace and deprecate this abomination.
  */
 
 import fs from 'fs'
