@@ -1,12 +1,18 @@
 
-
+import {useEffect} from 'react'
 import {BrowserRouter} from 'react-router'
 
 import NavBar from './NavBar'
 import Hero from './Hero'
 import FeatureSection from './FeatureSection'
 
+const PAGE_TITLE = 'Mobile Responsive Design'
+
 const App = () => {
+	useEffect(() => {
+		document.title = PAGE_TITLE
+	}, [])
+	
 	return <BrowserRouter> 
 		<div className="min-h-screen font-roboto text-violet-800">
 			<NavBar />

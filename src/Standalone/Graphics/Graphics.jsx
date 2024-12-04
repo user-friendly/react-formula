@@ -17,7 +17,7 @@ import UiTextBox from './Lib/UiTextBox'
 
 import MersenneTwister from 'mersennetwister'
 
-export const PAGE_TITLE = 'Graphics'
+export const PAGE_TITLE = 'Experimental Canvas Graphics'
 
 let graphics = null
 
@@ -27,6 +27,10 @@ const Graphics = () => {
 	
 	const canvasWrapperRef = useRef(null)
 	const canvasRef = useRef(null)
+	
+	useEffect(() => {
+		document.title = PAGE_TITLE
+	}, [])
 	
 	useLayoutEffect(() => {
 		graphics = new RenderEngine(canvasRef.current)
@@ -119,7 +123,6 @@ const Graphics = () => {
 			} 
 			return true
 		}).bind(null, textBox))
-		
 		
 		const smallStep = 4
 		const bigStep = 20
