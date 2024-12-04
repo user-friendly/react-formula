@@ -113,6 +113,8 @@ const AppWrapper = () => {
 	
 	// If there are no consent cookies, the default denied state is set for all.
 	GA.load(cookies?.cookieConsent)
+	// Signal application load event.
+	GA.appLoad(currentApp)
 	
 	let cookieBanner = null
 	if (cookies.cookieConsent === undefined) {

@@ -50,7 +50,9 @@ const load = (consent = {}) => {
 	}
 	
 	gtag('js', new Date())
-	gtag('config', TAG_ID)
+	gtag('config', TAG_ID, {
+		send_page_view: true,
+	})
 	
 	gtag('consent', 'default', consentOptions)
 	
@@ -68,13 +70,52 @@ const load = (consent = {}) => {
 	document.head.appendChild(script)
 }
 
+const consentToAnalytics = () => {
+	gtag('consent', 'update', {
+		'analytics_storage': 'granted'
+	})
+}
+
+const event = (name, params) => {
+	if (gtag === undefined) {
+		return
+	}
+	
+	gtag('event', name, params)
+}
+
+const pageView = (title, location) => {
+	event('page_view', {
+		page_title: title,
+		page_location: location
+	})
+}
+
+// Custom events follow.
+
+const screenView = (app_name, screen_name) => {
+	event('screen_view', {
+		app_name: app_name,
+		screen_name: screen_name,
+	})
+}
+
+const appLoad = (app_name) => {
+	event('app_load', {
+		app_name: app_name,
+	})
+}
+
 const GoogleAnalytics = {
 	load: load,
-	consentToAnalytics: () => {
-		gtag('consent', 'update', {
-			'analytics_storage': 'granted'
-		})
-	},
+	
+	consentToAnalytics: consentToAnalytics,
+	
+	event: event,
+
+	appLoad: appLoad,
+	pageView: pageView,
+	screenView: screenView,
 }
 
 export default GoogleAnalytics
