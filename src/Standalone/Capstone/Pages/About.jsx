@@ -1,10 +1,14 @@
 
+import {useDocumentTitle} from '#cap/DocumentTitle'
 
 import RedirectAuthenticated from '#cap/Components/RedirectAuthenticated'
 import NavHeader from '#cap/Components/NavHeader'
 import {Section, Heading, Paragraph} from '#cap/Components/Text'
 
 const About = () => {
+	const [title, setTitle] = useDocumentTitle()
+	setTitle('About')
+	
 	return <RedirectAuthenticated not path="/sign-in">
 		<NavHeader />
 		<Section className="p-8 mx-auto w-full max-w-5xl">

@@ -1,4 +1,6 @@
 
+import {useDocumentTitle} from '#cap/DocumentTitle'
+
 import Icon from '#cap/Components/Icon'
 import NavHeader from '#cap/Components/NavHeader'
 import {Section, Heading, Paragraph} from '#cap/Components/Text'
@@ -13,6 +15,9 @@ const placeholder = `
 `
 
 const StyleGuide = () => {
+	const [title, setTitle] = useDocumentTitle()
+	setTitle('Style Guide')
+	
 	return <>
 			<NavHeader />
 			<div className="p-6 m-auto max-w-5xl ">

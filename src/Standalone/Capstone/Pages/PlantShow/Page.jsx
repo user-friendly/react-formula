@@ -9,6 +9,8 @@ import {ApiGetPlant} from  '#cap/Services'
 
 import RedirectAuthenticated from '#cap/Components/RedirectAuthenticated'
 
+import {useDocumentTitle} from '#cap/DocumentTitle'
+
 import NavHeader from '#cap/Components/NavHeader'
 import Spinner from '#cap/Components/Spinner'
 import {Section} from '#cap/Components/Text'
@@ -22,6 +24,8 @@ const Page = () => {
 	const {uuid} = useParams()
 	const [plant, setPlant] = useState(null)
 	const [status, setStatus] = useState({error: false})
+	
+	const [title, setTitle] = useDocumentTitle()
 
 	const fetchPlant = async () => {
 		if (plant === REFRESHING_STATE) {
@@ -31,6 +35,7 @@ const Page = () => {
 		setPlant(REFRESHING_STATE)
 		const result = await ApiGetPlant(session?.data, uuid)
 		if (result.error === false) {
+			setTitle(result.data.name)
 			setPlant(result.data)
 		} else {
 			console.error(`Failed to get plants list. Response:`, result)

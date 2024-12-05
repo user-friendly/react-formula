@@ -7,6 +7,8 @@ import {RouterProvider, createBrowserRouter, Link, Routes, Route} from 'react-ro
 import {apiLogoutUser, getSessionStorage, setSessionStorage, removeSessionStorage} from '#cap/Services'
 import SessionContext from '#cap/Context/Session'
 
+import {useDocumentTitle} from '#cap/DocumentTitle'
+
 import RoutesMap from '#cap/RoutesMap'
 
 // import './Style/index.css'
@@ -22,6 +24,9 @@ const router = createBrowserRouter([
 
 const App = () => {
 	const [session, setSession] = useState(() => getSessionStorage())
+	const [title, setTitle] = useDocumentTitle()
+	
+	console.log('Render Capstone App')
 	
 	const sessionUtility = {
 		data: session,

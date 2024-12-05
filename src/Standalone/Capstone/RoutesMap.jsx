@@ -1,6 +1,5 @@
 
-import {useEffect} from 'react'
-import {Routes, Route, Navigate, Outlet, useLocation} from 'react-router'
+import {Routes, Route, Navigate, Outlet} from 'react-router'
 
 import NotFound from '#cap/Pages/NotFound'
 import Home from '#cap/Pages/Home'
@@ -23,15 +22,7 @@ const ExampleLayout = () => {
 }
 
 const RoutesMap = () => {
-	const loc = useLocation()
 	const session = useContext(SessionContext)
-	
-	useEffect(() => {
-		const title = "Rica's Plants"
-		if (title) {
-			document.title = title
-		} // TODO Report to GA?
-	}, [loc])
 	
 	return <Routes>
 		<Route element={<ExampleLayout />}>

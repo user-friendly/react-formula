@@ -10,6 +10,8 @@ import SessionContext from '#cap/Context/Session'
 
 import RedirectAuthenticated from '#cap/Components/RedirectAuthenticated'
 
+import {useDocumentTitle} from '#cap/DocumentTitle'
+
 import Form from '#cap/Form'
 import FormContainer from '#cap/Pages/Auth/FormContainer'
 
@@ -37,6 +39,9 @@ const SignInPage = () => {
 		}
 		return getDefaultApiStatusState()
 	})
+	
+	const [title, setTitle] = useDocumentTitle()
+	setTitle('Sign In')
 	
 	// TODO What happens when the user sends a login request and manually
 	// navigates away from the sign in, before the request is resolved?

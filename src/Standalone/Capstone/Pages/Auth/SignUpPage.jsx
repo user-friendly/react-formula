@@ -10,6 +10,8 @@ import SessionContext from '#cap/Context/Session'
 
 import RedirectAuthenticated from '#cap/Components/RedirectAuthenticated'
 
+import {useDocumentTitle} from '#cap/DocumentTitle'
+
 import Form from '#cap/Form'
 import FormContainer from '#cap/Pages/Auth/FormContainer'
 
@@ -28,6 +30,9 @@ const SignUpPage = () => {
 	const navigate = useNavigate()
 	const [inProgress, setInProgress] = useState(false)
 	const [apiStatus, setApiStatus] = useState(() => getDefaultApiStatusState())
+	
+	const [title, setTitle] = useDocumentTitle()
+	setTitle('Sign Up')
 	
 	// Usually, can ommit the formId and event.
 	const handleSubmit = async (values, formId, event) => {

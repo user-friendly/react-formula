@@ -9,6 +9,8 @@ import {ApiGetPlants} from  '#cap/Services'
 
 import RedirectAuthenticated from '#cap/Components/RedirectAuthenticated'
 
+import {useDocumentTitle} from '#cap/DocumentTitle'
+
 import NavHeader from '#cap/Components/NavHeader'
 import Spinner from '#cap/Components/Spinner'
 import Icon from '#cap/Components/Icon'
@@ -23,6 +25,9 @@ const Page = () => {
 	const [list, setList] = useState(null)
 	const [status, setStatus] = useState({error: false})
 	const itemsContRef = useRef(null)
+	
+	const [title, setTitle] = useDocumentTitle()
+	setTitle('Plant List')
 	
 	const refreshList = async () => {
 		if (list === REFRESHING_STATE) {
