@@ -1,6 +1,8 @@
 
 const TAG_ID = import.meta.env.VITE_GA_ID
 
+const GA_DEBUG_MODE = import.meta.env.VITE_GA_DEBUG_MODE === 'true' ? true : false
+
 // Boolean true is converted to GA consent status:
 const consentStatusYes = 'granted'
 // Boolean false is converted to GA consent status:
@@ -49,10 +51,15 @@ const load = (consent = {}) => {
 		consentOptions[type] = consentOptions[type] === true ? consentStatusYes : consentStatusNo
 	}
 	
-	gtag('js', new Date())
-	gtag('config', TAG_ID, {
+	const webStreamConfig  = {
 		send_page_view: true,
-	})
+	}
+	if (GA_DEBUG_MODE) {
+		webStreamConfig.debug_mode = true
+	}
+	
+	gtag('js', new Date())
+	gtag('config', TAG_ID, webStreamConfig)
 	
 	gtag('consent', 'default', consentOptions)
 	
